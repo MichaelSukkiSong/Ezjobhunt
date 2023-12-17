@@ -1,6 +1,6 @@
 'use client';
 
-import { SearchIcon } from '@chakra-ui/icons';
+import { SearchIcon } from '../../../icons';
 
 const Searchbar = () => {
   return (

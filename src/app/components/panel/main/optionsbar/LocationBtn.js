@@ -15,8 +15,8 @@ import {
   RadioGroup,
   Stack,
 } from '@chakra-ui/react';
-import { ChevronDownIcon } from '@chakra-ui/icons';
 import Select from 'react-select';
+import { ChevronDownIcon } from '../../../../icons';
 
 const options = [
   { value: 'North America', label: 'North America' },

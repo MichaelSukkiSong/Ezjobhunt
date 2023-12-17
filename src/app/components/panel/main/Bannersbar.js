@@ -1,23 +1,27 @@
 'use client';
 
-import { Icon } from '@chakra-ui/icons';
-import { AiOutlineHeart, AiOutlineInsurance } from 'react-icons/ai';
-import { BsMic, BsCart2 } from 'react-icons/bs';
-import { CiDeliveryTruck } from 'react-icons/ci';
-import { GiArtificialHive } from 'react-icons/gi';
-import { GrInsecure } from 'react-icons/gr';
-import { GoLaw } from 'react-icons/go';
-import { LiaRobotSolid } from 'react-icons/lia';
-import { LuGraduationCap } from 'react-icons/lu';
 import {
+  Icon,
+  AiOutlineHeart,
+  AiOutlineInsurance,
+  BsMic,
+  BsCart2,
+  CiDeliveryTruck,
+  GiArtificialHive,
+  GrInsecure,
+  GoLaw,
+  LiaRobotSolid,
+  LuGraduationCap,
   RiComputerLine,
   RiMoneyDollarCircleLine,
   RiGovernmentLine,
-} from 'react-icons/ri';
-import { SiHiveBlockchain } from 'react-icons/si';
-import { PiDnaBold, PiTelegramLogo, PiBowlFoodBold } from 'react-icons/pi';
-import { TiWeatherPartlySunny } from 'react-icons/ti';
-import { TbBuildingEstate } from 'react-icons/tb';
+  SiHiveBlockchain,
+  PiDnaBold,
+  PiTelegramLogo,
+  PiBowlFoodBold,
+  TiWeatherPartlySunny,
+  TbBuildingEstate,
+} from '../../../icons';
 
 const Bannersbar = () => {
   return (

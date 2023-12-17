@@ -1,17 +1,18 @@
 'use client';
 
 import { Divider } from '@chakra-ui/react';
-import { SearchIcon, ChatIcon } from '@chakra-ui/icons';
 import { Icon } from '@chakra-ui/react';
-import { MdSettings } from 'react-icons/md';
 import {
+  SearchIcon,
+  ChatIcon,
+  MdSettings,
   BsBookmark,
   BsBookmarkCheck,
   BsBookmarkX,
   BsEyeSlash,
-} from 'react-icons/bs';
-import { HiOutlinePaperAirplane } from 'react-icons/hi';
-import { SiFoodpanda } from 'react-icons/si';
+  HiOutlinePaperAirplane,
+  SiFoodpanda,
+} from '../icons';
 
 const SidePanel = () => {
   return (

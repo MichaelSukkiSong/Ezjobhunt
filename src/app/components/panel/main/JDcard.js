@@ -1,15 +1,15 @@
 'use client';
 
-import { Icon } from '@chakra-ui/icons';
 import {
+  Icon,
   BsBookmark,
   BsBookmarkCheck,
   BsEyeSlash,
   BsFlag,
-} from 'react-icons/bs';
-import { CiSettings } from 'react-icons/ci';
-import { FaRegFileLines } from 'react-icons/fa6';
-import { LuCoffee } from 'react-icons/lu';
+  CiSettings,
+  FaRegFileLines,
+  LuCoffee,
+} from '../../../icons';
 
 const JDcard = () => {
   return (
