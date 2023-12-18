@@ -1,7 +1,6 @@
 import { Providers } from './providers';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import SidePanel from './components/SidePanel';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -14,15 +13,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>
-          <div className="block p-4 md:p-0 md:hidden">hello</div>
-          <div className="hidden md:block">
-            <div className="flex h-screen">
-              <SidePanel />
-              {children}
-            </div>
-          </div>
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
