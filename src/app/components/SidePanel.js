@@ -1,5 +1,7 @@
 'use client';
 
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Divider } from '@chakra-ui/react';
 import { Icon } from '@chakra-ui/react';
 import {
@@ -15,6 +17,12 @@ import {
 } from '../icons';
 
 const SidePanel = () => {
+  const pathname = usePathname();
+
+  if (pathname === '/auth') {
+    return null;
+  }
+
   return (
     <div className="flex h-screen p-2 pt-8 border-r">
       <div className="flex flex-col ml-2 w-48 overflow-y-auto">
@@ -30,7 +38,7 @@ const SidePanel = () => {
           </div>
         </div>
         <Divider />
-        <Link className="py-4 text-sm text-orange-600">
+        <Link href="/employers" className="py-4 text-sm text-orange-600">
           Employers / Post a Job
         </Link>
         <Divider />
@@ -39,15 +47,24 @@ const SidePanel = () => {
             <span className="text-xs font-bold text-gray-500">Job Search</span>
           </div>
           <div className="mt-4 flex flex-col space-y-4">
-            <Link className="flex items-center space-x-2 font-medium text-sm bg-gray-200 py-1.5 px-2 rounded">
+            <Link
+              href="/"
+              className="flex items-center space-x-2 font-medium text-sm bg-gray-200 py-1.5 px-2 rounded"
+            >
               <SearchIcon />
               <span>Discover</span>
             </Link>
-            <Link className="flex items-center space-x-2 mt-4 mb-4 font-medium text-sm ">
+            <Link
+              href="/"
+              className="flex items-center space-x-2 mt-4 mb-4 font-medium text-sm "
+            >
               <Icon as={SiFoodpanda} />
               <span>Mochi</span>
             </Link>
-            <Link className="flex items-center space-x-2 mt-4 mb-4 font-medium text-sm ">
+            <Link
+              href="/"
+              className="flex items-center space-x-2 mt-4 mb-4 font-medium text-sm "
+            >
               <ChatIcon />
               <span>Inbox</span>
             </Link>
@@ -59,23 +76,38 @@ const SidePanel = () => {
             Application Tracker
           </span>
           <div className="mt-4 flex flex-col space-y-4">
-            <Link className="flex items-center space-x-2 font-medium text-sm">
+            <Link
+              href="/"
+              className="flex items-center space-x-2 font-medium text-sm"
+            >
               <Icon as={BsBookmark} />
               <span>Saved</span>
             </Link>
-            <Link className="flex items-center space-x-2 font-medium text-sm">
+            <Link
+              href="/"
+              className="flex items-center space-x-2 font-medium text-sm"
+            >
               <Icon as={BsBookmarkCheck} />
               <span>Applied</span>
             </Link>
-            <Link className="flex items-center space-x-2 font-medium text-sm">
+            <Link
+              href="/"
+              className="flex items-center space-x-2 font-medium text-sm"
+            >
               <Icon as={HiOutlinePaperAirplane} />
               <span>Interviewing</span>
             </Link>
-            <Link className="flex items-center space-x-2 font-medium text-sm">
+            <Link
+              href="/"
+              className="flex items-center space-x-2 font-medium text-sm"
+            >
               <Icon as={BsBookmarkX} />
               <span>Rejected</span>
             </Link>
-            <Link className="flex items-center space-x-2 font-medium text-sm">
+            <Link
+              href="/"
+              className="flex items-center space-x-2 font-medium text-sm"
+            >
               <Icon as={BsEyeSlash} />
               <span>Hidden</span>
             </Link>
@@ -92,7 +124,10 @@ const SidePanel = () => {
           </div>
         </div>
         <div className="flex items-center justify-center bg-white py-4 border-t">
-          <Link className="w-full flex items-center text-center justify-center text-orange-800 text-sm font-medium bg-orange-200 py-2 rounded-full">
+          <Link
+            href="/auth"
+            className="w-full flex items-center text-center justify-center text-orange-800 text-sm font-medium bg-orange-200 py-2 rounded-full"
+          >
             Log In
           </Link>
         </div>
