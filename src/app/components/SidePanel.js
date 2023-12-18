@@ -31,7 +31,11 @@ const SidePanel = () => {
             <div className="flex justify-center items-center mr-2">
               <Icon as={MdSettings} className="" />
             </div>
-            <span className="flex justify-center items-center">Ezjobhunt</span>
+            <Link href="/">
+              <span className="flex justify-center items-center">
+                Ezjobhunt
+              </span>
+            </Link>
           </div>
           <div className="text-xs">
             Discover exciting jobs and track applications in one place.
@@ -42,28 +46,23 @@ const SidePanel = () => {
           Employers / Post a Job
         </Link>
         <Divider />
-        <div className="flex flex-col py-4 px-2">
-          <div className="flex items-center">
-            <span className="text-xs font-bold text-gray-500">Job Search</span>
-          </div>
-          <div className="mt-4 flex flex-col space-y-4">
+        <div className="flex flex-col py-4 ">
+          <span className="text-xs font-bold text-gray-500">Profile</span>
+          <div className="flex flex-col space-y-4">
             <Link
-              href="/"
-              className="flex items-center space-x-2 font-medium text-sm bg-gray-200 py-1.5 px-2 rounded"
-            >
-              <SearchIcon />
-              <span>Discover</span>
-            </Link>
-            <Link
-              href="/"
-              className="flex items-center space-x-2 mt-4 mb-4 font-medium text-sm "
+              href="/profile"
+              className={`flex items-center space-x-2 mt-4  font-medium text-sm ${
+                pathname === '/profile' ? 'bg-gray-200 py-1.5 px-2 rounded' : ''
+              }`}
             >
               <Icon as={SiFoodpanda} />
-              <span>Mochi</span>
+              <span>Profile</span>
             </Link>
             <Link
-              href="/"
-              className="flex items-center space-x-2 mt-4 mb-4 font-medium text-sm "
+              href="/inbox"
+              className={`flex items-center space-x-2 mt-4 mb-4 font-medium text-sm ${
+                pathname === '/inbox' ? 'bg-gray-200 py-1.5 px-2 rounded' : ''
+              }`}
             >
               <ChatIcon />
               <span>Inbox</span>
@@ -71,19 +70,30 @@ const SidePanel = () => {
           </div>
         </div>
         <Divider />
-        <div className="flex flex-col py-4 px-2">
-          <span className="text-xs font-bold text-gray-500">
-            Application Tracker
-          </span>
+        <div className="flex flex-col py-4 ">
+          <span className="text-xs font-bold text-gray-500">Job Search</span>
           <div className="mt-4 flex flex-col space-y-4">
             <Link
               href="/"
-              className="flex items-center space-x-2 font-medium text-sm"
+              className={`flex items-center space-x-2 font-medium text-sm ${
+                pathname === '/' ? 'bg-gray-200 py-1.5 px-2 rounded' : ''
+              }`}
             >
-              <Icon as={BsBookmark} />
-              <span>Saved</span>
+              <SearchIcon />
+              <span>Discover</span>
             </Link>
             <Link
+              href="/application-tracker"
+              className={`flex items-center space-x-2 font-medium text-sm ${
+                pathname === '/application-tracker'
+                  ? 'bg-gray-200 py-1.5 px-2 rounded'
+                  : ''
+              }`}
+            >
+              <Icon as={BsBookmark} />
+              <span>Track</span>
+            </Link>
+            {/* <Link
               href="/"
               className="flex items-center space-x-2 font-medium text-sm"
             >
@@ -110,7 +120,7 @@ const SidePanel = () => {
             >
               <Icon as={BsEyeSlash} />
               <span>Hidden</span>
-            </Link>
+            </Link> */}
           </div>
         </div>
         <Divider />
@@ -119,7 +129,9 @@ const SidePanel = () => {
             About Ezjobhunt
           </span>
           <div className="mt-4 flex flex-col space-y-4">
-            <span className="font-medium text-sm">Feature Requests</span>
+            <Link href="/backlog">
+              <span className="font-medium text-sm">Feature Requests</span>
+            </Link>
             <span className="font-medium text-sm">How it Works</span>
           </div>
         </div>
