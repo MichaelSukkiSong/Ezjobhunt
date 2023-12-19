@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Searchbar from './panel/main/Searchbar';
 import Optionsbar from './panel/main/Optionsbar';
 import Bannersbar from './panel/main/Bannersbar';
@@ -11,7 +12,9 @@ const MainPanel = () => {
           <Searchbar />
           <Optionsbar />
           <Bannersbar />
-          <JDgrid />
+          <Suspense fallback={<p>Loading</p>}>
+            <JDgrid />
+          </Suspense>
         </div>
       </div>
     </div>
