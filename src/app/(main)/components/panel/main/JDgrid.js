@@ -1,8 +1,28 @@
 import JDcard from './JDcard';
 
-const JDgrid = () => {
-  // TODO: Use cloud functions instead of using state in react.
+async function getData() {
+  const res = await fetch(
+    ' https://boards-api.greenhouse.io/v1/boards/doordash/jobs',
+    {
+      next: { revalidate: 3600 },
+    }
+  );
+  // The return value is *not* serialized
+  // You can return Date, Map, Set, etc.
+
+  if (!res.ok) {
+    // This will activate the closest `error.js` Error Boundary
+    throw new Error('Failed to fetch data');
+  }
+
+  return res.json();
+}
+
+const JDgrid = async () => {
+  // TODO: Fetch data on the server with fetch.
+  const data = await getData();
   // fetch job->store in firebase->trigger save event->parse data->show in client
+  console.log(data);
 
   const renderJDcard = () => {
     return <JDcard />;
