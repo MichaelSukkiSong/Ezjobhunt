@@ -1,4 +1,4 @@
-const RolteBtn = () => {
+const RoleBtn = () => {
   return (
     <select className="border rounded-xl p-2 w-full">
       <option value>Any Role</option>
@@ -19,4 +19,4 @@ const RolteBtn = () => {
   );
 };
 
-export default RolteBtn;
+export default RoleBtn;

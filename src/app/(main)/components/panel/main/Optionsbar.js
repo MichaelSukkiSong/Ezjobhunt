@@ -1,6 +1,8 @@
+'use client';
+
 import LocationBtn from './optionsbar/LocationBtn';
 import RemoteOnlyBtn from './optionsbar/RemoteOnlyBtn';
-import RolteBtn from './optionsbar/RoleBtn';
+import RoleBtn from './optionsbar/RoleBtn';
 import TypeBtn from './optionsbar/TypeBtn';
 import ExperienceBtn from './optionsbar/ExperienceBtn';
 import TransparentSalariesBtn from './optionsbar/TransparentSalariesBtn';
@@ -12,7 +14,7 @@ const Optionsbar = () => {
         <div className="flex text-sm font-medium w-full space-x-2">
           <LocationBtn />
           <RemoteOnlyBtn />
-          <RolteBtn />
+          <RoleBtn />
           <TypeBtn />
           <ExperienceBtn />
           <TransparentSalariesBtn />
