@@ -1,5 +1,3 @@
-'use client';
-
 import LocationBtn from './optionsbar/LocationBtn';
 import RemoteOnlyBtn from './optionsbar/RemoteOnlyBtn';
 import RoleBtn from './optionsbar/RoleBtn';

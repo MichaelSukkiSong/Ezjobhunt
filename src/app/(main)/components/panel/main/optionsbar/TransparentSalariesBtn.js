@@ -1,3 +1,5 @@
+'use client';
+
 import { Switch } from '@chakra-ui/react';
 
 const TransparentSalariesBtn = () => {
