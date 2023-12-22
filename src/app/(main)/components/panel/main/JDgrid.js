@@ -7,8 +7,6 @@ async function getData() {
       next: { revalidate: 3600 },
     }
   );
-  // The return value is *not* serialized
-  // You can return Date, Map, Set, etc.
 
   if (!res.ok) {
     // This will activate the closest `error.js` Error Boundary
@@ -19,7 +17,6 @@ async function getData() {
 }
 
 const JDgrid = async () => {
-  // TODO: Fetch data on the server with fetch.
   const data = await getData();
   // fetch job->store in firebase->trigger save event->parse data->show in client
   console.log(data);
@@ -40,3 +37,32 @@ const JDgrid = async () => {
 };
 
 export default JDgrid;
+
+// try {
+//   const docRef = await addDoc(collection(db, 'users'), {
+//     first: 'Ada',
+//     last: 'Lovelace',
+//     born: 1815,
+//   });
+//   console.log('Document written with ID: ', docRef.id);
+// } catch (e) {
+//   console.error('Error adding document: ', e);
+// }
+
+// try {
+//   const docRef = await addDoc(collection(db, 'users'), {
+//     first: 'Alan',
+//     middle: 'Mathison',
+//     last: 'Turing',
+//     born: 1912,
+//   });
+
+//   console.log('Document written with ID: ', docRef.id);
+// } catch (e) {
+//   console.error('Error adding document: ', e);
+// }
+
+// const querySnapshot = await getDocs(collection(db, 'users'));
+// querySnapshot.forEach((doc) => {
+//   console.log(`${doc.id} => ${doc.data()}`);
+// });
