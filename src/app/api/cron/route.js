@@ -1,4 +1,11 @@
-export async function GET() {
+export async function GET(request) {
+  const authHeader = request.headers.get('authorization');
+  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    return new Response('Unauthorized', {
+      status: 401,
+    });
+  }
+
   const result = await fetch(
     'http://worldtimeapi.org/api/timezone/America/Chicago',
     {
