@@ -1,7 +1,7 @@
 import fb from '@/app/services/firebase';
 import { collection, addDoc, getDocs, where, query } from 'firebase/firestore';
 
-export async function GET(req) {
+export async function GET(request) {
   const { jobs, meta } = await getJobs();
   const db = fb.getFirestore();
   await saveJobs(db, jobs);
