@@ -1,6 +1,8 @@
 import fb from '@/app/services/firebase';
 import { collection, addDoc, getDocs, where, query } from 'firebase/firestore';
 
+export const runtime = 'edge';
+
 export async function GET(request) {
   // Secure corn function invocation by checking header
   const authHeader = request.headers.get('authorization');
