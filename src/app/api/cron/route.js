@@ -9,7 +9,7 @@ export async function GET(request) {
     });
   }
 
-  await fetch('/api/jobs');
+  await fetch('http://localhost:3000/api/jobs');
 
   return Response.json({ success: true, message: 'Cron job completed' });
 }
