@@ -9,7 +9,7 @@ export async function GET(request) {
     });
   }
 
-  await fetch('https://ezjobhunt.vercel.app/api/jobs');
+  await fetch('/api/jobs');
 
   return Response.json({ success: true, message: 'Cron job completed' });
 }
