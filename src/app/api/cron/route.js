@@ -1,4 +1,4 @@
-export const maxDuration = 5;
+export const maxDuration = 300;
 
 import fb from '@/app/services/firebase';
 import { collection, addDoc, getDocs, where, query } from 'firebase/firestore';
