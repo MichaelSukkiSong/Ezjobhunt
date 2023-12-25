@@ -15,6 +15,7 @@ export async function GET(request) {
 
   await fetch(`${baseUrl}/api/jobs`, {
     headers: {
+      'Content-type': 'application/json',
       Authorization: authHeader,
     },
   });
