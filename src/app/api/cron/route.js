@@ -14,10 +14,7 @@ export async function GET(request) {
     : 'http://localhost:3000';
 
   await fetch(`${baseUrl}/api/jobs`, {
-    headers: {
-      'Content-type': 'application/json',
-      Authorization: authHeader,
-    },
+    headers: request.headers,
   });
 
   return Response.json({ success: true, message: 'Cron job completed' });
