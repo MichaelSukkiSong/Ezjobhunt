@@ -13,10 +13,18 @@ export async function GET(request) {
     });
   }
 
+  const db = fb.getFirestore();
+
   for (const board_token of board_tokens_greenhouse_3) {
-    const { jobs, meta } = await getJobs(board_token);
-    const db = fb.getFirestore();
-    await saveJobs(db, jobs);
+    try {
+      const { jobs, meta } = await getJobs(board_token);
+
+      if (jobs) {
+        await saveJobs(db, jobs);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   return Response.json({ success: true, message: "Cron job completed" });
