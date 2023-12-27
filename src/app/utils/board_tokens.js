@@ -37,13 +37,6 @@ export const board_tokens_greenhouse_1 = [
   "clarifai",
   "cityoffortworth",
   "fueled",
-  "remotetcx",
-  "carecom",
-  "cybrary",
-  "pathrobotics",
-  "linkfire",
-  "clever",
-  "rubrik",
 ];
 
 export const board_tokens_greenhouse_2 = [
@@ -87,11 +80,6 @@ export const board_tokens_greenhouse_2 = [
   "wargamingen",
   "byheart",
   "lilium",
-  "faire",
-  "verifone",
-  "braze",
-  "atlasxhm",
-  "banza",
 ];
 
 export const board_tokens_greenhouse_3 = [
@@ -112,6 +100,18 @@ export const board_tokens_greenhouse_3 = [
   "inflectionai",
   "lenusehealth",
   "stepstone",
+  "carecom",
+  "cybrary",
+  "pathrobotics",
+  "linkfire",
+  "clever",
+  "rubrik",
+  "faire",
+  "verifone",
+  "braze",
+  "atlasxhm",
+  "banza",
+  "remotetcx",
 ];
 
 export const board_tokens_lever = ["clovirtualfashion", "joshstoysandgames"];
