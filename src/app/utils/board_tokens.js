@@ -34,9 +34,6 @@ export const board_tokens_greenhouse_1 = [
   "akqa",
   "ternary",
   "fearless",
-  "clarifai",
-  "cityoffortworth",
-  "fueled",
 ];
 
 export const board_tokens_greenhouse_2 = [
@@ -75,14 +72,29 @@ export const board_tokens_greenhouse_2 = [
   "peloton",
   "moz",
   "descript",
+];
+
+export const board_tokens_greenhouse_3 = [
+  "clarifai",
+  "cityoffortworth",
+  "fueled",
   "collibra",
   "bayada",
   "wargamingen",
   "byheart",
   "lilium",
-];
-
-export const board_tokens_greenhouse_3 = [
+  "carecom",
+  "cybrary",
+  "pathrobotics",
+  "linkfire",
+  "clever",
+  "rubrik",
+  "faire",
+  "verifone",
+  "braze",
+  "atlasxhm",
+  "banza",
+  "remotetcx",
   "wing",
   "pointdigitalfinance",
   "highmetric",
@@ -98,20 +110,8 @@ export const board_tokens_greenhouse_3 = [
   "floridamedicalclinic",
   "thunes",
   "inflectionai",
-  "lenusehealth",
-  "stepstone",
-  "carecom",
-  "cybrary",
-  "pathrobotics",
-  "linkfire",
-  "clever",
-  "rubrik",
-  "faire",
-  "verifone",
-  "braze",
-  "atlasxhm",
-  "banza",
-  "remotetcx",
 ];
+
+export const board_tokens_greenhouse_4 = ["lenusehealth", "stepstone"];
 
 export const board_tokens_lever = ["clovirtualfashion", "joshstoysandgames"];
