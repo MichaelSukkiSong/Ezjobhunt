@@ -37,33 +37,15 @@ async function getJobs(board_token) {
 async function saveJobs(db, jobs) {
   for (const job of jobs) {
     // Check if the job already exists in Firestore
-    const jobQuery = query(
-      collection(db, "jobs"),
-      where("job_title", "==", job.title),
-      where("job_location", "==", job.location.name),
-      where(
-        "job_entity",
-        "==",
-        job.metadata.find((el) => el.name === "Entity")?.value || null
-      ),
-      where(
-        "job_type",
-        "==",
-        job.metadata.find((el) => el.name === "Time Type")?.value || null
-      )
+    const querySnapshot = await getDocs(
+      query(collection(db, "jobs"), where("id", "==", job.id))
     );
-    const querySnapshot = await getDocs(jobQuery);
 
     if (querySnapshot.empty) {
       // Job does not exist, add it to Firestore
       try {
         const docRef = await addDoc(collection(db, "jobs"), {
-          job_title: job.title,
-          job_location: job.location.name,
-          job_entity: job.metadata.find((el) => el.name === "Entity").value,
-          job_type: job.metadata.find((el) => el.name === "Time Type").value,
-          compensation: null,
-          salary_range: null,
+          ...job,
         });
 
         console.log("Document written with ID: ", docRef.id);
