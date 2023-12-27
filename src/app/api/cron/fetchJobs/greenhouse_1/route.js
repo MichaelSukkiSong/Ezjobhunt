@@ -2,7 +2,7 @@ export const maxDuration = 300;
 
 import fb from "@/app/services/firebase";
 import { collection, addDoc, getDocs, where, query } from "firebase/firestore";
-import { board_tokens_greenhouse } from "@/app/utils/board_tokens";
+import { board_tokens_greenhouse_1 } from "@/app/utils/board_tokens";
 
 export async function GET(request) {
   // Secure cron function invocation by checking header
@@ -13,7 +13,7 @@ export async function GET(request) {
     });
   }
 
-  for (const board_token of board_tokens_greenhouse) {
+  for (const board_token of board_tokens_greenhouse_1) {
     const { jobs, meta } = await getJobs(board_token);
     const db = fb.getFirestore();
     await saveJobs(db, jobs);

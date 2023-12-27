@@ -1,4 +1,4 @@
-export const board_tokens_greenhouse = [
+export const board_tokens_greenhouse_1 = [
   "doordash",
   "ecobee",
   "bishopfox",
@@ -44,6 +44,9 @@ export const board_tokens_greenhouse = [
   "linkfire",
   "clever",
   "rubrik",
+];
+
+export const board_tokens_greenhouse_2 = [
   "databricks",
   "blacksky",
   "biofire",
