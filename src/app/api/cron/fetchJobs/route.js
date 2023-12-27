@@ -13,11 +13,11 @@ export async function GET(request) {
     });
   }
 
-  board_tokens_greenhouse.forEach(async (board_token) => {
+  for (board_token of board_tokens_greenhouse) {
     const { jobs, meta } = await getJobs(board_token);
     const db = fb.getFirestore();
     await saveJobs(db, jobs);
-  });
+  }
 
   return Response.json({ success: true, message: "Cron job completed" });
 }
