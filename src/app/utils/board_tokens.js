@@ -2,7 +2,7 @@ export const board_tokens_greenhouse = [
   "doordash",
   "ecobee",
   "bishopfox",
-  "prasebiosciences",
+  "parsebiosciences",
   "deepscribe",
   "cityblockhealth",
   "vestahealthcare",
