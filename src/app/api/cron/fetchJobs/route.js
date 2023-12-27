@@ -13,7 +13,7 @@ export async function GET(request) {
     });
   }
 
-  for (board_token of board_tokens_greenhouse) {
+  for (const board_token of board_tokens_greenhouse) {
     const { jobs, meta } = await getJobs(board_token);
     const db = fb.getFirestore();
     await saveJobs(db, jobs);
