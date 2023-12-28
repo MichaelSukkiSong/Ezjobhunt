@@ -79,7 +79,6 @@ export const board_tokens_greenhouse_3 = [
   "cityoffortworth",
   "fueled",
   "collibra",
-  "bayada",
   "wargamingen",
   "byheart",
   "lilium",
@@ -110,8 +109,9 @@ export const board_tokens_greenhouse_3 = [
   "floridamedicalclinic",
   "thunes",
   "inflectionai",
+  "lenusehealth",
 ];
 
-export const board_tokens_greenhouse_4 = ["lenusehealth", "stepstone"];
+export const board_tokens_greenhouse_4 = ["stepstone"];
 
 export const board_tokens_lever = ["clovirtualfashion", "joshstoysandgames"];
