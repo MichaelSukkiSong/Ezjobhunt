@@ -6,19 +6,7 @@
   },
   "crons": [
     {
-      "path": "/api/cron/fetchJobs/greenhouse_1",
-      "schedule": "0 5 * * *"
-    },
-    {
-      "path": "/api/cron/fetchJobs/greenhouse_2",
-      "schedule": "0 5 * * *"
-    },
-    {
       "path": "/api/cron/fetchJobs/greenhouse_3",
-      "schedule": "0 5 * * *"
-    },
-    {
-      "path": "/api/cron/fetchJobs/greenhouse_4",
       "schedule": "0 5 * * *"
     }
   ]
