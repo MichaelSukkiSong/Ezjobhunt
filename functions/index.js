@@ -1,23 +1,3 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * const {onCall} = require("firebase-functions/v2/https");
- * const {onDocumentWritten} = require("firebase-functions/v2/firestore");
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
-
-// const { onRequest } = require("firebase-functions/v2/https");
-// const logger = require("firebase-functions/logger");
-
-// Create and deploy your first functions
-// https://firebase.google.com/docs/functions/get-started
-
-// exports.helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
-
 // The Cloud Functions for Firebase SDK to create Cloud Functions and triggers.
 const { logger } = require("firebase-functions");
 const { onRequest } = require("firebase-functions/v2/https");
@@ -27,4 +7,159 @@ const { onDocumentCreated } = require("firebase-functions/v2/firestore");
 const { initializeApp } = require("firebase-admin/app");
 const { getFirestore } = require("firebase-admin/firestore");
 
+const cheerio = require("cheerio");
+const axios = require("axios");
+
 initializeApp();
+
+exports.test = onDocumentCreated("/jobs/{jobId}", async (event) => {
+  const job = event.data;
+  await processJob(job);
+});
+
+async function processJob(job) {
+  // Grab URL of what was written to Firestore.
+  const url = job.data().absolute_url;
+  const salary = job.data().compensation || job.data().salary_range || null;
+
+  const response = await axios.get(url);
+  const $ = cheerio.load(response.data);
+  const jobDescription = $("body").text();
+
+  try {
+    const response = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo-0613",
+      messages: [
+        {
+          role: "user",
+          content: `Title: ${job.data().job_title} \nLocation: ${
+            job.data().job_location
+          } Job description: ${preparedJD(job.data())} ${
+            salary ? `\nSalary: ${salary}` : ""
+          }`,
+        },
+      ],
+      functions: [
+        {
+          name: "get_json_from_job_description",
+          description: "Get information about the job.",
+          parameters: {
+            type: "object",
+            properties: {
+              about_company: {
+                type: "string",
+                description:
+                  "What does the company do? Keep it brief - 100 characters or LESS.",
+              },
+              responsibilities: {
+                type: "string",
+                description:
+                  "Describe the role and responsibility. Keep it brief - 100 characters or LESS.",
+              },
+              tech_stack: {
+                type: "string",
+                description:
+                  "Their tech stack (programming languages, software, tools required to know, etc). If none, output empty string. Keep it brief - 100 characters or LESS.",
+              },
+              requirements: {
+                type: "string",
+                description:
+                  "Describe the ideal candidate for this job. Keep it brief - 100 characters or LESS.",
+              },
+              salary_range: {
+                type: "string",
+                description:
+                  "Extract salary range from the job description and preserve the currency symbol if provided (ex $, €, £, etc). If none, output empty string.",
+              },
+              salary_high: {
+                type: "number",
+                description:
+                  "If salary range is provided, output the high end of the range. If just a number is provided, output that number. If none, output null.",
+              },
+              job_type: {
+                type: "string",
+                description: "What is the job type?",
+                enum: [
+                  "Full Time",
+                  "Part Time",
+                  "Contract",
+                  "Internship",
+                  "Temporary",
+                ],
+              },
+              role: {
+                type: "string",
+                enum: [
+                  "Engineering",
+                  "Design",
+                  "Product",
+                  "Science",
+                  "Sales",
+                  "Marketing",
+                  "Support",
+                  "Operations",
+                  "Project Management",
+                  "Recruiting & HR",
+                  "Finance",
+                  "Legal",
+                ],
+              },
+              min_years_experience: {
+                type: "number",
+                description: "What's the min years of experience required?",
+              },
+              industry: {
+                type: "string",
+                description: "What industry does the company operate in?",
+                enum: [
+                  "Blockchain",
+                  "Food",
+                  "Transportation",
+                  "Biotechnology",
+                  "Climate Tech",
+                  "HR Software",
+                  "Insurance",
+                  "Non-Profit",
+                  "Education",
+                  "Legal",
+                  "Media & Entertainment",
+                  "Accounting Software",
+                  "Telecommunications",
+                  "E-commerce",
+                  "AI/ML",
+                  "Health & Wellness",
+                  "Cybersecurity",
+                  "Financial Technology",
+                  "Real Estate & Construction",
+                  "Industrials",
+                  "Government",
+                  "SaaS / B2B",
+                ],
+              },
+            },
+            required: [
+              "about_company",
+              "responsibilities",
+              "requirements",
+              "salary_range",
+              "job_type",
+              "role",
+              "min_years_experience",
+              "industry",
+              "tech_stack",
+            ],
+          },
+        },
+      ],
+    });
+
+    const result = getJSON(
+      response?.choices?.[0]?.message?.function_call?.arguments
+    );
+    console.log(result);
+    return result;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+}
