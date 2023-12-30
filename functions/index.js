@@ -35,12 +35,13 @@ async function processJob(job) {
   // Grab URL of what was written to Firestore.
   const url = job.data().absolute_url;
 
-  const response = await axios.get(url);
-  const $ = cheerio.load(response.data);
-  const jobDescription = $("body").text();
-  const trimmedjobDescription = trimJobDescription(jobDescription);
-
   try {
+    const res = await axios.get(url);
+
+    const $ = cheerio.load(res.data);
+    const jobDescription = $("body").text();
+    const trimmedjobDescription = trimJobDescription(jobDescription);
+
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo-0613",
       messages: [
@@ -163,18 +164,15 @@ async function processJob(job) {
       ],
     });
 
-    // console.log(response.choices[0].message.function_call.arguments);
-
     const result = response?.choices?.[0]?.message?.function_call?.arguments;
-    console.log(result);
     return result;
   } catch (e) {
-    console.log(e);
+    console.log("error", e);
     return null;
   }
 }
 
-function trimJobDescription(description, maxTokens = 1300) {
+function trimJobDescription(description, maxTokens = 1200) {
   // Load the HTML content using Cheerio
   const $ = cheerio.load(description);
 
