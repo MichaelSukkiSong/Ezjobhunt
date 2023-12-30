@@ -17,10 +17,20 @@ const openai = new OpenAI({
 
 initializeApp();
 
-exports.test = onDocumentCreated("/jobs/{jobId}", async (event) => {
-  const job = event.data;
-  const jobDescription_JSON = await processJob(job);
-});
+exports.test = onDocumentCreated(
+  "/greenhouse/{greenhouseId}",
+  async (event) => {
+    const job = event.data;
+    const jobDescription_JSON = await processJob(job);
+
+    if (jobDescription_JSON) {
+      const jobsCollection = getFirestore().collection("jobs");
+
+      // Save the processed job information to the "jobs" collection
+      await setDoc(doc(jobsCollection), jobDescription_JSON);
+    }
+  }
+);
 
 async function processJob(job) {
   // Grab URL of what was written to Firestore.
