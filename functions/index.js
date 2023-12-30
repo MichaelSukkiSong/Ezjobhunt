@@ -24,10 +24,9 @@ exports.test = onDocumentCreated(
     const jobDescription_JSON = await processJob(job);
 
     if (jobDescription_JSON) {
-      const jobsCollection = getFirestore().collection("jobs");
+      const db = getFirestore();
 
-      // Save the processed job information to the "jobs" collection
-      await setDoc(doc(jobsCollection), jobDescription_JSON);
+      await db.collection("jobs").add(JSON.parse(jobDescription_JSON));
     }
   }
 );
@@ -39,9 +38,7 @@ async function processJob(job) {
   const response = await axios.get(url);
   const $ = cheerio.load(response.data);
   const jobDescription = $("body").text();
-  const trimedjobDescription = trimJobDescription(jobDescription);
-
-  // console.log(trimedjobDescription);
+  const trimmedjobDescription = trimJobDescription(jobDescription);
 
   try {
     const response = await openai.chat.completions.create({
@@ -49,7 +46,7 @@ async function processJob(job) {
       messages: [
         {
           role: "user",
-          content: trimedjobDescription,
+          content: trimmedjobDescription,
         },
       ],
       functions: [
