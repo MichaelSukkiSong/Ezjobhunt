@@ -9,22 +9,29 @@ const { getFirestore } = require("firebase-admin/firestore");
 
 const cheerio = require("cheerio");
 const axios = require("axios");
+const { OpenAI } = require("openai");
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 initializeApp();
 
 exports.test = onDocumentCreated("/jobs/{jobId}", async (event) => {
   const job = event.data;
-  await processJob(job);
+  const jobDescription_JSON = await processJob(job);
 });
 
 async function processJob(job) {
   // Grab URL of what was written to Firestore.
   const url = job.data().absolute_url;
-  const salary = job.data().compensation || job.data().salary_range || null;
 
   const response = await axios.get(url);
   const $ = cheerio.load(response.data);
   const jobDescription = $("body").text();
+  const trimedjobDescription = trimJobDescription(jobDescription);
+
+  // console.log(trimedjobDescription);
 
   try {
     const response = await openai.chat.completions.create({
@@ -32,11 +39,7 @@ async function processJob(job) {
       messages: [
         {
           role: "user",
-          content: `Title: ${job.data().job_title} \nLocation: ${
-            job.data().job_location
-          } Job description: ${preparedJD(job.data())} ${
-            salary ? `\nSalary: ${salary}` : ""
-          }`,
+          content: trimedjobDescription,
         },
       ],
       functions: [
@@ -153,13 +156,30 @@ async function processJob(job) {
       ],
     });
 
-    const result = getJSON(
-      response?.choices?.[0]?.message?.function_call?.arguments
-    );
+    // console.log(response.choices[0].message.function_call.arguments);
+
+    const result = response?.choices?.[0]?.message?.function_call?.arguments;
     console.log(result);
     return result;
   } catch (e) {
     console.log(e);
     return null;
   }
+}
+
+function trimJobDescription(description, maxTokens = 1300) {
+  // Load the HTML content using Cheerio
+  const $ = cheerio.load(description);
+
+  // Remove script and style tags
+  $("script, style").remove();
+
+  // Get text content
+  const textContent = $.root().text();
+
+  // Remove extra white spaces and limit the result to maxTokens
+  const tokens = textContent.trim().replace(/\s+/g, " ").split(" ");
+  const result = tokens.slice(0, maxTokens).join(" ");
+
+  return result;
 }
