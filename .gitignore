@@ -37,4 +37,3 @@ next-env.d.ts
 
 # firebase cloud functions env file
 functions/.env
-functions/.env.local
