@@ -13,12 +13,13 @@ exports.makejobdescriptionJSON = onDocumentCreated(
   "/greenhouse/{greenhouseId}",
   async (event) => {
     const job = event.data;
+    const jobDescription_JSON = await processJob(job);
     const jobetc_JSON = JSON.stringify({
       job_title: job.data().title,
-      job_location: job.data().location.name,
-      job_company: job.data().metadata.find((el) => el.name === "Entity").value,
+      job_location: job.data().location?.name,
+      job_company: job.data().metadata?.find((el) => el.name === "Entity")
+        .value,
     });
-    const jobDescription_JSON = await processJob(job);
     const job_obj = combineJson(jobetc_JSON, jobDescription_JSON);
 
     if (job_obj) {
