@@ -16,11 +16,9 @@ const JDcard = ({ job }) => {
     <div className="relative flex flex-col lg:max-w-sm items-start justify-start text-start">
       <div className="flex flex-col items-start w-full rounded-3xl pt-2 overflow-auto hide-scrollbar border hover:border-yellow-600">
         <div className="flex flex-col text-start items-start px-4">
-          <span className="font-bold text-start">
-            HT Manager - My Auto Store
-          </span>
+          <span className="font-bold text-start">{job.job_title}</span>
           <button className="flex items-center space-x-1 text-start font-light text-sm">
-            <span>@ EMR USA Metal Recycling</span>
+            <span>@ {job.job_company}</span>
             <CiSettings className="h-4 w-4 flex-none text-yellow-600" />
           </button>
         </div>
@@ -29,7 +27,7 @@ const JDcard = ({ job }) => {
             <div>
               📍
               <button className="text-start text-sm underline font-medium">
-                Multiple Locations Available
+                {job.job_location}
               </button>
             </div>
             <div>
