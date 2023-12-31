@@ -15,7 +15,7 @@ exports.makejobdescriptionJSON = onDocumentCreated(
   async (event) => {
     try {
       const job = event.data;
-      const jobDescription_JSON = await processJob(job);
+      const jobDescription_JSON = JSON.stringify(await processJob(job));
       const jobetc_JSON = JSON.stringify({
         job_title: job.data()?.title,
         job_location: job.data()?.location?.name || "",
