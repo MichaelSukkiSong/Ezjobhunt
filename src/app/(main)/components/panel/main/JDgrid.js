@@ -1,8 +1,14 @@
-import JDcard from './JDcard';
+import JDcard from "./JDcard";
+import fb from "@/app/services/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 const JDgrid = () => {
-  const renderJDcard = () => {
-    return <JDcard />;
+  const renderJDcard = async () => {
+    const db = fb.getFirestore();
+    const querySnapshot = await getDocs(collection(db, "jobs"));
+    querySnapshot.forEach((job) => {
+      return <JDcard job={job.data()} />;
+    });
   };
 
   return (

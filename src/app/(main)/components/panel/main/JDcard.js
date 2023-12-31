@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Icon,
@@ -9,9 +9,9 @@ import {
   CiSettings,
   FaRegFileLines,
   LuCoffee,
-} from '../../../icons';
+} from "../../../icons";
 
-const JDcard = () => {
+const JDcard = ({ job }) => {
   return (
     <div className="relative flex flex-col lg:max-w-sm items-start justify-start text-start">
       <div className="flex flex-col items-start w-full rounded-3xl pt-2 overflow-auto hide-scrollbar border hover:border-yellow-600">
@@ -32,26 +32,25 @@ const JDcard = () => {
                 Multiple Locations Available
               </button>
             </div>
+            <div>
+              💰
+              <button className="text-start text-sm underline font-medium">
+                {job.salary_range}
+              </button>
+            </div>
             <div className="flex flex-col space-y-1">
               <span className="font-bold text-xs text-gray-500">🏢 About</span>
-              <span className="font-light">
-                EMR is one of the world\u2019s leading metal recycling companies
-                with a history spanning decades. Our mission is to provide our
-                customers with efficient and reliable metal recycling services
-                while minimizing the environmental impact of our ...
-              </span>
+              <span className="font-light">{job.about_company}</span>
             </div>
             <div className="flex flex-col space-y-1">
               <span className="font-bold text-xs text-gray-500">
                 🎯 Requirements
               </span>
-              <span className="font-light">
-                Bachelor\u2019s Degree, 7 years of HR experience, 5 years of
-                supervisory experience, advanced knowledge of MS Word, Excel,
-                Outlook, PowerPoint, payroll software systems, SHRM
-                certification, experience working in manufacturing,
-                distribution,...
-              </span>
+              <span className="font-light">{job.requirements}</span>
+            </div>
+            <div className="flex flex-col space-y-1">
+              <span className="font-bold text-xs text-gray-500">💻 Tech</span>
+              <span className="font-light">{job.tech_stack}</span>
             </div>
           </div>
           <div>
