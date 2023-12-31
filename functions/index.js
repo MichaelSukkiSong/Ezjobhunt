@@ -20,8 +20,8 @@ exports.makejobdescriptionJSON = onDocumentCreated(
         job_title: job.data().title,
         job_location: job.data().location?.name || "",
         job_company:
-          job.data().metadata?.find((el) => el.name === "Entity").value ||
-          job.data().metadata?.find((el) => el.name === "Company").value ||
+          job.data().metadata?.find((el) => el.name === "Entity")?.value ||
+          job.data().metadata?.find((el) => el.name === "Company")?.value ||
           "",
       });
       const job_obj = combineJson(jobetc_JSON, jobDescription_JSON);
