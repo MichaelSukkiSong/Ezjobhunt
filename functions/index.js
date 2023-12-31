@@ -16,9 +16,11 @@ exports.makejobdescriptionJSON = onDocumentCreated(
     const jobDescription_JSON = await processJob(job);
     const jobetc_JSON = JSON.stringify({
       job_title: job.data().title,
-      job_location: job.data().location?.name,
-      job_company: job.data().metadata?.find((el) => el.name === "Entity")
-        .value,
+      job_location: job.data().location?.name || "",
+      job_company:
+        job.data().metadata?.find((el) => el.name === "Entity").value ||
+        job.data().metadata?.find((el) => el.name === "Company").value ||
+        "",
     });
     const job_obj = combineJson(jobetc_JSON, jobDescription_JSON);
 
