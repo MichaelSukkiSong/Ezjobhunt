@@ -6,7 +6,6 @@ const { initializeApp } = require("firebase-admin/app");
 const { getFirestore } = require("firebase-admin/firestore");
 
 const { processJob } = require("./utils/processJobs");
-const { combineJson } = require("./utils/combineJson");
 
 initializeApp();
 
@@ -15,16 +14,35 @@ exports.makejobdescriptionJSON = onDocumentCreated(
   async (event) => {
     try {
       const job = event.data;
-      const jobDescription_JSON = JSON.stringify(await processJob(job));
-      const jobetc_JSON = JSON.stringify({
-        job_title: job.data()?.title,
-        job_location: job.data()?.location?.name || "",
-        job_company:
-          job.data()?.metadata?.find((el) => el.name === "Entity")?.value ||
-          job.data()?.metadata?.find((el) => el.name === "Company")?.value ||
-          "",
-      });
-      const job_obj = combineJson(jobetc_JSON, jobDescription_JSON);
+      const jobDescription_str = await processJob(job);
+      const job_title = job.data()?.title || "";
+      const job_location = job.data()?.location?.name || "";
+      const job_url = job.data()?.absolute_url || "";
+      const job_company =
+        job.data()?.metadata?.find((el) => el.name === "Entity")?.value ||
+        job.data()?.metadata?.find((el) => el.name === "Company")?.value ||
+        "";
+
+      const jobetc_obj = {
+        job_title,
+        job_location,
+        job_company,
+        job_url,
+      };
+      // console.log("jobetc_obj", jobetc_obj);
+      // console.log("typeof jobetc_obj", typeof jobetc_obj);
+      console.log("jobDescription_str", jobDescription_str);
+      console.log("typeof jobDescription_str", typeof jobDescription_str);
+      // console.log("{ ...jobetc_obj, ...jobDescription_str } : ", {
+      //   ...jobetc_obj,
+      //   ...jobDescription_str,
+      // });
+      const jobDescription_obj = jobDescription_str
+        ? JSON.parse(jobDescription_str)
+        : undefined;
+      const job_obj = { ...jobetc_obj, ...jobDescription_obj };
+      // console.log("job_obj : ", job_obj);
+      // console.log("typeof job_obj : ", typeof job_obj);
 
       if (job_obj) {
         const db = getFirestore();

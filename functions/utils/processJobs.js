@@ -12,13 +12,18 @@ const openai = new OpenAI({
 async function processJob(job) {
   // Grab URL of what was written to Firestore.
   const url = job.data().absolute_url;
+  console.log("url : ", url);
 
   try {
     const res = await axios.get(url);
+    console.log("res.data : ", res.data);
 
     const $ = cheerio.load(res.data);
     const jobDescription = $("body").text();
+    console.log("jobDescription : ", jobDescription);
+
     const trimmedjobDescription = trimJobDescription(jobDescription);
+    console.log("trimmedjobDescription : ", trimmedjobDescription);
 
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo-0613",
@@ -143,6 +148,7 @@ async function processJob(job) {
     });
 
     const result = response?.choices?.[0]?.message?.function_call?.arguments;
+    console.log("result : ", result);
     return result;
   } catch (e) {
     console.log("error", e);
