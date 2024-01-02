@@ -1,25 +1,21 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { Divider } from '@chakra-ui/react';
-import { Icon } from '@chakra-ui/react';
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { Divider } from "@chakra-ui/react";
+import { Icon } from "@chakra-ui/react";
 import {
   SearchIcon,
   ChatIcon,
   MdSettings,
   BsBookmark,
-  BsBookmarkCheck,
-  BsBookmarkX,
-  BsEyeSlash,
-  HiOutlinePaperAirplane,
   SiFoodpanda,
-} from '../icons';
+} from "../icons";
 
 const SidePanel = () => {
   const pathname = usePathname();
 
-  if (pathname === '/auth') {
+  if (pathname === "/auth") {
     return null;
   }
 
@@ -52,7 +48,7 @@ const SidePanel = () => {
             <Link
               href="/profile"
               className={`flex items-center space-x-2 mt-4  font-medium text-sm ${
-                pathname === '/profile' ? 'bg-gray-200 py-1.5 px-2 rounded' : ''
+                pathname === "/profile" ? "bg-gray-200 py-1.5 px-2 rounded" : ""
               }`}
             >
               <Icon as={SiFoodpanda} />
@@ -61,7 +57,7 @@ const SidePanel = () => {
             <Link
               href="/inbox"
               className={`flex items-center space-x-2 mt-4 mb-4 font-medium text-sm ${
-                pathname === '/inbox' ? 'bg-gray-200 py-1.5 px-2 rounded' : ''
+                pathname === "/inbox" ? "bg-gray-200 py-1.5 px-2 rounded" : ""
               }`}
             >
               <ChatIcon />
@@ -76,7 +72,7 @@ const SidePanel = () => {
             <Link
               href="/"
               className={`flex items-center space-x-2 font-medium text-sm ${
-                pathname === '/' ? 'bg-gray-200 py-1.5 px-2 rounded' : ''
+                pathname === "/" ? "bg-gray-200 py-1.5 px-2 rounded" : ""
               }`}
             >
               <SearchIcon />
@@ -85,9 +81,9 @@ const SidePanel = () => {
             <Link
               href="/application-tracker"
               className={`flex items-center space-x-2 font-medium text-sm ${
-                pathname === '/application-tracker'
-                  ? 'bg-gray-200 py-1.5 px-2 rounded'
-                  : ''
+                pathname === "/application-tracker"
+                  ? "bg-gray-200 py-1.5 px-2 rounded"
+                  : ""
               }`}
             >
               <Icon as={BsBookmark} />
