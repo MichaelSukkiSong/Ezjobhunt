@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Divider } from "@chakra-ui/react";
@@ -8,16 +10,36 @@ import {
   SearchIcon,
   ChatIcon,
   MdSettings,
+  MdLogout,
   BsBookmark,
   SiFoodpanda,
 } from "../icons";
+import fb from "@/app/services/firebase";
 
 const SidePanel = () => {
   const pathname = usePathname();
+  const [user, setUser] = useState(null);
 
-  if (pathname === "/auth") {
-    return null;
-  }
+  useEffect(() => {
+    const auth = fb.getAuth();
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      console.log(user);
+      if (!user) {
+        setUser(null);
+      }
+      setUser(user);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [user, setUser]);
+
+  const handleSignout = () => {
+    const auth = fb.getAuth();
+    auth.signOut();
+  };
+  console.log(user);
 
   return (
     <div className="flex h-screen p-2 pt-8 border-r">
@@ -132,12 +154,25 @@ const SidePanel = () => {
           </div>
         </div>
         <div className="flex items-center justify-center bg-white py-4 border-t">
-          <Link
-            href="/auth"
-            className="w-full flex items-center text-center justify-center text-orange-800 text-sm font-medium bg-orange-200 py-2 rounded-full"
-          >
-            Log In
-          </Link>
+          {user ? (
+            <div className="flex flex-col items-center space-y-2 mt-2 w-full">
+              <span className="text-xs">{user.email}</span>
+              <button
+                onClick={handleSignout}
+                className="flex items-center text-start space-x-2 text-red-600"
+              >
+                <Icon as={MdLogout} className="" />
+                <span className="text-sm font-medium">Log Out</span>
+              </button>
+            </div>
+          ) : (
+            <Link
+              href="/auth"
+              className="w-full flex items-center text-center justify-center text-orange-800 text-sm font-medium bg-orange-200 py-2 rounded-full"
+            >
+              Log In / Sign Up
+            </Link>
+          )}
         </div>
       </div>
     </div>
