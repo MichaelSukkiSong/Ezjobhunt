@@ -12,6 +12,7 @@ export {
 } from "react-icons/bs";
 export { CiDeliveryTruck, CiSettings } from "react-icons/ci";
 export { FaRegFileLines } from "react-icons/fa6";
+export { FiLock } from "react-icons/fi";
 export { GiArtificialHive } from "react-icons/gi";
 export { GoLaw } from "react-icons/go";
 export { GrInsecure } from "react-icons/gr";
