@@ -23,7 +23,6 @@ const SidePanel = () => {
   useEffect(() => {
     const auth = fb.getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      console.log(user);
       if (!user) {
         setUser(null);
       }
@@ -39,7 +38,6 @@ const SidePanel = () => {
     const auth = fb.getAuth();
     auth.signOut();
   };
-  console.log(user);
 
   return (
     <div className="flex h-screen p-2 pt-8 border-r">
