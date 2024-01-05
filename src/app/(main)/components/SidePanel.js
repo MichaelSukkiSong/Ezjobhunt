@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Divider } from "@chakra-ui/react";
@@ -15,10 +16,17 @@ import {
 } from "../icons";
 import fb from "@/app/services/firebase";
 import { useAuth } from "@/app/hooks/useAuth";
+import { saveUserToFirestore } from "@/app/utils/saveUserToFirestore";
 
 const SidePanel = () => {
   const pathname = usePathname();
   const user = useAuth();
+
+  useEffect(() => {
+    if (user) {
+      saveUserToFirestore(user);
+    }
+  }, [user]);
 
   const handleSignout = () => {
     const auth = fb.getAuth();

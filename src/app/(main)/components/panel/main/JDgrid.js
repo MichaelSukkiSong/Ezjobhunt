@@ -6,9 +6,11 @@ const JDgrid = async () => {
   const jobs = await fetchJobs();
 
   const renderJDcard = () => {
-    return jobs.map((job) => {
-      return <JDcard key={job.id} job={job} />;
-    });
+    return jobs
+      .filter((job) => !job.about_company !== true)
+      .map((job) => {
+        return <JDcard key={job.id} job={job} />;
+      });
   };
 
   return (
