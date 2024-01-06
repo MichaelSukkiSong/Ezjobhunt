@@ -1,4 +1,4 @@
-export async function getJobs(board_token) {
+export async function fetchJobs(board_token) {
   const res = await fetch(
     `https://boards-api.greenhouse.io/v1/boards/${board_token}/jobs`
   );

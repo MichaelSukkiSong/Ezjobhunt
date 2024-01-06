@@ -1,13 +1,33 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import fb from "@/app/services/firebase";
+import { useAuth } from "@/app/hooks/useAuth";
 import JDcard from "./JDcard";
 
-const JDgrid = async () => {
-  const jobs = await fetchJobs();
+const JDgrid = () => {
+  const [jobs, setJobs] = useState([]);
+  const user = useAuth();
+
+  useEffect(() => {
+    const getJobs = async () => {
+      const db = fb.getFirestore();
+      const jobsArray = [];
+      const querySnapshot = await getDocs(collection(db, "jobs"));
+      querySnapshot.forEach((doc) => {
+        jobsArray.push({ id: doc.id, ...doc.data() });
+      });
+      setJobs(jobsArray);
+    };
+
+    getJobs();
+  }, []);
 
   const renderJDcard = () => {
     return jobs
       .filter((job) => !job.about_company !== true)
+      .filter((job) => !user.saved?.includes(job.id))
       .map((job) => {
         return <JDcard key={job.id} job={job} />;
       });
@@ -25,14 +45,3 @@ const JDgrid = async () => {
 };
 
 export default JDgrid;
-
-async function fetchJobs() {
-  const db = fb.getFirestore();
-  const jobs = [];
-  const querySnapshot = await getDocs(collection(db, "jobs"));
-  querySnapshot.forEach((doc) => {
-    jobs.push({ id: doc.id, ...doc.data() });
-  });
-
-  return jobs;
-}

@@ -1,7 +1,7 @@
 export const maxDuration = 300;
 
 import { board_tokens_greenhouse_2 } from "@/app/utils/board_tokens";
-import { getJobs } from "@/app/utils/getJobs";
+import { fetchJobs } from "@/app/utils/fetchJobs";
 import { saveJobs } from "@/app/utils/saveJobs";
 
 export async function GET(request) {
@@ -15,7 +15,7 @@ export async function GET(request) {
 
   for (const board_token of board_tokens_greenhouse_2) {
     try {
-      const { jobs, meta } = await getJobs(board_token);
+      const { jobs, meta } = await fetchJobs(board_token);
 
       if (jobs) {
         await saveJobs(jobs);
