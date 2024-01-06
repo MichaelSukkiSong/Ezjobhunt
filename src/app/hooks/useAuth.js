@@ -10,7 +10,7 @@ export function useAuth() {
   useEffect(() => {
     const auth = fb.getAuth();
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      console.log("user : ", user);
+      // console.log("user : ", user);
       setUser(user);
     });
 

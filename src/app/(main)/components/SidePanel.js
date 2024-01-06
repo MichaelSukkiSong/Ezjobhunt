@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Divider } from "@chakra-ui/react";
@@ -21,6 +22,7 @@ import { saveUserToFirestore } from "@/app/utils/saveUserToFirestore";
 const SidePanel = () => {
   const pathname = usePathname();
   const user = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     if (user) {
@@ -31,6 +33,7 @@ const SidePanel = () => {
   const handleSignout = () => {
     const auth = fb.getAuth();
     auth.signOut();
+    router.push("/");
   };
 
   return (

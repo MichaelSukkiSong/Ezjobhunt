@@ -10,34 +10,14 @@ import {
   FaRegFileLines,
   LuCoffee,
 } from "../../../icons";
-import { useAuth } from "@/app/hooks/useAuth";
-import fb from "@/app/services/firebase";
-import { doc, updateDoc } from "firebase/firestore";
 
-const JDcard = ({ job }) => {
-  const user = useAuth();
-
-  const handleSaveJobClick = async () => {
-    try {
-      const db = fb.getFirestore();
-
-      // Get the reference to the user's document in the Firestore collection
-      const userDocRef = doc(db, "users", user.id);
-
-      // Update the document by adding the job.id to the "saved" array
-      await updateDoc(userDocRef, {
-        saved: arrayUnion(job.id),
-      });
-
-      console.log("Job saved successfully!");
-    } catch (error) {
-      console.error("Error saving job:", error.message);
-    }
-  };
-  const handleMarkAppliedClick = () => {};
-  const handleHideJobClick = () => {};
-  const handleReportJobClick = () => {};
-
+const JDcard = ({
+  job,
+  handleSaveJobClick,
+  handleMarkAppliedClick,
+  handleHideJobClick,
+  handleReportJobClick,
+}) => {
   return (
     <div className="relative flex flex-col lg:max-w-sm items-start justify-start text-start">
       <div className="flex flex-col items-start w-full rounded-3xl pt-2 overflow-auto hide-scrollbar border hover:border-yellow-600">
