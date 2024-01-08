@@ -1,5 +1,6 @@
 "use client";
 
+import { Tooltip } from "@chakra-ui/react";
 import {
   Icon,
   BsBookmark,
@@ -74,30 +75,38 @@ const JDcard = ({
                 <LuCoffee />
               </button>
               <div className="flex items-center space-x-4">
-                <button
-                  onClick={() => handleSaveJobClick(job)}
-                  className="h-4 w-4 flex-none text-green-600"
-                >
-                  <Icon as={BsBookmark} />
-                </button>
-                <button
-                  onClick={handleMarkAppliedClick}
-                  className="h-4 w-4 flex-none text-green-600"
-                >
-                  <Icon as={BsBookmarkCheck} />
-                </button>
-                <button
-                  onClick={handleHideJobClick}
-                  className="h-4 w-4 flex-none text-red-600"
-                >
-                  <Icon as={BsEyeSlash} />
-                </button>
-                <button
-                  onClick={handleReportJobClick}
-                  className="h-4 w-4 flex-none text-red-600"
-                >
-                  <Icon as={BsFlag} />
-                </button>
+                <Tooltip label="Save Job">
+                  <button
+                    onClick={() => handleSaveJobClick(job)}
+                    className="h-4 w-4 flex-none text-green-600"
+                  >
+                    <Icon as={BsBookmark} />
+                  </button>
+                </Tooltip>
+                <Tooltip label="Mark Applied">
+                  <button
+                    onClick={handleMarkAppliedClick}
+                    className="h-4 w-4 flex-none text-green-600"
+                  >
+                    <Icon as={BsBookmarkCheck} />
+                  </button>
+                </Tooltip>
+                <Tooltip label="Hide Job">
+                  <button
+                    onClick={handleHideJobClick}
+                    className="h-4 w-4 flex-none text-red-600"
+                  >
+                    <Icon as={BsEyeSlash} />
+                  </button>
+                </Tooltip>
+                <Tooltip label="Report Job">
+                  <button
+                    onClick={handleReportJobClick}
+                    className="h-4 w-4 flex-none text-red-600"
+                  >
+                    <Icon as={BsFlag} />
+                  </button>
+                </Tooltip>
               </div>
             </div>
           </div>
