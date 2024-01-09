@@ -3,8 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { Icon } from "@chakra-ui/react";
-import { MdSettings } from "../icons";
 import { useAuth } from "@/app/hooks/useAuth";
 import fb from "@/app/services/firebase";
 import JDcard from "../components/panel/main/JDcard";
