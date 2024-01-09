@@ -85,7 +85,7 @@ const JDcard = ({
                 </Tooltip>
                 <Tooltip label="Mark Applied">
                   <button
-                    onClick={handleMarkAppliedClick}
+                    onClick={() => handleMarkAppliedClick(job)}
                     className="h-4 w-4 flex-none text-green-600"
                   >
                     <Icon as={BsBookmarkCheck} />
@@ -93,7 +93,7 @@ const JDcard = ({
                 </Tooltip>
                 <Tooltip label="Hide Job">
                   <button
-                    onClick={handleHideJobClick}
+                    onClick={() => handleHideJobClick(job)}
                     className="h-4 w-4 flex-none text-red-600"
                   >
                     <Icon as={BsEyeSlash} />

@@ -19,6 +19,8 @@ import JDcard from "./JDcard";
 const JDgrid = () => {
   const [jobs, setJobs] = useState([]);
   const [savedJobs, setSavedJobs] = useState([]);
+  const [appliedJobs, setAppliedJobs] = useState([]);
+  const [hiddenJobs, setHiddenJobs] = useState([]);
   const [currentUserUid, setCurrentUserUid] = useState(null);
   const user = useAuth();
   const router = useRouter();
@@ -60,6 +62,10 @@ const JDgrid = () => {
 
         // get saved jobs and set it to state
         setSavedJobs(userDoc.saved || []);
+        // get applied jobs and set it to state
+        setAppliedJobs(userDoc.applied || []);
+        // get hidden jobs and set it to state
+        setHiddenJobs(userDoc.hidden || []);
       }
     };
 
@@ -96,29 +102,86 @@ const JDgrid = () => {
       console.error("Error saving job:", error.message);
     }
   };
-  const handleMarkAppliedClick = () => {};
-  const handleHideJobClick = () => {};
+  const handleMarkAppliedClick = async (job) => {
+    if (!currentUserUid) {
+      router.push("/auth");
+      return;
+    }
+    try {
+      const db = fb.getFirestore();
+
+      // Query the user by uid
+      const q = query(
+        collection(db, "users"),
+        where("uid", "==", currentUserUid)
+      );
+      const querySnapshot = await getDocs(q);
+
+      const userDoc = querySnapshot.docs[0];
+
+      // Update the user document
+      await updateDoc(doc(db, "users", userDoc.id), {
+        applied: arrayUnion(job.id),
+      });
+
+      // Update the state to remove the saved job
+      setJobs((prevJobs) => prevJobs.filter((el) => el.id !== job.id));
+
+      console.log("Job saved successfully!");
+    } catch (error) {
+      console.error("Error saving job:", error.message);
+    }
+  };
+  const handleHideJobClick = async (job) => {
+    if (!currentUserUid) {
+      router.push("/auth");
+      return;
+    }
+    try {
+      const db = fb.getFirestore();
+
+      // Query the user by uid
+      const q = query(
+        collection(db, "users"),
+        where("uid", "==", currentUserUid)
+      );
+      const querySnapshot = await getDocs(q);
+
+      const userDoc = querySnapshot.docs[0];
+
+      // Update the user document
+      await updateDoc(doc(db, "users", userDoc.id), {
+        hidden: arrayUnion(job.id),
+      });
+
+      // Update the state to remove the saved job
+      setJobs((prevJobs) => prevJobs.filter((el) => el.id !== job.id));
+
+      console.log("Job saved successfully!");
+    } catch (error) {
+      console.error("Error saving job:", error.message);
+    }
+  };
   const handleReportJobClick = () => {};
 
   const renderJDcard = () => {
-    return (
-      jobs
-        .filter((job) => !job.about_company !== true)
-        // TODO
-        .filter((job) => !savedJobs.includes(job.id))
-        .map((job) => {
-          return (
-            <JDcard
-              key={job.id}
-              job={job}
-              handleSaveJobClick={handleSaveJobClick}
-              handleMarkAppliedClick={handleMarkAppliedClick}
-              handleHideJobClick={handleHideJobClick}
-              handleReportJobClick={handleReportJobClick}
-            />
-          );
-        })
-    );
+    return jobs
+      .filter((job) => !job.about_company !== true)
+      .filter((job) => !savedJobs.includes(job.id))
+      .filter((job) => !appliedJobs.includes(job.id))
+      .filter((job) => !hiddenJobs.includes(job.id))
+      .map((job) => {
+        return (
+          <JDcard
+            key={job.id}
+            job={job}
+            handleSaveJobClick={handleSaveJobClick}
+            handleMarkAppliedClick={handleMarkAppliedClick}
+            handleHideJobClick={handleHideJobClick}
+            handleReportJobClick={handleReportJobClick}
+          />
+        );
+      });
   };
 
   return (
