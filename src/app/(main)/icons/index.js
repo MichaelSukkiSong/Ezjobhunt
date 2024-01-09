@@ -9,17 +9,18 @@ export {
   BsFlag,
   BsMic,
   BsCart2,
+  BsTrash3,
 } from "react-icons/bs";
 export { CiDeliveryTruck, CiSettings } from "react-icons/ci";
 export { FaRegFileLines } from "react-icons/fa6";
 export { FiLock } from "react-icons/fi";
 export { GiArtificialHive } from "react-icons/gi";
-export { GoLaw } from "react-icons/go";
-export { GrInsecure } from "react-icons/gr";
+export { GoLaw, GoPaperAirplane } from "react-icons/go";
+export { GrInsecure, GrDocumentExcel } from "react-icons/gr";
 export { HiOutlinePaperAirplane } from "react-icons/hi";
 export { LiaRobotSolid } from "react-icons/lia";
 export { LuGraduationCap, LuCoffee } from "react-icons/lu";
-export { MdSettings, MdLogout } from "react-icons/md";
+export { MdSettings, MdLogout, MdOutlineLibraryAddCheck } from "react-icons/md";
 export { PiDnaBold, PiTelegramLogo, PiBowlFoodBold } from "react-icons/pi";
 export {
   RiComputerLine,

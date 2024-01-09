@@ -8,13 +8,18 @@ import {
   arrayUnion,
   collection,
   getDocs,
-  getDoc,
   query,
   where,
 } from "firebase/firestore";
 import fb from "@/app/services/firebase";
 import { useAuth } from "@/app/hooks/useAuth";
 import JDcard from "./JDcard";
+import {
+  BsBookmark,
+  BsBookmarkCheck,
+  BsEyeSlash,
+  BsFlag,
+} from "../../../icons";
 
 const JDgrid = () => {
   const [jobs, setJobs] = useState([]);
@@ -164,6 +169,33 @@ const JDgrid = () => {
   };
   const handleReportJobClick = () => {};
 
+  const buttons = [
+    {
+      label: "Save Job",
+      icon: BsBookmark,
+      fn: handleSaveJobClick,
+      color: "green",
+    },
+    {
+      label: "Mark Applied",
+      icon: BsBookmarkCheck,
+      fn: handleMarkAppliedClick,
+      color: "green",
+    },
+    {
+      label: "Hide Job",
+      icon: BsEyeSlash,
+      fn: handleHideJobClick,
+      color: "red",
+    },
+    {
+      label: "Report Job",
+      icon: BsFlag,
+      fn: handleReportJobClick,
+      color: "red",
+    },
+  ];
+
   const renderJDcard = () => {
     return jobs
       .filter((job) => !job.about_company !== true)
@@ -171,16 +203,7 @@ const JDgrid = () => {
       .filter((job) => !appliedJobs.includes(job.id))
       .filter((job) => !hiddenJobs.includes(job.id))
       .map((job) => {
-        return (
-          <JDcard
-            key={job.id}
-            job={job}
-            handleSaveJobClick={handleSaveJobClick}
-            handleMarkAppliedClick={handleMarkAppliedClick}
-            handleHideJobClick={handleHideJobClick}
-            handleReportJobClick={handleReportJobClick}
-          />
-        );
+        return <JDcard key={job.id} job={job} buttons={buttons} />;
       });
   };
 

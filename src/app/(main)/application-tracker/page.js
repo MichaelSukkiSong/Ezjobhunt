@@ -8,6 +8,13 @@ import { MdSettings } from "../icons";
 import { useAuth } from "@/app/hooks/useAuth";
 import fb from "@/app/services/firebase";
 import JDcard from "../components/panel/main/JDcard";
+import {
+  BsBookmark,
+  BsBookmarkCheck,
+  GoPaperAirplane,
+  GrDocumentExcel,
+  BsTrash3,
+} from "../icons";
 
 const Page = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -112,10 +119,10 @@ const Page = () => {
     getHiddenJobs();
   }, [hiddenJobsId]);
 
-  const handleSaveJobClick = () => {};
-  const handleMarkAppliedClick = () => {};
-  const handleHideJobClick = () => {};
-  const handleReportJobClick = () => {};
+  const handleMoveToAppliedClick = () => {};
+  const handleMoveToInterviewingClick = () => {};
+  const handleMoveToRejectedClick = () => {};
+  const handleDeleteJobClick = () => {};
 
   const renderContent = () => {
     switch (activeIndex) {
@@ -134,19 +141,99 @@ const Page = () => {
     }
   };
 
+  const buttonsForSavedSection = [
+    {
+      label: "Move to Applied",
+      icon: BsBookmarkCheck,
+      fn: handleMoveToAppliedClick,
+      color: "green",
+    },
+    {
+      label: "Move to interviewing",
+      icon: GoPaperAirplane,
+      fn: handleMoveToInterviewingClick,
+      color: "green",
+    },
+    {
+      label: "Move to rejected",
+      icon: GrDocumentExcel,
+      fn: handleMoveToRejectedClick,
+      color: "red",
+    },
+    {
+      label: "Delete",
+      icon: BsTrash3,
+      fn: handleDeleteJobClick,
+      color: "red",
+    },
+  ];
+
+  const buttonsForAppliedSection = [
+    {
+      label: "Move to Saved",
+      icon: BsBookmark,
+      fn: handleMoveToAppliedClick,
+      color: "green",
+    },
+    {
+      label: "Move to interviewing",
+      icon: GoPaperAirplane,
+      fn: handleMoveToInterviewingClick,
+      color: "green",
+    },
+    {
+      label: "Move to rejected",
+      icon: GrDocumentExcel,
+      fn: handleMoveToRejectedClick,
+      color: "red",
+    },
+    {
+      label: "Delete",
+      icon: BsTrash3,
+      fn: handleDeleteJobClick,
+      color: "red",
+    },
+  ];
+
+  const buttonsForHiddenSection = [
+    {
+      label: "Move to Saved",
+      icon: BsBookmark,
+      fn: handleMoveToAppliedClick,
+      color: "green",
+    },
+    {
+      label: "Move to Applied",
+      icon: BsBookmarkCheck,
+      fn: handleMoveToAppliedClick,
+      color: "green",
+    },
+    {
+      label: "Move to interviewing",
+      icon: GoPaperAirplane,
+      fn: handleMoveToInterviewingClick,
+      color: "green",
+    },
+    {
+      label: "Move to rejected",
+      icon: GrDocumentExcel,
+      fn: handleMoveToRejectedClick,
+      color: "red",
+    },
+    {
+      label: "Delete",
+      icon: BsTrash3,
+      fn: handleDeleteJobClick,
+      color: "red",
+    },
+  ];
+
   const renderSavedJobs = () => {
     return (
       <>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
           {savedJobs.map((job) => (
-            <JDcard
-              key={job.id}
-              job={job}
-              handleSaveJobClick={handleSaveJobClick}
-              handleMarkAppliedClick={handleMarkAppliedClick}
-              handleHideJobClick={handleHideJobClick}
-              handleReportJobClick={handleReportJobClick}
-            />
+            <JDcard key={job.id} job={job} buttons={buttonsForSavedSection} />
           ))}
         </div>
         {savedJobs.length === 0 && (
@@ -172,14 +259,7 @@ const Page = () => {
       <>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
           {appliedJobs.map((job) => (
-            <JDcard
-              key={job.id}
-              job={job}
-              handleSaveJobClick={handleSaveJobClick}
-              handleMarkAppliedClick={handleMarkAppliedClick}
-              handleHideJobClick={handleHideJobClick}
-              handleReportJobClick={handleReportJobClick}
-            />
+            <JDcard key={job.id} job={job} buttons={buttonsForAppliedSection} />
           ))}
         </div>
         {appliedJobs.length === 0 && (
@@ -215,14 +295,7 @@ const Page = () => {
       <>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
           {hiddenJobs.map((job) => (
-            <JDcard
-              key={job.id}
-              job={job}
-              handleSaveJobClick={handleSaveJobClick}
-              handleMarkAppliedClick={handleMarkAppliedClick}
-              handleHideJobClick={handleHideJobClick}
-              handleReportJobClick={handleReportJobClick}
-            />
+            <JDcard key={job.id} job={job} buttons={buttonsForHiddenSection} />
           ))}
         </div>
         {hiddenJobs.length === 0 && (

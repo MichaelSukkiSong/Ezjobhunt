@@ -1,24 +1,26 @@
 "use client";
 
 import { Tooltip } from "@chakra-ui/react";
-import {
-  Icon,
-  BsBookmark,
-  BsBookmarkCheck,
-  BsEyeSlash,
-  BsFlag,
-  CiSettings,
-  FaRegFileLines,
-  LuCoffee,
-} from "../../../icons";
+import { Icon, CiSettings, FaRegFileLines, LuCoffee } from "../../../icons";
 
-const JDcard = ({
-  job,
-  handleSaveJobClick,
-  handleMarkAppliedClick,
-  handleHideJobClick,
-  handleReportJobClick,
-}) => {
+const JDcard = ({ job, buttons }) => {
+  const renderButtons = () => {
+    return buttons.map(({ label, icon, fn, color }) => {
+      return (
+        <>
+          <Tooltip label={label}>
+            <button
+              onClick={() => fn(job)}
+              className={`h-4 w-4 flex-none text-${color}-600`}
+            >
+              <Icon as={icon} />
+            </button>
+          </Tooltip>
+        </>
+      );
+    });
+  };
+
   return (
     <div className="relative flex flex-col lg:max-w-sm items-start justify-start text-start">
       <div className="flex flex-col items-start w-full rounded-3xl pt-2 overflow-auto hide-scrollbar border hover:border-yellow-600">
@@ -75,38 +77,7 @@ const JDcard = ({
                 <LuCoffee />
               </button>
               <div className="flex items-center space-x-4">
-                <Tooltip label="Save Job">
-                  <button
-                    onClick={() => handleSaveJobClick(job)}
-                    className="h-4 w-4 flex-none text-green-600"
-                  >
-                    <Icon as={BsBookmark} />
-                  </button>
-                </Tooltip>
-                <Tooltip label="Mark Applied">
-                  <button
-                    onClick={() => handleMarkAppliedClick(job)}
-                    className="h-4 w-4 flex-none text-green-600"
-                  >
-                    <Icon as={BsBookmarkCheck} />
-                  </button>
-                </Tooltip>
-                <Tooltip label="Hide Job">
-                  <button
-                    onClick={() => handleHideJobClick(job)}
-                    className="h-4 w-4 flex-none text-red-600"
-                  >
-                    <Icon as={BsEyeSlash} />
-                  </button>
-                </Tooltip>
-                <Tooltip label="Report Job">
-                  <button
-                    onClick={handleReportJobClick}
-                    className="h-4 w-4 flex-none text-red-600"
-                  >
-                    <Icon as={BsFlag} />
-                  </button>
-                </Tooltip>
+                {renderButtons()}
               </div>
             </div>
           </div>
