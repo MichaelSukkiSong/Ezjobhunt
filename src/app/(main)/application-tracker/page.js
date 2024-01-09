@@ -117,6 +117,7 @@ const Page = () => {
     getHiddenJobs();
   }, [hiddenJobsId]);
 
+  const handleMoveToSavedClick = () => {};
   const handleMoveToAppliedClick = () => {};
   const handleMoveToInterviewingClick = () => {};
   const handleMoveToRejectedClick = () => {};
@@ -170,7 +171,7 @@ const Page = () => {
     {
       label: "Move to Saved",
       icon: BsBookmark,
-      fn: handleMoveToAppliedClick,
+      fn: handleMoveToSavedClick,
       color: "blue",
     },
     {
@@ -193,11 +194,65 @@ const Page = () => {
     },
   ];
 
+  const buttonsForInterviewingSection = [
+    {
+      label: "Move to Saved",
+      icon: BsBookmark,
+      fn: handleMoveToSavedClick,
+      color: "blue",
+    },
+    {
+      label: "Move to Applied",
+      icon: BsBookmarkCheck,
+      fn: handleMoveToAppliedClick,
+      color: "blue",
+    },
+    {
+      label: "Move to rejected",
+      icon: GrDocumentExcel,
+      fn: handleMoveToRejectedClick,
+      color: "red",
+    },
+    {
+      label: "Delete",
+      icon: BsTrash3,
+      fn: handleDeleteJobClick,
+      color: "red",
+    },
+  ];
+
+  const buttonsForRejectedSection = [
+    {
+      label: "Move to Saved",
+      icon: BsBookmark,
+      fn: handleMoveToSavedClick,
+      color: "blue",
+    },
+    {
+      label: "Move to Applied",
+      icon: BsBookmarkCheck,
+      fn: handleMoveToAppliedClick,
+      color: "blue",
+    },
+    {
+      label: "Move to interviewing",
+      icon: GoPaperAirplane,
+      fn: handleMoveToInterviewingClick,
+      color: "blue",
+    },
+    {
+      label: "Delete",
+      icon: BsTrash3,
+      fn: handleDeleteJobClick,
+      color: "red",
+    },
+  ];
+
   const buttonsForHiddenSection = [
     {
       label: "Move to Saved",
       icon: BsBookmark,
-      fn: handleMoveToAppliedClick,
+      fn: handleMoveToSavedClick,
       color: "blue",
     },
     {
@@ -251,8 +306,6 @@ const Page = () => {
   };
 
   const renderAppliedJobs = () => {
-    // Implement rendering for Applied Jobs
-    // ...
     return (
       <>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
@@ -277,18 +330,62 @@ const Page = () => {
   };
 
   const renderInterviewingJobs = () => {
-    // Implement rendering for Interviewing Jobs
-    // ...
+    return (
+      <>
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
+          {interviewingJobs.map((job) => (
+            <JDcard
+              key={job.id}
+              job={job}
+              buttons={buttonsForInterviewingSection}
+            />
+          ))}
+        </div>
+        {interviewingJobs.length === 0 && (
+          <div className="flex flex-col flex-auto items-center p-8 my-8 border rounded-xl m-4">
+            <span className="text-xl font-bold">No saved jobs</span>
+            <span className="mt-2 font-light">
+              Start &nbsp;
+              <Link className="text-blue-600" href="/">
+                adding jobs
+              </Link>
+              &nbsp; to your list.
+            </span>
+          </div>
+        )}
+      </>
+    );
   };
 
   const renderRejectedJobs = () => {
-    // Implement rendering for Rejected Jobs
-    // ...
+    return (
+      <>
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
+          {rejectedJobs.map((job) => (
+            <JDcard
+              key={job.id}
+              job={job}
+              buttons={buttonsForRejectedSection}
+            />
+          ))}
+        </div>
+        {rejectedJobs.length === 0 && (
+          <div className="flex flex-col flex-auto items-center p-8 my-8 border rounded-xl m-4">
+            <span className="text-xl font-bold">No saved jobs</span>
+            <span className="mt-2 font-light">
+              Start &nbsp;
+              <Link className="text-blue-600" href="/">
+                adding jobs
+              </Link>
+              &nbsp; to your list.
+            </span>
+          </div>
+        )}
+      </>
+    );
   };
 
   const renderHiddenJobs = () => {
-    // Implement rendering for Hidden Jobs
-    // ...
     return (
       <>
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
