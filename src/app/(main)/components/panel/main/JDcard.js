@@ -5,9 +5,9 @@ import { Icon, CiSettings, FaRegFileLines, LuCoffee } from "../../../icons";
 
 const JDcard = ({ job, buttons }) => {
   const renderButtons = () => {
-    return buttons.map(({ label, icon, fn, color }) => {
+    return buttons.map(({ label, icon, fn, color }, index) => {
       return (
-        <>
+        <div key={index}>
           <Tooltip label={label}>
             <button
               onClick={() => fn(job)}
@@ -16,7 +16,7 @@ const JDcard = ({ job, buttons }) => {
               <Icon as={icon} />
             </button>
           </Tooltip>
-        </>
+        </div>
       );
     });
   };

@@ -174,13 +174,13 @@ const JDgrid = () => {
       label: "Save Job",
       icon: BsBookmark,
       fn: handleSaveJobClick,
-      color: "green",
+      color: "blue",
     },
     {
       label: "Mark Applied",
       icon: BsBookmarkCheck,
       fn: handleMarkAppliedClick,
-      color: "green",
+      color: "blue",
     },
     {
       label: "Hide Job",
