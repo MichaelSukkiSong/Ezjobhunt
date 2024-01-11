@@ -21,7 +21,7 @@ import {
   BsFlag,
 } from "../../../icons";
 
-const JDgrid = () => {
+const JDgrid = ({ filteringOptions }) => {
   const [jobs, setJobs] = useState([]);
   const [savedJobs, setSavedJobs] = useState([]);
   const [appliedJobs, setAppliedJobs] = useState([]);
@@ -48,8 +48,6 @@ const JDgrid = () => {
       setJobs(jobsArray);
     };
 
-    getJobs();
-
     const getSavedJobs = async () => {
       if (!currentUserUid) return;
 
@@ -74,6 +72,7 @@ const JDgrid = () => {
       }
     };
 
+    getJobs();
     getSavedJobs();
   }, [currentUserUid]);
 
@@ -202,6 +201,10 @@ const JDgrid = () => {
       .filter((job) => !savedJobs.includes(job.id))
       .filter((job) => !appliedJobs.includes(job.id))
       .filter((job) => !hiddenJobs.includes(job.id))
+      .filter((job) => {
+        // apply additonal filtering logic here based on filteringOptions
+        return true;
+      })
       .map((job) => {
         return <JDcard key={job.id} job={job} buttons={buttons} />;
       });

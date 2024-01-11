@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Popover,
   PopoverTrigger,
@@ -12,9 +12,9 @@ import {
   RangeSliderTrack,
   RangeSliderFilledTrack,
   RangeSliderThumb,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
-const ExperienceBtn = () => {
+const ExperienceBtn = ({ setFilteringOptions }) => {
   const [checkboxChecked, setCheckboxChecked] = useState(false);
   const [experienceRange, setExperienceRange] = useState([]);
 
@@ -39,16 +39,19 @@ const ExperienceBtn = () => {
               Filter by Experience:
               {experienceRange.length !== 0
                 ? `${experienceRange[0]} - ${experienceRange[1]} Years`
-                : 'Any'}
+                : "Any"}
             </span>
             {checkboxChecked ? (
               <RangeSlider
-                aria-label={['min', 'max']}
+                aria-label="experience-slider"
                 defaultValue={[0, 21]}
                 min={0}
                 max={21}
                 onChangeEnd={(val) => {
+                  console.log(val);
+
                   setExperienceRange(val);
+                  setFilteringOptions(val);
                 }}
               >
                 <RangeSliderTrack>

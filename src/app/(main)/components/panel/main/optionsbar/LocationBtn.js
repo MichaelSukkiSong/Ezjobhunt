@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 import {
   useDisclosure,
   Modal,
@@ -14,24 +14,24 @@ import {
   Radio,
   RadioGroup,
   Stack,
-} from '@chakra-ui/react';
-import Select from 'react-select';
-import { ChevronDownIcon } from '../../../../icons';
+} from "@chakra-ui/react";
+import Select from "react-select";
+import { ChevronDownIcon } from "../../../../icons";
 
 const options = [
-  { value: 'North America', label: 'North America' },
-  { value: 'Latin America', label: 'Latin America' },
-  { value: 'Europe', label: 'Europe' },
-  { value: 'EMEA', label: 'EMEA' },
-  { value: 'Asia', label: 'Asia' },
-  { value: 'Africa', label: 'Africa' },
-  { value: 'Oceania', label: 'Oceania' },
-  { value: 'United States', label: 'United States' },
+  { value: "North America", label: "North America" },
+  { value: "Latin America", label: "Latin America" },
+  { value: "Europe", label: "Europe" },
+  { value: "EMEA", label: "EMEA" },
+  { value: "Asia", label: "Asia" },
+  { value: "Africa", label: "Africa" },
+  { value: "Oceania", label: "Oceania" },
+  { value: "United States", label: "United States" },
 ];
 
-const LocationBtn = () => {
+const LocationBtn = ({ setFilteringOptions }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [value, setValue] = useState('1');
+  const [value, setValue] = useState("1");
   const [selectedOption, setSelectedOption] = useState(null);
 
   return (
@@ -55,7 +55,7 @@ const LocationBtn = () => {
               <RadioGroup onChange={setValue} value={value}>
                 <Stack direction="column">
                   <Radio value="1">Country</Radio>
-                  {value === '1' ? (
+                  {value === "1" ? (
                     <div>
                       <Select
                         defaultValue={selectedOption}

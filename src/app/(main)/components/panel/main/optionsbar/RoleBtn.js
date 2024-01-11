@@ -1,7 +1,20 @@
-const RoleBtn = () => {
+"use client";
+
+import { useState } from "react";
+import { Select } from "@chakra-ui/react";
+
+const RoleBtn = ({ setFilteringOptions }) => {
+  const [selectedRole, setSelectedRole] = useState("");
+
+  const handleChange = (event) => {
+    setSelectedRole(event.target.value);
+    setFilteringOptions((prevState) => {
+      return { ...prevState, role: event.target.value };
+    });
+  };
+
   return (
-    <select className="border rounded-xl p-2 w-full">
-      <option value>Any Role</option>
+    <Select placeholder="Any Role" value={selectedRole} onChange={handleChange}>
       <option value="Software Engineering">Software Engineering</option>
       <option value="Engineering">Engineering</option>
       <option value="Sales">Sales</option>
@@ -15,7 +28,7 @@ const RoleBtn = () => {
       <option value="Legal">Legal</option>
       <option value="Customer Support">Customer Support</option>
       <option value="Business Operations">Business Operations</option>
-    </select>
+    </Select>
   );
 };
 
