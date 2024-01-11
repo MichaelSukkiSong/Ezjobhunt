@@ -39,12 +39,14 @@ const JDcard = ({ job, buttons }) => {
                 {job.job_location}
               </button>
             </div>
-            <div>
-              💰
-              <button className="text-start text-sm underline font-medium">
-                {job.salary_range}
-              </button>
-            </div>
+            {job.salary_range ? (
+              <div>
+                💰
+                <button className="text-start text-sm underline font-medium">
+                  {job.salary_range}
+                </button>
+              </div>
+            ) : null}
             <div className="flex flex-col space-y-1">
               <span className="font-bold text-xs text-gray-500">🏢 About</span>
               <span className="font-light">{job.about_company}</span>
