@@ -2,7 +2,15 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDocs,
+  updateDoc,
+  query,
+  where,
+  runTransaction,
+} from "firebase/firestore";
 import { useAuth } from "@/app/hooks/useAuth";
 import fb from "@/app/services/firebase";
 import JDcard from "../components/panel/main/JDcard";
@@ -19,6 +27,8 @@ const Page = () => {
   const [currentUserUid, setCurrentUserUid] = useState(null);
   const [savedJobsId, setSavedJobsId] = useState([]);
   const [appliedJobsId, setAppliedJobsId] = useState([]);
+  const [interviewingJobsId, setInterviewingJobsId] = useState([]);
+  const [rejectedJobsId, setRejectedJobsId] = useState([]);
   const [hiddenJobsId, setHiddenJobsId] = useState([]);
   const [savedJobs, setSavedJobs] = useState([]);
   const [appliedJobs, setAppliedJobs] = useState([]);
@@ -50,6 +60,8 @@ const Page = () => {
 
         setSavedJobsId(userDoc.saved || []);
         setAppliedJobsId(userDoc.applied || []);
+        setInterviewingJobsId(userDoc.interviewing || []);
+        setRejectedJobsId(userDoc.rejected || []);
         setHiddenJobsId(userDoc.hidden || []);
       }
     };
@@ -98,6 +110,46 @@ const Page = () => {
   }, [appliedJobsId]);
 
   useEffect(() => {
+    const getInterviewingJobs = async () => {
+      if (!interviewingJobsId) return;
+
+      const db = fb.getFirestore();
+
+      const querySnapshot = await getDocs(collection(db, "jobs"));
+      const interviewingJobsArray = [];
+      querySnapshot.forEach((doc) => {
+        if (interviewingJobsId.includes(doc.id)) {
+          interviewingJobsArray.push({ id: doc.id, ...doc.data() });
+        }
+      });
+
+      setInterviewingJobs(interviewingJobsArray);
+    };
+
+    getInterviewingJobs();
+  }, [interviewingJobsId]);
+
+  useEffect(() => {
+    const getRejectedJobs = async () => {
+      if (!rejectedJobsId) return;
+
+      const db = fb.getFirestore();
+
+      const querySnapshot = await getDocs(collection(db, "jobs"));
+      const rejectedJobsArray = [];
+      querySnapshot.forEach((doc) => {
+        if (rejectedJobsId.includes(doc.id)) {
+          rejectedJobsArray.push({ id: doc.id, ...doc.data() });
+        }
+      });
+
+      setRejectedJobs(rejectedJobsArray);
+    };
+
+    getRejectedJobs();
+  }, [rejectedJobsId]);
+
+  useEffect(() => {
     const getHiddenJobs = async () => {
       if (!hiddenJobsId) return;
 
@@ -117,26 +169,343 @@ const Page = () => {
     getHiddenJobs();
   }, [hiddenJobsId]);
 
-  const handleMoveToSavedClick = () => {};
-  const handleMoveToAppliedClick = () => {};
-  const handleMoveToInterviewingClick = () => {};
-  const handleMoveToRejectedClick = () => {};
-  const handleDeleteJobClick = () => {};
+  const handleMoveToSavedClick = async (job) => {
+    const db = fb.getFirestore();
 
-  const renderContent = () => {
-    switch (activeIndex) {
-      case 0:
-        return renderSavedJobs();
-      case 1:
-        return renderAppliedJobs();
-      case 2:
-        return renderInterviewingJobs();
-      case 3:
-        return renderRejectedJobs();
-      case 4:
-        return renderHiddenJobs();
-      default:
-        return null;
+    try {
+      await runTransaction(db, async (transaction) => {
+        const q = query(
+          collection(db, "users"),
+          where("uid", "==", currentUserUid)
+        );
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.docs.length > 0) {
+          // get user data
+          const userDoc = querySnapshot.docs[0].data();
+          // get user reference
+          const userRef = doc(db, "users", querySnapshot.docs[0].id);
+
+          const { applied, interviewing, rejected, hidden, saved } = userDoc;
+
+          // function to remove the job
+          const removeFromState = (stateArray) => {
+            const index = stateArray.indexOf(job.id);
+            if (index !== -1) {
+              stateArray.splice(index, 1);
+            }
+          };
+
+          // remove job from all arrays
+          removeFromState(saved);
+          removeFromState(applied);
+          removeFromState(interviewing);
+          removeFromState(rejected);
+          removeFromState(hidden);
+
+          // save job to saved array
+          if (!saved.includes(job.id)) {
+            saved.push(job.id);
+          }
+
+          // update user data
+          await updateDoc(userRef, {
+            applied,
+            interviewing,
+            rejected,
+            hidden,
+            saved,
+          });
+        }
+      });
+
+      // Update the local state and all relevant Id arrays to reflect the changes
+      setSavedJobs([...savedJobs, job]);
+      setAppliedJobs(appliedJobs.filter((j) => j.id !== job.id));
+      setInterviewingJobs(interviewingJobs.filter((j) => j.id !== job.id));
+      setRejectedJobs(rejectedJobs.filter((j) => j.id !== job.id));
+      setHiddenJobs(hiddenJobs.filter((j) => j.id !== job.id));
+
+      // Update Id arrays
+      setSavedJobsId([...savedJobsId, job.id]);
+      setAppliedJobsId(appliedJobsId.filter((id) => id !== job.id));
+      setInterviewingJobsId(interviewingJobsId.filter((id) => id !== job.id));
+      setRejectedJobsId(rejectedJobsId.filter((id) => id !== job.id));
+      setHiddenJobsId(hiddenJobsId.filter((id) => id !== job.id));
+    } catch (error) {
+      console.error("Error moving job to saved:", error.message);
+      // Handle error, show a notification, etc.
+    }
+  };
+
+  const handleMoveToAppliedClick = async (job) => {
+    const db = fb.getFirestore();
+
+    try {
+      await runTransaction(db, async (transaction) => {
+        const q = query(
+          collection(db, "users"),
+          where("uid", "==", currentUserUid)
+        );
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.docs.length > 0) {
+          // get user data
+          const userDoc = querySnapshot.docs[0].data();
+          // get user reference
+          const userRef = doc(db, "users", querySnapshot.docs[0].id);
+
+          const { applied, interviewing, rejected, hidden, saved } = userDoc;
+
+          // function to remove the job
+          const removeFromState = (stateArray) => {
+            const index = stateArray.indexOf(job.id);
+            if (index !== -1) {
+              stateArray.splice(index, 1);
+            }
+          };
+
+          // remove job from all arrays
+          removeFromState(saved);
+          removeFromState(applied);
+          removeFromState(interviewing);
+          removeFromState(rejected);
+          removeFromState(hidden);
+
+          // save job to applied array
+          if (!applied.includes(job.id)) {
+            applied.push(job.id);
+          }
+
+          // update user data
+          await updateDoc(userRef, {
+            applied,
+            interviewing,
+            rejected,
+            hidden,
+            saved,
+          });
+        }
+      });
+
+      // Update the local state and all relevant Id arrays to reflect the changes
+      setSavedJobs(savedJobs.filter((j) => j.id !== job.id));
+      setAppliedJobs([...appliedJobs, job]);
+      setInterviewingJobs(interviewingJobs.filter((j) => j.id !== job.id));
+      setRejectedJobs(rejectedJobs.filter((j) => j.id !== job.id));
+      setHiddenJobs(hiddenJobs.filter((j) => j.id !== job.id));
+
+      // Update Id arrays
+      setSavedJobsId(savedJobsId.filter((id) => id !== job.id));
+      setAppliedJobsId([...appliedJobsId, job.id]);
+      setInterviewingJobsId(interviewingJobsId.filter((id) => id !== job.id));
+      setRejectedJobsId(rejectedJobsId.filter((id) => id !== job.id));
+      setHiddenJobsId(hiddenJobsId.filter((id) => id !== job.id));
+    } catch (error) {
+      console.error("Error moving job to applied:", error.message);
+      // Handle error, show a notification, etc.
+    }
+  };
+
+  const handleMoveToInterviewingClick = async (job) => {
+    const db = fb.getFirestore();
+
+    try {
+      await runTransaction(db, async (transaction) => {
+        const q = query(
+          collection(db, "users"),
+          where("uid", "==", currentUserUid)
+        );
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.docs.length > 0) {
+          // get user data
+          const userDoc = querySnapshot.docs[0].data();
+          // get user reference
+          const userRef = doc(db, "users", querySnapshot.docs[0].id);
+
+          const { applied, interviewing, rejected, hidden, saved } = userDoc;
+
+          // function to remove the job
+          const removeFromState = (stateArray) => {
+            const index = stateArray.indexOf(job.id);
+            if (index !== -1) {
+              stateArray.splice(index, 1);
+            }
+          };
+
+          // remove job from all arrays
+          removeFromState(saved);
+          removeFromState(applied);
+          removeFromState(interviewing);
+          removeFromState(rejected);
+          removeFromState(hidden);
+
+          // save job to interviewing array
+          if (!interviewing.includes(job.id)) {
+            interviewing.push(job.id);
+          }
+
+          // update user data
+          await updateDoc(userRef, {
+            applied,
+            interviewing,
+            rejected,
+            hidden,
+            saved,
+          });
+        }
+      });
+
+      // Update the local state and all relevant Id arrays to reflect the changes
+      setSavedJobs(savedJobs.filter((j) => j.id !== job.id));
+      setAppliedJobs(appliedJobs.filter((j) => j.id !== job.id));
+      setInterviewingJobs([...interviewingJobs, job]);
+      setRejectedJobs(rejectedJobs.filter((j) => j.id !== job.id));
+      setHiddenJobs(hiddenJobs.filter((j) => j.id !== job.id));
+
+      // Update Id arrays
+      setSavedJobsId(savedJobsId.filter((id) => id !== job.id));
+      setAppliedJobsId(appliedJobsId.filter((id) => id !== job.id));
+      setInterviewingJobsId([...interviewingJobsId, job.id]);
+      setRejectedJobsId(rejectedJobsId.filter((id) => id !== job.id));
+      setHiddenJobsId(hiddenJobsId.filter((id) => id !== job.id));
+    } catch (error) {
+      console.error("Error moving job to interviewing:", error.message);
+      // Handle error, show a notification, etc.
+    }
+  };
+
+  const handleMoveToRejectedClick = async (job) => {
+    const db = fb.getFirestore();
+
+    try {
+      await runTransaction(db, async (transaction) => {
+        const q = query(
+          collection(db, "users"),
+          where("uid", "==", currentUserUid)
+        );
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.docs.length > 0) {
+          // get user data
+          const userDoc = querySnapshot.docs[0].data();
+          // get user reference
+          const userRef = doc(db, "users", querySnapshot.docs[0].id);
+
+          const { applied, interviewing, rejected, hidden, saved } = userDoc;
+
+          // function to remove the job
+          const removeFromState = (stateArray) => {
+            const index = stateArray.indexOf(job.id);
+            if (index !== -1) {
+              stateArray.splice(index, 1);
+            }
+          };
+
+          // remove job from all arrays
+          removeFromState(saved);
+          removeFromState(applied);
+          removeFromState(interviewing);
+          removeFromState(rejected);
+          removeFromState(hidden);
+
+          // save job to rejected array
+          if (!rejected.includes(job.id)) {
+            rejected.push(job.id);
+          }
+
+          // update user data
+          await updateDoc(userRef, {
+            applied,
+            interviewing,
+            rejected,
+            hidden,
+            saved,
+          });
+        }
+      });
+
+      // Update the local state and all relevant Id arrays to reflect the changes
+      setSavedJobs(savedJobs.filter((j) => j.id !== job.id));
+      setAppliedJobs(appliedJobs.filter((j) => j.id !== job.id));
+      setInterviewingJobs(interviewingJobs.filter((j) => j.id !== job.id));
+      setRejectedJobs([...rejectedJobs, job]);
+      setHiddenJobs(hiddenJobs.filter((j) => j.id !== job.id));
+
+      // Update Id arrays
+      setSavedJobsId(savedJobsId.filter((id) => id !== job.id));
+      setAppliedJobsId(appliedJobsId.filter((id) => id !== job.id));
+      setInterviewingJobsId(interviewingJobsId.filter((id) => id !== job.id));
+      setRejectedJobsId([...rejectedJobsId, job.id]);
+      setHiddenJobsId(hiddenJobsId.filter((id) => id !== job.id));
+    } catch (error) {
+      console.error("Error moving job to rejected:", error.message);
+      // Handle error, show a notification, etc.
+    }
+  };
+
+  const handleDeleteJobClick = async (job) => {
+    const db = fb.getFirestore();
+
+    try {
+      await runTransaction(db, async (transaction) => {
+        const q = query(
+          collection(db, "users"),
+          where("uid", "==", currentUserUid)
+        );
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.docs.length > 0) {
+          // get user data
+          const userDoc = querySnapshot.docs[0].data();
+          // get user reference
+          const userRef = doc(db, "users", querySnapshot.docs[0].id);
+
+          const { applied, interviewing, rejected, hidden, saved } = userDoc;
+
+          // function to remove the job
+          const removeFromState = (stateArray) => {
+            const index = stateArray.indexOf(job.id);
+            if (index !== -1) {
+              stateArray.splice(index, 1);
+            }
+          };
+
+          // remove job from all arrays
+          removeFromState(saved);
+          removeFromState(applied);
+          removeFromState(interviewing);
+          removeFromState(rejected);
+          removeFromState(hidden);
+
+          // update user data
+          await updateDoc(userRef, {
+            applied,
+            interviewing,
+            rejected,
+            hidden,
+            saved,
+          });
+        }
+      });
+
+      // Update the local state and all relevant Id arrays to reflect the changes
+      setSavedJobs(savedJobs.filter((j) => j.id !== job.id));
+      setAppliedJobs(appliedJobs.filter((j) => j.id !== job.id));
+      setInterviewingJobs(interviewingJobs.filter((j) => j.id !== job.id));
+      setRejectedJobs(rejectedJobs.filter((j) => j.id !== job.id));
+      setHiddenJobs(hiddenJobs.filter((j) => j.id !== job.id));
+
+      // Update Id arrays
+      setSavedJobsId(savedJobsId.filter((id) => id !== job.id));
+      setAppliedJobsId(appliedJobsId.filter((id) => id !== job.id));
+      setInterviewingJobsId(interviewingJobsId.filter((id) => id !== job.id));
+      setRejectedJobsId(rejectedJobsId.filter((id) => id !== job.id));
+      setHiddenJobsId(hiddenJobsId.filter((id) => id !== job.id));
+    } catch (error) {
+      console.error("Error deleting job:", error.message);
+      // Handle error, show a notification, etc.
     }
   };
 
@@ -281,15 +650,15 @@ const Page = () => {
     },
   ];
 
-  const renderSavedJobs = () => {
+  const renderJobs = (jobs, buttons) => {
     return (
       <>
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-          {savedJobs.map((job) => (
-            <JDcard key={job.id} job={job} buttons={buttonsForSavedSection} />
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 p-4">
+          {jobs.map((job) => (
+            <JDcard key={job.id} job={job} buttons={buttons} />
           ))}
         </div>
-        {savedJobs.length === 0 && (
+        {jobs.length === 0 && (
           <div className="flex flex-col flex-auto items-center p-8 my-8 border rounded-xl m-4">
             <span className="text-xl font-bold">No saved jobs</span>
             <span className="mt-2 font-light">
@@ -305,108 +674,21 @@ const Page = () => {
     );
   };
 
-  const renderAppliedJobs = () => {
-    return (
-      <>
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-          {appliedJobs.map((job) => (
-            <JDcard key={job.id} job={job} buttons={buttonsForAppliedSection} />
-          ))}
-        </div>
-        {appliedJobs.length === 0 && (
-          <div className="flex flex-col flex-auto items-center p-8 my-8 border rounded-xl m-4">
-            <span className="text-xl font-bold">No saved jobs</span>
-            <span className="mt-2 font-light">
-              Start &nbsp;
-              <Link className="text-blue-600" href="/">
-                adding jobs
-              </Link>
-              &nbsp; to your list.
-            </span>
-          </div>
-        )}
-      </>
-    );
-  };
-
-  const renderInterviewingJobs = () => {
-    return (
-      <>
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-          {interviewingJobs.map((job) => (
-            <JDcard
-              key={job.id}
-              job={job}
-              buttons={buttonsForInterviewingSection}
-            />
-          ))}
-        </div>
-        {interviewingJobs.length === 0 && (
-          <div className="flex flex-col flex-auto items-center p-8 my-8 border rounded-xl m-4">
-            <span className="text-xl font-bold">No saved jobs</span>
-            <span className="mt-2 font-light">
-              Start &nbsp;
-              <Link className="text-blue-600" href="/">
-                adding jobs
-              </Link>
-              &nbsp; to your list.
-            </span>
-          </div>
-        )}
-      </>
-    );
-  };
-
-  const renderRejectedJobs = () => {
-    return (
-      <>
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-          {rejectedJobs.map((job) => (
-            <JDcard
-              key={job.id}
-              job={job}
-              buttons={buttonsForRejectedSection}
-            />
-          ))}
-        </div>
-        {rejectedJobs.length === 0 && (
-          <div className="flex flex-col flex-auto items-center p-8 my-8 border rounded-xl m-4">
-            <span className="text-xl font-bold">No saved jobs</span>
-            <span className="mt-2 font-light">
-              Start &nbsp;
-              <Link className="text-blue-600" href="/">
-                adding jobs
-              </Link>
-              &nbsp; to your list.
-            </span>
-          </div>
-        )}
-      </>
-    );
-  };
-
-  const renderHiddenJobs = () => {
-    return (
-      <>
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
-          {hiddenJobs.map((job) => (
-            <JDcard key={job.id} job={job} buttons={buttonsForHiddenSection} />
-          ))}
-        </div>
-        {hiddenJobs.length === 0 && (
-          <div className="flex flex-col flex-auto items-center p-8 my-8 border rounded-xl m-4">
-            <span className="text-xl font-bold">No saved jobs</span>
-            <span className="mt-2 font-light">
-              Start &nbsp;
-              <Link className="text-blue-600" href="/">
-                adding jobs
-              </Link>
-              &nbsp; to your list.
-            </span>
-          </div>
-        )}
-      </>
-    );
+  const renderContent = () => {
+    switch (activeIndex) {
+      case 0:
+        return renderJobs(savedJobs, buttonsForSavedSection);
+      case 1:
+        return renderJobs(appliedJobs, buttonsForAppliedSection);
+      case 2:
+        return renderJobs(interviewingJobs, buttonsForInterviewingSection);
+      case 3:
+        return renderJobs(rejectedJobs, buttonsForRejectedSection);
+      case 4:
+        return renderJobs(hiddenJobs, buttonsForHiddenSection);
+      default:
+        return null;
+    }
   };
 
   return (
