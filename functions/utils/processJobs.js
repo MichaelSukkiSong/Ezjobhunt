@@ -40,6 +40,11 @@ async function processJob(job) {
           parameters: {
             type: "object",
             properties: {
+              job_company: {
+                type: "string",
+                description:
+                  "What is the name of the company? Keep it brief - 50 characters or LESS.",
+              },
               about_company: {
                 type: "string",
                 description:
@@ -132,6 +137,7 @@ async function processJob(job) {
               },
             },
             required: [
+              "job_company",
               "about_company",
               "responsibilities",
               "requirements",
