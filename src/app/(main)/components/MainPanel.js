@@ -20,12 +20,12 @@ const MainPanel = () => {
     <div className="h-screen p-4 w-full overflow-x-hidden">
       <div className="md:px-2">
         {/* TESTING */}
-        {/* <div>{filteringOptions.role}</div>
+        {/* <div>{filteringOptions.remoteOnly === true ? "true" : "false"}</div>
+        <div>{filteringOptions.role}</div>
         <div>{filteringOptions.type}</div>
         <div>
           {filteringOptions.transparentSalaries === true ? "true" : "false"}
-        </div>
-        <div>{filteringOptions.remoteOnly === true ? "true" : "false"}</div> */}
+        </div> */}
         <div className="flex flex-col">
           <Searchbar />
           <Optionsbar setFilteringOptions={setFilteringOptions} />
