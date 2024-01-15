@@ -57,10 +57,12 @@ const JDcard = ({ job, buttons }) => {
               </span>
               <span className="font-light">{job.requirements}</span>
             </div>
-            <div className="flex flex-col space-y-1">
-              <span className="font-bold text-xs text-gray-500">💻 Tech</span>
-              <span className="font-light">{job.tech_stack}</span>
-            </div>
+            {job.tech_stack ? (
+              <div className="flex flex-col space-y-1">
+                <span className="font-bold text-xs text-gray-500">💻 Tech</span>
+                <span className="font-light">{job.tech_stack}</span>
+              </div>
+            ) : null}
           </div>
           <div>
             <a href={job.job_url} target="_blank">
