@@ -1,8 +1,18 @@
-'use client';
+"use client";
 
-import { SearchIcon } from '../../../icons';
+import { useState } from "react";
+import { SearchIcon } from "../../../icons";
 
-const Searchbar = () => {
+const Searchbar = ({ setFilteringOptions }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (event) => {
+    setSearchTerm(event.target.value);
+    setFilteringOptions((prev) => {
+      return { ...prev, searchTerm: event.target.value };
+    });
+  };
+
   return (
     <div className="flex flex-col justify-center">
       <div className="flex items-center bg-white pr-2 rounded-md border border-gray-300 focus-within:border-black ">
@@ -12,6 +22,8 @@ const Searchbar = () => {
         <input
           className="pl-3 grow outline-none placeholder:text-sm placeholder:md:text-base"
           placeholder="Job Title / Requirements / Tech..."
+          onChange={handleSearch}
+          value={searchTerm}
         />
       </div>
     </div>

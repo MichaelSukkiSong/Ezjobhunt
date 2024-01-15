@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   useDisclosure,
   Modal,
@@ -18,21 +18,29 @@ import {
 import Select from "react-select";
 import { ChevronDownIcon } from "../../../../icons";
 
-const options = [
-  { value: "North America", label: "North America" },
-  { value: "Latin America", label: "Latin America" },
-  { value: "Europe", label: "Europe" },
-  { value: "EMEA", label: "EMEA" },
-  { value: "Asia", label: "Asia" },
-  { value: "Africa", label: "Africa" },
-  { value: "Oceania", label: "Oceania" },
-  { value: "United States", label: "United States" },
-];
-
 const LocationBtn = ({ setFilteringOptions }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, setValue] = useState("1");
   const [selectedOption, setSelectedOption] = useState(null);
+  const [options, setOptions] = useState([]);
+
+  useEffect(() => {
+    const getCountry = async () => {
+      const res = await fetch("/api/fetchCountry");
+      const result = await res.json();
+
+      const options = result.data.map((el) => {
+        return {
+          value: el.name.common,
+          label: el.name.common,
+        };
+      });
+
+      setOptions(options);
+    };
+
+    getCountry();
+  }, []);
 
   return (
     <div className="flex flex-row items-center space-x-2 border rounded-xl outline-none basis-1/2 ">
@@ -64,18 +72,12 @@ const LocationBtn = ({ setFilteringOptions }) => {
                       />
                     </div>
                   ) : null}
-                  <Radio value="2">City</Radio>
-                  <div>-</div>
+                  {/* <Radio value="2">City</Radio>
+                  <div>-</div> */}
                 </Stack>
               </RadioGroup>
             </div>
           </ModalBody>
-
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
         </ModalContent>
       </Modal>
     </div>
