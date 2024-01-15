@@ -9,7 +9,7 @@ import JDgrid from "./panel/main/JDgrid";
 const MainPanel = () => {
   const [filteringOptions, setFilteringOptions] = useState({
     searchTerm: "",
-    location: "",
+    locations: [],
     remoteOnly: false,
     role: "",
     type: "",
@@ -27,7 +27,9 @@ const MainPanel = () => {
         <div>
           {filteringOptions.transparentSalaries === true ? "true" : "false"}
         </div>
-        <div>{filteringOptions.searchTerm}</div> */}
+        <div>{filteringOptions.searchTerm}</div>
+        <div>{filteringOptions.locations.length}</div>
+        <div>{filteringOptions.experience.length}</div> */}
         <div className="flex flex-col">
           <Searchbar setFilteringOptions={setFilteringOptions} />
           <Optionsbar setFilteringOptions={setFilteringOptions} />

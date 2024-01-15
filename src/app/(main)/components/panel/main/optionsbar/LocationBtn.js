@@ -21,8 +21,8 @@ import { ChevronDownIcon } from "../../../../icons";
 const LocationBtn = ({ setFilteringOptions }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [value, setValue] = useState("1");
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [options, setOptions] = useState([]);
+  const [countryOptions, setCountryOptions] = useState([]);
+  const [selected, setSelected] = useState([]);
 
   useEffect(() => {
     const getCountry = async () => {
@@ -36,7 +36,7 @@ const LocationBtn = ({ setFilteringOptions }) => {
         };
       });
 
-      setOptions(options);
+      setCountryOptions(options);
     };
 
     getCountry();
@@ -66,9 +66,18 @@ const LocationBtn = ({ setFilteringOptions }) => {
                   {value === "1" ? (
                     <div>
                       <Select
-                        defaultValue={selectedOption}
-                        onChange={setSelectedOption}
-                        options={options}
+                        isMulti
+                        name="countries"
+                        options={countryOptions}
+                        onChange={(selected) => {
+                          setSelected(selected);
+                          setFilteringOptions((prev) => {
+                            return {
+                              ...prev,
+                              locations: selected.map((el) => el.value),
+                            };
+                          });
+                        }}
                       />
                     </div>
                   ) : null}
