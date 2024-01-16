@@ -47,16 +47,22 @@ const JDcard = ({ job, buttons }) => {
                 </button>
               </div>
             ) : null}
-            <div className="flex flex-col space-y-1">
-              <span className="font-bold text-xs text-gray-500">🏢 About</span>
-              <span className="font-light">{job.about_company}</span>
-            </div>
-            <div className="flex flex-col space-y-1">
-              <span className="font-bold text-xs text-gray-500">
-                🎯 Requirements
-              </span>
-              <span className="font-light">{job.requirements}</span>
-            </div>
+            {job.about_company ? (
+              <div className="flex flex-col space-y-1">
+                <span className="font-bold text-xs text-gray-500">
+                  🏢 About
+                </span>
+                <span className="font-light">{job.about_company}</span>
+              </div>
+            ) : null}
+            {job.requirements ? (
+              <div className="flex flex-col space-y-1">
+                <span className="font-bold text-xs text-gray-500">
+                  🎯 Requirements
+                </span>
+                <span className="font-light">{job.requirements}</span>
+              </div>
+            ) : null}
             {job.tech_stack ? (
               <div className="flex flex-col space-y-1">
                 <span className="font-bold text-xs text-gray-500">💻 Tech</span>
