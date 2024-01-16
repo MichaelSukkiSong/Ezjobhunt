@@ -22,13 +22,22 @@ import {
 } from "../../../icons";
 
 const JDgrid = ({ filteringOptions }) => {
+  const [currentUserUid, setCurrentUserUid] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [savedJobs, setSavedJobs] = useState([]);
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [hiddenJobs, setHiddenJobs] = useState([]);
-  const [currentUserUid, setCurrentUserUid] = useState(null);
   const user = useAuth();
   const router = useRouter();
+  const {
+    searchTerm,
+    locations,
+    remoteOnly,
+    role,
+    type,
+    experience,
+    transparentSalaries,
+  } = filteringOptions;
 
   useEffect(() => {
     if (user) {
@@ -48,7 +57,7 @@ const JDgrid = ({ filteringOptions }) => {
       setJobs(jobsArray);
     };
 
-    const getSavedJobs = async () => {
+    const getSavedAppliedHiddenJobs = async () => {
       if (!currentUserUid) return;
 
       const db = fb.getFirestore();
@@ -73,7 +82,7 @@ const JDgrid = ({ filteringOptions }) => {
     };
 
     getJobs();
-    getSavedJobs();
+    getSavedAppliedHiddenJobs();
   }, [currentUserUid]);
 
   const handleSaveJobClick = async (job) => {
@@ -202,8 +211,44 @@ const JDgrid = ({ filteringOptions }) => {
       .filter((job) => !appliedJobs.includes(job.id))
       .filter((job) => !hiddenJobs.includes(job.id))
       .filter((job) => {
-        // apply additonal filtering logic here based on filteringOptions
-        return true;
+        const searchTermMatch =
+          job.job_title.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+          job.requirements.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+          job.tech_stack.toLowerCase().includes(searchTerm?.toLowerCase());
+
+        const remoteMatch =
+          !remoteOnly || job.job_location?.toLowerCase().includes("remote");
+
+        const transparentSalariesMatch =
+          !transparentSalaries || job.salary_range;
+
+        const roleMatch =
+          role === "" || job.role.toLowerCase() === role?.toLowerCase();
+
+        const typeMatch =
+          type === "" || job.job_type.toLowerCase() === type?.toLowerCase();
+
+        const experienceMatch =
+          !experience ||
+          experience?.length === 0 ||
+          (experience[0] < job.min_years_experience &&
+            job.min_years_experience < experience[1]);
+
+        // const locationMatch =
+        //   locations.length === 0 ||
+        //   locations.some((location) =>
+        //     job.job_location.toLowerCase().includes(location.toLowerCase())
+        //   );
+
+        return (
+          searchTermMatch &&
+          remoteMatch &&
+          transparentSalariesMatch &&
+          roleMatch &&
+          typeMatch &&
+          experienceMatch
+        );
+        // locationMatch &&
       })
       .map((job) => {
         return <JDcard key={job.id} job={job} buttons={buttons} />;

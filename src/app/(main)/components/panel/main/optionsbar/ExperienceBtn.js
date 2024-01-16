@@ -48,10 +48,10 @@ const ExperienceBtn = ({ setFilteringOptions }) => {
                 min={0}
                 max={21}
                 onChangeEnd={(val) => {
-                  console.log(val);
-
                   setExperienceRange(val);
-                  setFilteringOptions(val);
+                  setFilteringOptions((prev) => {
+                    return { ...prev, experience: val };
+                  });
                 }}
               >
                 <RangeSliderTrack>
