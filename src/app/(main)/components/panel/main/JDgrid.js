@@ -206,7 +206,7 @@ const JDgrid = ({ filteringOptions }) => {
 
   const renderJDcard = () => {
     return jobs
-      .filter((job) => !job.job_company !== true)
+      .filter((job) => !job.about_company !== true)
       .filter((job) => !savedJobs.includes(job.id))
       .filter((job) => !appliedJobs.includes(job.id))
       .filter((job) => !hiddenJobs.includes(job.id))
