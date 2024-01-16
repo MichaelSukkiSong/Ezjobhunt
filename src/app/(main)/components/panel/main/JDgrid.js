@@ -223,10 +223,10 @@ const JDgrid = ({ filteringOptions }) => {
           !transparentSalaries || job.salary_range;
 
         const roleMatch =
-          role === "" || job.role.toLowerCase() === role?.toLowerCase();
+          role === "" || job.role?.toLowerCase() === role?.toLowerCase();
 
         const typeMatch =
-          type === "" || job.job_type.toLowerCase() === type?.toLowerCase();
+          type === "" || job.job_type?.toLowerCase() === type?.toLowerCase();
 
         const experienceMatch =
           !experience ||
