@@ -217,7 +217,6 @@ export const board_tokens_greenhouse_6 = [
 
 export const board_tokens_greenhouse_7 = [
   "crossmediainc",
-  "carvana",
   "signos",
   "barstoolsports",
   "machinezone",
