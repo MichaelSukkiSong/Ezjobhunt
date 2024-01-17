@@ -138,8 +138,6 @@ export const board_tokens_greenhouse_4 = [
   "density",
   "marketaxesscorporation",
   "vitalfarms",
-  "adasiaholdings",
-  "turquoisehealth",
 ];
 
 export const board_tokens_greenhouse_5 = [
@@ -377,6 +375,8 @@ export const board_tokens_greenhouse_11 = [
   "roku",
   "flatironhealth",
   "changeis",
+  "adasiaholdings",
+  "turquoisehealth",
 ];
 
 export const board_tokens_lever = ["clovirtualfashion", "joshstoysandgames"];
