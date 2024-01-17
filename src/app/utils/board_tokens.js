@@ -140,13 +140,6 @@ export const board_tokens_greenhouse_4 = [
   "vitalfarms",
   "adasiaholdings",
   "turquoisehealth",
-  "shopmonkey",
-  "naughtydog",
-  "bhs",
-  "chashburn",
-  "roku",
-  "flatironhealth",
-  "changeis",
 ];
 
 export const board_tokens_greenhouse_5 = [
@@ -161,18 +154,17 @@ export const board_tokens_greenhouse_5 = [
   "dustyrobotics",
   "preply",
   "credera",
-  "policygenius", //
+  "policygenius",
   "thoughtspot",
   "Stripe",
   "calendly",
   "supplyhouse",
   "betterment",
   "daangn",
-  "mongodb", //
   "spothero",
   "cannondesign",
   "integrate",
-  "evokekyne", //
+  "evokekyne",
   "realtimeboardglobal",
   "cloudmasonry",
   "nayya",
@@ -375,6 +367,16 @@ export const board_tokens_greenhouse_10 = [
   "zynga",
   "googlefiber",
   "buzzfeed",
+];
+
+export const board_tokens_greenhouse_11 = [
+  "shopmonkey",
+  "naughtydog",
+  "bhs",
+  "chashburn",
+  "roku",
+  "flatironhealth",
+  "changeis",
 ];
 
 export const board_tokens_lever = ["clovirtualfashion", "joshstoysandgames"];
