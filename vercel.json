@@ -44,6 +44,14 @@
     {
       "path": "/api/cron/fetchJobs/greenhouse_10",
       "schedule": "45 5 * * 0"
+    },
+    {
+      "path": "/api/cron/fetchJobs/greenhouse_11",
+      "schedule": "0 6 * * 0"
+    },
+    {
+      "path": "/api/cron/fetchJobs/greenhouse_12",
+      "schedule": "15 6 * * 0"
     }
   ]
 }
