@@ -314,11 +314,6 @@ export const board_tokens_greenhouse_9 = [
   "noredink",
   "kivaorg",
   "digicert",
-  "deliveroo",
-  "remotecom",
-  "linx",
-  "mindfoundry",
-  "foodpandamalaysia",
 ];
 
 export const board_tokens_greenhouse_10 = [
@@ -375,6 +370,11 @@ export const board_tokens_greenhouse_11 = [
   "duda",
   "sumologic",
   "purestorage",
+  "deliveroo",
+  "remotecom",
+  "linx",
+  "mindfoundry",
+  "foodpandamalaysia",
 ];
 
 export const board_tokens_lever = ["clovirtualfashion", "joshstoysandgames"];
