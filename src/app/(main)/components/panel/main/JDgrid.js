@@ -212,9 +212,9 @@ const JDgrid = ({ filteringOptions }) => {
       .filter((job) => !hiddenJobs.includes(job.id))
       .filter((job) => {
         const searchTermMatch =
-          job.job_title.toLowerCase().includes(searchTerm?.toLowerCase()) ||
-          job.requirements.toLowerCase().includes(searchTerm?.toLowerCase()) ||
-          job.tech_stack.toLowerCase().includes(searchTerm?.toLowerCase());
+          job.job_title?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+          job.requirements?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+          job.tech_stack?.toLowerCase().includes(searchTerm?.toLowerCase());
 
         const remoteMatch =
           !remoteOnly || job.job_location?.toLowerCase().includes("remote");
