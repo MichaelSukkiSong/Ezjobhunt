@@ -281,7 +281,6 @@ export const board_tokens_greenhouse_8 = [
   "vestwell",
   "icapitalnetwork",
   "pay2dc",
-  "purestorage",
 ];
 
 export const board_tokens_greenhouse_9 = [
@@ -375,6 +374,7 @@ export const board_tokens_greenhouse_11 = [
   "villagemd",
   "duda",
   "sumologic",
+  "purestorage",
 ];
 
 export const board_tokens_lever = ["clovirtualfashion", "joshstoysandgames"];
