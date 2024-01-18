@@ -332,26 +332,7 @@ export const board_tokens_greenhouse_10 = [
   "onemedical",
   "bancopan",
   "jamf",
-  "udemny",
-  "mindbody",
-  "usertesting48",
-  "tide",
-  "jumptrading",
-  "travelperk",
-  "ogilvy",
-  "chime",
-  "shifttechnology",
-  "prenuvo",
-  "hashicorp",
-  "vaynermedia",
-  "bitcoincom",
-  "taketwo",
-  "axios",
-  "buildarocketboy",
-  "jetty",
-  "zynga",
-  "googlefiber",
-  "buzzfeed",
+  "udemy",
 ];
 
 export const board_tokens_greenhouse_11 = [
@@ -375,6 +356,27 @@ export const board_tokens_greenhouse_11 = [
   "linx",
   "mindfoundry",
   "foodpandamalaysia",
+];
+
+export const board_tokens_greenhouse_12 = [
+  "mindbody",
+  "usertesting48",
+  "tide",
+  "jumptrading",
+  "travelperk",
+  "ogilvy",
+  "chime",
+  "shifttechnology",
+  "prenuvo",
+  "hashicorp",
+  "vaynermedia",
+  "bitcoincom",
+  "taketwo",
+  "axios",
+  "buildarocketboy",
+  "jetty",
+  "googlefiber",
+  "buzzfeed",
 ];
 
 export const board_tokens_lever = ["clovirtualfashion", "joshstoysandgames"];
