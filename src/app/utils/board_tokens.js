@@ -256,7 +256,6 @@ export const board_tokens_greenhouse_8 = [
   "centriaautism",
   "asana",
   "axonius",
-  "blueoriginllc",
   "coinbase",
   "sonderaustralia",
   "snappy",
@@ -283,11 +282,6 @@ export const board_tokens_greenhouse_8 = [
   "icapitalnetwork",
   "pay2dc",
   "purestorage",
-  "iex",
-  "lattice",
-  "villagemd",
-  "duda",
-  "sumologic",
 ];
 
 export const board_tokens_greenhouse_9 = [
@@ -376,6 +370,11 @@ export const board_tokens_greenhouse_11 = [
   "changeis",
   "adasiaholdings",
   "turquoisehealth",
+  "iex",
+  "lattice",
+  "villagemd",
+  "duda",
+  "sumologic",
 ];
 
 export const board_tokens_lever = ["clovirtualfashion", "joshstoysandgames"];
