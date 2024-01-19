@@ -43,7 +43,7 @@ const LocationBtn = ({ setFilteringOptions }) => {
   }, []);
 
   return (
-    <div className="flex flex-row items-center space-x-2 border rounded-xl outline-none basis-1/2 ">
+    <div className="flex flex-row items-center space-x-2 border rounded-xl grow outline-none false">
       <button
         onClick={onOpen}
         className="flex w-full items-center justify-center space-x-4 p-2 "

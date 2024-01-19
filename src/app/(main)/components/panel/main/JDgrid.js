@@ -53,10 +53,10 @@ const JDgrid = ({ filteringOptions }) => {
       const db = fb.getFirestore();
       const jobsArray = [];
       // TESTING
-      // const q = query(collection(db, "jobs"), limit(1000));
-      // const querySnapshot = await getDocs(q);
+      const q = query(collection(db, "jobs"), limit(500));
+      const querySnapshot = await getDocs(q);
       // ORIGINAL
-      const querySnapshot = await getDocs(collection(db, "jobs"));
+      // const querySnapshot = await getDocs(collection(db, "jobs"));
       querySnapshot.forEach((doc) => {
         jobsArray.push({ id: doc.id, ...doc.data() });
       });
@@ -100,7 +100,7 @@ const JDgrid = ({ filteringOptions }) => {
         "#infiniteJobsScrollDiv"
       );
 
-      console.log(scrollHeight, scrollTop, clientHeight);
+      // console.log(scrollHeight, scrollTop, clientHeight);
 
       if (scrollHeight - scrollTop - clientHeight < 100) {
         // console.log("end of list!");

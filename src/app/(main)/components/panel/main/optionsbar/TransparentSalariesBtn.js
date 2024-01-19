@@ -14,9 +14,11 @@ const TransparentSalariesBtn = ({ setFilteringOptions }) => {
   };
 
   return (
-    <div className="flex flex-row flex-none items-center space-x-2 border rounded-xl outline-none p-2">
-      <span>Transparent Salaries Only</span>
-      <Switch onChange={handleChange} isChecked={isEnabled} />
+    <div className="flex flex-col border px-4 py-2 rounded-xl flex-none grow false">
+      <div className="flex items-center justify-between space-x-4">
+        <span>Transparent Salaries Only</span>
+        <Switch onChange={handleChange} isChecked={isEnabled} />
+      </div>
     </div>
   );
 };

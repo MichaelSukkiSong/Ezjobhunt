@@ -9,13 +9,19 @@ const Optionsbar = ({ setFilteringOptions }) => {
   return (
     <div className="mt-4 mb-2">
       <div className="flex justify-center">
-        <div className="flex text-sm font-medium w-full space-x-2">
-          <LocationBtn setFilteringOptions={setFilteringOptions} />
-          <RemoteOnlyBtn setFilteringOptions={setFilteringOptions} />
-          <RoleBtn setFilteringOptions={setFilteringOptions} />
-          <TypeBtn setFilteringOptions={setFilteringOptions} />
-          <ExperienceBtn setFilteringOptions={setFilteringOptions} />
-          <TransparentSalariesBtn setFilteringOptions={setFilteringOptions} />
+        <div className="flex flex-col w-full flex-auto xl:flex-none xl:flex-row xl:items-center space-y-2 xl:space-y-0 xl:space-x-2 text-sm font-medium">
+          <div className="flex flex-row items-center space-x-2 grow">
+            <LocationBtn setFilteringOptions={setFilteringOptions} />
+            <RemoteOnlyBtn setFilteringOptions={setFilteringOptions} />
+          </div>
+          <div className="flex flex-row items-center space-x-2 grow shrink-0">
+            <RoleBtn setFilteringOptions={setFilteringOptions} />
+            <TypeBtn setFilteringOptions={setFilteringOptions} />
+          </div>
+          <div className="flex flex-row items-center space-x-2">
+            <ExperienceBtn setFilteringOptions={setFilteringOptions} />
+            <TransparentSalariesBtn setFilteringOptions={setFilteringOptions} />
+          </div>
         </div>
       </div>
     </div>

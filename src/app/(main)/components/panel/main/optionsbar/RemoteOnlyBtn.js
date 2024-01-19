@@ -14,7 +14,7 @@ const RemoteOnlyBtn = ({ setFilteringOptions }) => {
   };
 
   return (
-    <div className="flex flex-row flex-none items-center space-x-2 border rounded-xl outline-none p-2">
+    <div className="flex items-center space-x-4 p-2 flex-none border rounded-xl false">
       <span>Remote Only</span>
       <Switch onChange={handleChange} isChecked={isEnabled} />
     </div>
