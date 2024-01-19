@@ -37,7 +37,7 @@ const SidePanel = () => {
   };
 
   return (
-    <div className="flex h-screen p-2 pt-8 border-r">
+    <div className="hidden md:flex h-screen p-2 pt-8 border-r">
       <div className="flex flex-col ml-2 w-48 overflow-y-auto">
         <div className="flex flex-col py-4 px-2">
           <div className="flex  font-bold text-xl mb-4 ">

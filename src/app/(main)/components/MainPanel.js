@@ -18,7 +18,10 @@ const MainPanel = () => {
   });
 
   return (
-    <div className="h-screen p-4 w-full overflow-x-hidden">
+    <div
+      className="md:h-screen overflow-x-hidden w-full"
+      id="infiniteJobsScrollDiv"
+    >
       <div className="md:px-2">
         {/* TESTING */}
         {/* <div>{filteringOptions.remoteOnly === true ? "true" : "false"}</div>

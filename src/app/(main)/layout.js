@@ -1,11 +1,13 @@
-import SidePanel from './components/SidePanel';
+import SidePanel from "./components/SidePanel";
 
 export default function MainLayout({ children }) {
   return (
     <>
-      <div className="block p-4 md:p-0 md:hidden">hello</div>
+      {/* mobile */}
+      <div className="block md:p-0 md:hidden min-h-screen">hello</div>
+      {/* pc */}
       <div className="hidden md:block">
-        <div className="flex h-screen">
+        <div className="md:flex">
           <SidePanel />
           {children}
         </div>

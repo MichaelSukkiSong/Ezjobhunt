@@ -10,6 +10,7 @@ import {
   getDocs,
   query,
   where,
+  limit,
 } from "firebase/firestore";
 import fb from "@/app/services/firebase";
 import { useAuth } from "@/app/hooks/useAuth";
@@ -51,6 +52,10 @@ const JDgrid = ({ filteringOptions }) => {
     const getJobs = async () => {
       const db = fb.getFirestore();
       const jobsArray = [];
+      // TESTING
+      // const q = query(collection(db, "jobs"), limit(1000));
+      // const querySnapshot = await getDocs(q);
+      // ORIGINAL
       const querySnapshot = await getDocs(collection(db, "jobs"));
       querySnapshot.forEach((doc) => {
         jobsArray.push({ id: doc.id, ...doc.data() });
@@ -89,21 +94,30 @@ const JDgrid = ({ filteringOptions }) => {
   //TODO
   useEffect(() => {
     const handleScroll = () => {
-      console.log("scroll working!");
+      // console.log("scroll working!");
 
-      const { scrollHeight, scrollTop, clientHeight } =
-        document.documentElement;
+      const { scrollHeight, scrollTop, clientHeight } = document.querySelector(
+        "#infiniteJobsScrollDiv"
+      );
+
+      console.log(scrollHeight, scrollTop, clientHeight);
 
       if (scrollHeight - scrollTop - clientHeight < 100) {
+        // console.log("end of list!");
+
         const newNumVisibleJobs = numVisibleJobs + 40;
         setNumVisibleJobs(newNumVisibleJobs);
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
+    document
+      .querySelector("#infiniteJobsScrollDiv")
+      .addEventListener("scroll", handleScroll);
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      document
+        .querySelector("#infiniteJobsScrollDiv")
+        .removeEventListener("scroll", handleScroll);
     };
   }, [numVisibleJobs]);
 
