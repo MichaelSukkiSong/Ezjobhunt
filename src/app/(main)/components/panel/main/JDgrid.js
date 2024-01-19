@@ -27,6 +27,7 @@ const JDgrid = ({ filteringOptions }) => {
   const [savedJobs, setSavedJobs] = useState([]);
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [hiddenJobs, setHiddenJobs] = useState([]);
+  const [numVisibleJobs, setNumVisibleJobs] = useState(40);
   const user = useAuth();
   const router = useRouter();
   const {
@@ -84,6 +85,27 @@ const JDgrid = ({ filteringOptions }) => {
     getJobs();
     getSavedAppliedHiddenJobs();
   }, [currentUserUid]);
+
+  //TODO
+  useEffect(() => {
+    const handleScroll = () => {
+      console.log("scroll working!");
+
+      const { scrollHeight, scrollTop, clientHeight } =
+        document.documentElement;
+
+      if (scrollHeight - scrollTop - clientHeight < 100) {
+        const newNumVisibleJobs = numVisibleJobs + 40;
+        setNumVisibleJobs(newNumVisibleJobs);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [numVisibleJobs]);
 
   const handleSaveJobClick = async (job) => {
     if (!currentUserUid) {
@@ -250,6 +272,7 @@ const JDgrid = ({ filteringOptions }) => {
         );
         // locationMatch &&
       })
+      .slice(0, numVisibleJobs)
       .map((job) => {
         return <JDcard key={job.id} job={job} buttons={buttons} />;
       });
@@ -258,7 +281,7 @@ const JDgrid = ({ filteringOptions }) => {
   return (
     <div className="infinite-scroll-component__outerdiv">
       <div className="infinite-scroll-component ">
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 ">
           {renderJDcard()}
         </div>
       </div>
