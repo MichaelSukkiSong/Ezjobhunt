@@ -1,4 +1,11 @@
-export { SearchIcon, ChatIcon, ChevronDownIcon, Icon } from "@chakra-ui/icons";
+export {
+  SearchIcon,
+  ChatIcon,
+  ChevronDownIcon,
+  Icon,
+  HamburgerIcon,
+  CloseIcon,
+} from "@chakra-ui/icons";
 
 export { AiOutlineHeart, AiOutlineInsurance } from "react-icons/ai";
 export {
