@@ -18,29 +18,14 @@ const MainPanel = () => {
   });
 
   return (
-    <div
-      className="md:h-screen overflow-x-hidden w-full"
-      id="infiniteJobsScrollDiv"
-    >
-      <div className="md:p-6 min-h-full">
-        {/* TESTING */}
-        {/* <div>{filteringOptions.remoteOnly === true ? "true" : "false"}</div>
-        <div>{filteringOptions.role}</div>
-        <div>{filteringOptions.type}</div>
-        <div>
-          {filteringOptions.transparentSalaries === true ? "true" : "false"}
-        </div>
-        <div>{filteringOptions.searchTerm}</div>
-        <div>{filteringOptions.locations.length}</div>
-        <div>{filteringOptions.experience.length}</div> */}
-        <div className="flex flex-col">
-          <Searchbar setFilteringOptions={setFilteringOptions} />
-          <Optionsbar setFilteringOptions={setFilteringOptions} />
-          <Bannersbar />
-          <Suspense fallback={<p>Loading</p>}>
-            <JDgrid filteringOptions={filteringOptions} />
-          </Suspense>
-        </div>
+    <div className="md:p-6 min-h-full">
+      <div className="flex flex-col">
+        <Searchbar setFilteringOptions={setFilteringOptions} />
+        <Optionsbar setFilteringOptions={setFilteringOptions} />
+        <Bannersbar />
+        <Suspense fallback={<p>Loading</p>}>
+          <JDgrid filteringOptions={filteringOptions} />
+        </Suspense>
       </div>
     </div>
   );
