@@ -10,6 +10,7 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
+import SidePanel from "../../SidePanel";
 import { CloseIcon, HamburgerIcon } from "../../../icons";
 
 const MobileMenubar = () => {
@@ -24,12 +25,15 @@ const MobileMenubar = () => {
           <HamburgerIcon boxSize={6} />
         </button>
 
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={onClose} size="full">
           <ModalOverlay />
           <ModalContent>
-            <ModalHeader>Modal Title</ModalHeader>
             <ModalCloseButton />
-            <ModalBody></ModalBody>
+            <ModalBody>
+              <div>
+                <SidePanel />
+              </div>
+            </ModalBody>
 
             <ModalFooter></ModalFooter>
           </ModalContent>

@@ -10,7 +10,9 @@ export default function MainLayout({ children }) {
       {/* pc */}
       <div className="hidden md:block">
         <div className="md:flex">
-          <SidePanel />
+          <div className="hidden md:flex h-screen p-2 pt-8 border-r">
+            <SidePanel />
+          </div>
           <div
             className="md:h-screen overflow-x-hidden w-full"
             id="infiniteJobsScrollDiv"
