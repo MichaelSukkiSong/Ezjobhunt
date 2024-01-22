@@ -112,12 +112,12 @@ const JDgrid = ({ filteringOptions }) => {
 
     document
       .querySelector("#infiniteJobsScrollDiv")
-      .addEventListener("scroll", handleScroll);
+      ?.addEventListener("scroll", handleScroll);
 
     return () => {
       document
         .querySelector("#infiniteJobsScrollDiv")
-        .removeEventListener("scroll", handleScroll);
+        ?.removeEventListener("scroll", handleScroll);
     };
   }, [numVisibleJobs]);
 
