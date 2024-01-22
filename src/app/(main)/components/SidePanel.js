@@ -32,8 +32,22 @@ const SidePanel = () => {
 
   const handleSignout = () => {
     const auth = fb.getAuth();
-    auth.signOut();
-    router.push("/");
+    auth
+      .signOut()
+      .then(() => {
+        // Clear cookies and site data
+        document.cookie.split(";").forEach((cookie) => {
+          const eqPos = cookie.indexOf("=");
+          const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+          document.cookie = `${name}=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/`;
+        });
+      })
+      .catch((err) => {
+        console.log("Error signing out", err);
+      });
+
+    router.replace("/");
+    router.refresh();
   };
 
   return (
