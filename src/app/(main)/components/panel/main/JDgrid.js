@@ -20,6 +20,7 @@ import {
   BsBookmarkCheck,
   BsEyeSlash,
   BsFlag,
+  LuCoffee,
 } from "../../../icons";
 
 const JDgrid = ({ filteringOptions }) => {
@@ -53,10 +54,10 @@ const JDgrid = ({ filteringOptions }) => {
       const db = fb.getFirestore();
       const jobsArray = [];
       // TESTING
-      // const q = query(collection(db, "jobs"), limit(500));
-      // const querySnapshot = await getDocs(q);
+      const q = query(collection(db, "jobs"), limit(500));
+      const querySnapshot = await getDocs(q);
       // ORIGINAL
-      const querySnapshot = await getDocs(collection(db, "jobs"));
+      // const querySnapshot = await getDocs(collection(db, "jobs"));
       querySnapshot.forEach((doc) => {
         jobsArray.push({ id: doc.id, ...doc.data() });
       });
@@ -240,6 +241,14 @@ const JDgrid = ({ filteringOptions }) => {
     },
   ];
 
+  const JDcard_etc_main = () => {
+    return (
+      <button>
+        <LuCoffee />
+      </button>
+    );
+  };
+
   const renderJDcard = () => {
     return jobs
       .filter((job) => !job.about_company !== true)
@@ -288,7 +297,14 @@ const JDgrid = ({ filteringOptions }) => {
       })
       .slice(0, numVisibleJobs)
       .map((job) => {
-        return <JDcard key={job.id} job={job} buttons={buttons} />;
+        return (
+          <JDcard
+            key={job.id}
+            job={job}
+            buttons={buttons}
+            etc={JDcard_etc_main()}
+          />
+        );
       });
   };
 

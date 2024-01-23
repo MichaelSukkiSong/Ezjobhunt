@@ -17,6 +17,7 @@ export {
   BsMic,
   BsCart2,
   BsTrash3,
+  BsPencil,
 } from "react-icons/bs";
 export { CiDeliveryTruck, CiSettings } from "react-icons/ci";
 export { FaRegFileLines } from "react-icons/fa6";

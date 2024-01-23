@@ -1,9 +1,9 @@
 "use client";
 
 import { Tooltip } from "@chakra-ui/react";
-import { Icon, CiSettings, FaRegFileLines, LuCoffee } from "../../../icons";
+import { Icon, CiSettings, FaRegFileLines } from "../../../icons";
 
-const JDcard = ({ job, buttons }) => {
+const JDcard = ({ job, buttons, etc }) => {
   const renderButtons = () => {
     return buttons.map(({ label, icon, fn, color }, index) => {
       return (
@@ -83,9 +83,7 @@ const JDcard = ({ job, buttons }) => {
               Apply Now
             </button>
             <div className="flex items-center space-x-4">
-              <button>
-                <LuCoffee />
-              </button>
+              {etc}
               <div className="flex items-center space-x-4">
                 {renderButtons()}
               </div>
