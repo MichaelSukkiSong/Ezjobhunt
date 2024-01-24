@@ -12,26 +12,15 @@ import {
   runTransaction,
 } from "firebase/firestore";
 import fb from "@/app/services/firebase";
-import {
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  Button,
-} from "@chakra-ui/react";
 import { useAuth } from "@/app/hooks/useAuth";
 import JDcard from "../components/panel/main/JDcard";
+import JDcard_etc_at from "./components/JDcard_etc_at";
 import {
   BsBookmark,
   BsBookmarkCheck,
   GoPaperAirplane,
   GrDocumentExcel,
   BsTrash3,
-  BsPencil,
 } from "../icons";
 
 const Page = () => {
@@ -47,9 +36,7 @@ const Page = () => {
   const [interviewingJobs, setInterviewingJobs] = useState([]);
   const [rejectedJobs, setRejectedJobs] = useState([]);
   const [hiddenJobs, setHiddenJobs] = useState([]);
-  const [notesText, setNotesText] = useState("");
   const user = useAuth();
-  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     if (user) {
@@ -329,10 +316,6 @@ const Page = () => {
     await handleMoveJobClick(job, "delete", "delete");
   };
 
-  const handleWriteNote = (event) => {
-    setNotesText(event.target.value);
-  };
-
   const buttonsForSavedSection = [
     {
       label: "Move to Applied",
@@ -474,30 +457,6 @@ const Page = () => {
     },
   ];
 
-  const JDcard_etc_at = () => {
-    return (
-      <>
-        {notesText ? (
-          <button
-            onClick={onOpen}
-            className="flex items-center space-x-2 py-1.5 text-xs rounded text-blue-600"
-          >
-            <BsPencil className="h-4 w-4 flex-none" />
-            <span>Your Notes</span>
-          </button>
-        ) : (
-          <button
-            onClick={onOpen}
-            className="flex items-center space-x-2 py-1.5 text-xs rounded border text-yellow-600 px-2"
-          >
-            <BsPencil className="h-4 w-4 flex-none" />
-            <span>Write Notes</span>
-          </button>
-        )}
-      </>
-    );
-  };
-
   const renderJobs = (jobs, buttons) => {
     return (
       <>
@@ -507,7 +466,7 @@ const Page = () => {
               key={job.id}
               job={job}
               buttons={buttons}
-              etc={JDcard_etc_at()}
+              etc={<JDcard_etc_at />}
             />
           ))}
         </div>
@@ -623,39 +582,6 @@ const Page = () => {
           {renderContent()}
         </div>
       </div>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Your Notes</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <div className="flex flex-col mb-4">
-              <textarea
-                onChange={handleWriteNote}
-                value={notesText}
-                className="h-72 border border-1 rounded w-full p-2 resize-none focus:border-none focus:ring-0 focus:outline-gray-200"
-              ></textarea>
-              {notesText && (
-                <div className="flex flex-items space-x-2 justify-end mt-4">
-                  <button className="py-2 w-28 rounded bg-black text-white font-medium text-sm">
-                    Save
-                  </button>
-                  <button className="py-2 w-28 rounded bg-red-500 text-white font-medium text-sm">
-                    Clear
-                  </button>
-                </div>
-              )}
-            </div>
-          </ModalBody>
-
-          {/* <ModalFooter>
-              <Button colorScheme="blue" mr={3} onClick={onClose}>
-                Close
-              </Button>
-              <Button variant="ghost">Secondary Action</Button>
-            </ModalFooter> */}
-        </ModalContent>
-      </Modal>
     </div>
   );
 };

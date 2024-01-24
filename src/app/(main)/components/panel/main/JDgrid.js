@@ -54,7 +54,7 @@ const JDgrid = ({ filteringOptions }) => {
       const db = fb.getFirestore();
       const jobsArray = [];
       // TESTING
-      // const q = query(collection(db, "jobs"), limit(500));
+      // const q = query(collection(db, "jobs"), limit(200));
       // const querySnapshot = await getDocs(q);
       // ORIGINAL
       const querySnapshot = await getDocs(collection(db, "jobs"));
