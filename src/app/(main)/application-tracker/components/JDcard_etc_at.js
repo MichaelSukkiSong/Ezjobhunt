@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -12,14 +12,50 @@ import {
   useDisclosure,
   Button,
 } from "@chakra-ui/react";
+import {
+  arrayRemove,
+  arrayUnion,
+  doc,
+  getDoc,
+  updateDoc,
+} from "firebase/firestore";
+import fb from "@/app/services/firebase";
 import { BsPencil } from "../../icons";
 
-const JDcard_etc_at = () => {
+const JDcard_etc_at = ({ jobId, memo, currentUserUid }) => {
   const [notesText, setNotesText] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  useEffect(() => {
+    setNotesText(memo);
+  }, [memo]);
+
   const handleWriteNote = (event) => {
     setNotesText(event.target.value);
+  };
+
+  const handleSaveMemoClick = async () => {
+    const db = fb.getFirestore();
+    // get job object ref for this particular job
+    const docRef = doc(db, "jobs", jobId);
+    // update job object to save memo inside job.memos array along with the user id
+    await updateDoc(docRef, {
+      memos: arrayUnion({ currentUserUid, memo: notesText }),
+    });
+    setNotesText(notesText);
+    onClose();
+  };
+
+  const handleClearMemoClick = async () => {
+    const db = fb.getFirestore();
+    // get job object ref for this particular job
+    const docRef = doc(db, "jobs", jobId);
+    // update job object to remove memo inside job.memos array
+    await updateDoc(docRef, {
+      memos: arrayRemove({ currentUserUid, memo: notesText }),
+    });
+    setNotesText("");
+    onClose();
   };
 
   return (
@@ -56,10 +92,16 @@ const JDcard_etc_at = () => {
               ></textarea>
               {notesText && (
                 <div className="flex flex-items space-x-2 justify-end mt-4">
-                  <button className="py-2 w-28 rounded bg-black text-white font-medium text-sm">
+                  <button
+                    onClick={handleSaveMemoClick}
+                    className="py-2 w-28 rounded bg-black text-white font-medium text-sm"
+                  >
                     Save
                   </button>
-                  <button className="py-2 w-28 rounded bg-red-500 text-white font-medium text-sm">
+                  <button
+                    onClick={handleClearMemoClick}
+                    className="py-2 w-28 rounded bg-red-500 text-white font-medium text-sm"
+                  >
                     Clear
                   </button>
                 </div>

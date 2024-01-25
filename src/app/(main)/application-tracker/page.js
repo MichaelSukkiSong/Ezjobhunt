@@ -466,7 +466,17 @@ const Page = () => {
               key={job.id}
               job={job}
               buttons={buttons}
-              etc={<JDcard_etc_at />}
+              etc={
+                <JDcard_etc_at
+                  jobId={job.id}
+                  currentUserUid={currentUserUid}
+                  memo={
+                    job.memos?.find(
+                      (memo) => memo.currentUserUid === currentUserUid
+                    )?.memo
+                  }
+                />
+              }
             />
           ))}
         </div>
