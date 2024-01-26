@@ -22,7 +22,7 @@ import {
 import fb from "@/app/services/firebase";
 import { BsPencil } from "../../icons";
 
-const JDcard_etc_at = ({ jobId, memo, currentUserUid }) => {
+const JDcard_etc_at = ({ jobId, memo, currentUserUid, onJobDataChange }) => {
   const [notesText, setNotesText] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -43,6 +43,7 @@ const JDcard_etc_at = ({ jobId, memo, currentUserUid }) => {
       memos: arrayUnion({ currentUserUid, memo: notesText }),
     });
     setNotesText(notesText);
+    onJobDataChange();
     onClose();
   };
 
@@ -55,28 +56,34 @@ const JDcard_etc_at = ({ jobId, memo, currentUserUid }) => {
       memos: arrayRemove({ currentUserUid, memo: notesText }),
     });
     setNotesText("");
+    onJobDataChange();
     onClose();
+  };
+
+  const renderButtonContent = () => {
+    const buttonContent = notesText ? (
+      <button
+        onClick={onOpen}
+        className="flex items-center space-x-2 py-1.5 text-xs rounded text-blue-600"
+      >
+        <BsPencil className="h-4 w-4 flex-none" />
+        <span>Your Notes</span>
+      </button>
+    ) : (
+      <button
+        onClick={onOpen}
+        className="flex items-center space-x-2 py-1.5 text-xs rounded border text-yellow-600 px-2"
+      >
+        <BsPencil className="h-4 w-4 flex-none" />
+        <span>Write Notes</span>
+      </button>
+    );
+    return buttonContent;
   };
 
   return (
     <>
-      {notesText ? (
-        <button
-          onClick={onOpen}
-          className="flex items-center space-x-2 py-1.5 text-xs rounded text-blue-600"
-        >
-          <BsPencil className="h-4 w-4 flex-none" />
-          <span>Your Notes</span>
-        </button>
-      ) : (
-        <button
-          onClick={onOpen}
-          className="flex items-center space-x-2 py-1.5 text-xs rounded border text-yellow-600 px-2"
-        >
-          <BsPencil className="h-4 w-4 flex-none" />
-          <span>Write Notes</span>
-        </button>
-      )}
+      {renderButtonContent()}
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />

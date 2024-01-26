@@ -71,104 +71,115 @@ const Page = () => {
   }, [currentUserUid]);
 
   useEffect(() => {
-    const getSavedJobs = async () => {
-      if (!savedJobsId) return;
-
-      const db = fb.getFirestore();
-
-      const querySnapshot = await getDocs(collection(db, "jobs"));
-      const savedJobsArray = [];
-      querySnapshot.forEach((doc) => {
-        if (savedJobsId.includes(doc.id)) {
-          savedJobsArray.push({ id: doc.id, ...doc.data() });
-        }
-      });
-
-      setSavedJobs(savedJobsArray);
-    };
-
     getSavedJobs();
   }, [savedJobsId]);
 
   useEffect(() => {
-    const getAppliedJobs = async () => {
-      if (!appliedJobsId) return;
-
-      const db = fb.getFirestore();
-
-      const querySnapshot = await getDocs(collection(db, "jobs"));
-      const appliedJobsArray = [];
-      querySnapshot.forEach((doc) => {
-        if (appliedJobsId.includes(doc.id)) {
-          appliedJobsArray.push({ id: doc.id, ...doc.data() });
-        }
-      });
-
-      setAppliedJobs(appliedJobsArray);
-    };
-
     getAppliedJobs();
   }, [appliedJobsId]);
 
   useEffect(() => {
-    const getInterviewingJobs = async () => {
-      if (!interviewingJobsId) return;
-
-      const db = fb.getFirestore();
-
-      const querySnapshot = await getDocs(collection(db, "jobs"));
-      const interviewingJobsArray = [];
-      querySnapshot.forEach((doc) => {
-        if (interviewingJobsId.includes(doc.id)) {
-          interviewingJobsArray.push({ id: doc.id, ...doc.data() });
-        }
-      });
-
-      setInterviewingJobs(interviewingJobsArray);
-    };
-
     getInterviewingJobs();
   }, [interviewingJobsId]);
 
   useEffect(() => {
-    const getRejectedJobs = async () => {
-      if (!rejectedJobsId) return;
-
-      const db = fb.getFirestore();
-
-      const querySnapshot = await getDocs(collection(db, "jobs"));
-      const rejectedJobsArray = [];
-      querySnapshot.forEach((doc) => {
-        if (rejectedJobsId.includes(doc.id)) {
-          rejectedJobsArray.push({ id: doc.id, ...doc.data() });
-        }
-      });
-
-      setRejectedJobs(rejectedJobsArray);
-    };
-
     getRejectedJobs();
   }, [rejectedJobsId]);
 
   useEffect(() => {
-    const getHiddenJobs = async () => {
-      if (!hiddenJobsId) return;
-
-      const db = fb.getFirestore();
-
-      const querySnapshot = await getDocs(collection(db, "jobs"));
-      const hiddenJobsArray = [];
-      querySnapshot.forEach((doc) => {
-        if (hiddenJobsId.includes(doc.id)) {
-          hiddenJobsArray.push({ id: doc.id, ...doc.data() });
-        }
-      });
-
-      setHiddenJobs(hiddenJobsArray);
-    };
-
     getHiddenJobs();
   }, [hiddenJobsId]);
+
+  const getSavedJobs = async () => {
+    if (!savedJobsId) return;
+
+    const db = fb.getFirestore();
+
+    const querySnapshot = await getDocs(collection(db, "jobs"));
+    const savedJobsArray = [];
+    querySnapshot.forEach((doc) => {
+      if (savedJobsId.includes(doc.id)) {
+        savedJobsArray.push({ id: doc.id, ...doc.data() });
+      }
+    });
+
+    setSavedJobs(savedJobsArray);
+  };
+
+  const getAppliedJobs = async () => {
+    if (!appliedJobsId) return;
+
+    const db = fb.getFirestore();
+
+    const querySnapshot = await getDocs(collection(db, "jobs"));
+    const appliedJobsArray = [];
+    querySnapshot.forEach((doc) => {
+      if (appliedJobsId.includes(doc.id)) {
+        appliedJobsArray.push({ id: doc.id, ...doc.data() });
+      }
+    });
+
+    setAppliedJobs(appliedJobsArray);
+  };
+
+  const getInterviewingJobs = async () => {
+    if (!interviewingJobsId) return;
+
+    const db = fb.getFirestore();
+
+    const querySnapshot = await getDocs(collection(db, "jobs"));
+    const interviewingJobsArray = [];
+    querySnapshot.forEach((doc) => {
+      if (interviewingJobsId.includes(doc.id)) {
+        interviewingJobsArray.push({ id: doc.id, ...doc.data() });
+      }
+    });
+
+    setInterviewingJobs(interviewingJobsArray);
+  };
+
+  const getRejectedJobs = async () => {
+    if (!rejectedJobsId) return;
+
+    const db = fb.getFirestore();
+
+    const querySnapshot = await getDocs(collection(db, "jobs"));
+    const rejectedJobsArray = [];
+    querySnapshot.forEach((doc) => {
+      if (rejectedJobsId.includes(doc.id)) {
+        rejectedJobsArray.push({ id: doc.id, ...doc.data() });
+      }
+    });
+
+    setRejectedJobs(rejectedJobsArray);
+  };
+
+  const getHiddenJobs = async () => {
+    if (!hiddenJobsId) return;
+
+    const db = fb.getFirestore();
+
+    const querySnapshot = await getDocs(collection(db, "jobs"));
+    const hiddenJobsArray = [];
+    querySnapshot.forEach((doc) => {
+      if (hiddenJobsId.includes(doc.id)) {
+        hiddenJobsArray.push({ id: doc.id, ...doc.data() });
+      }
+    });
+
+    setHiddenJobs(hiddenJobsArray);
+  };
+
+  const handleJobDataChange = () => {
+    // Fetch jobs data again or perform any other actions needed
+    // This function will be called when the memo is saved or cleared
+    // and you want to update the jobs data in Page.js
+    getSavedJobs();
+    getAppliedJobs();
+    getInterviewingJobs();
+    getRejectedJobs();
+    getHiddenJobs();
+  };
 
   const handleMoveJobClick = async (job, targetState, targetStateId) => {
     const db = fb.getFirestore();
@@ -475,6 +486,7 @@ const Page = () => {
                       (memo) => memo.currentUserUid === currentUserUid
                     )?.memo
                   }
+                  onJobDataChange={handleJobDataChange}
                 />
               }
             />
