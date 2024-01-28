@@ -6,25 +6,19 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-  Button,
+  useToast,
 } from "@chakra-ui/react";
-import {
-  arrayRemove,
-  arrayUnion,
-  doc,
-  getDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import fb from "@/app/services/firebase";
 import { BsPencil } from "../../icons";
 
 const JDcard_etc_at = ({ jobId, memo, currentUserUid, onJobDataChange }) => {
   const [notesText, setNotesText] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const toast = useToast();
 
   useEffect(() => {
     setNotesText(memo);
@@ -44,6 +38,13 @@ const JDcard_etc_at = ({ jobId, memo, currentUserUid, onJobDataChange }) => {
     });
     setNotesText(notesText);
     onJobDataChange();
+    toast({
+      title: "Note Saved",
+      description: "Your note has been saved.",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
     onClose();
   };
 
@@ -57,6 +58,13 @@ const JDcard_etc_at = ({ jobId, memo, currentUserUid, onJobDataChange }) => {
     });
     setNotesText("");
     onJobDataChange();
+    toast({
+      title: "Note Cleared",
+      description: "Your note has been cleared.",
+      status: "success",
+      duration: 9000,
+      isClosable: true,
+    });
     onClose();
   };
 
