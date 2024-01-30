@@ -1,6 +1,11 @@
+"use client";
+
+import { Icon } from "@chakra-ui/react";
+import { FaLinkedin, FaGlobe, FaDollarSign } from "../icons";
+
 const Page = () => {
   return (
-    <div className="flex justify-center pt-4 pb-32 px-4 lg:px-0 bg-red-100">
+    <div className="flex justify-center pt-16 pb-32 px-4 lg:px-0 bg-red-100 h-full">
       <div className="flex flex-col flex-auto lg:max-w-2xl">
         <div className="flex flex-col p-8 bg-white rounded-md sm:rounded-lg md:rounded-2xl lg:rounded-3xl shadow sm:shadow-md md:shadow-lg lg:shadow-xl xl:shadow-2xl">
           <div className="flex flex-col items-center">
@@ -30,17 +35,76 @@ const Page = () => {
                 Location Preferences
                 <span className="text-red-600">*</span>
               </span>
-              <div className="flex flex-col text-start w-full"></div>
+              <div className="flex flex-col text-start w-full">
+                <div className="flex flex-col w-full">
+                  <span className="mt-2 text-sm">
+                    📍 Current location
+                    <span className="text-red-600">*</span>
+                  </span>
+                  <div>
+                    <input
+                      className="w-full p-2 border rounded my-2 outline-none z-50 pac-target-input"
+                      type="text"
+                      placeholder="Enter city/location..."
+                      autoComplete="off"
+                    />
+                  </div>
+                </div>
+                {/* <div className="flex items-center text-sm mt-8 mb-2">
+                  <span>Additional locations (Optional)</span>
+                </div>
+                <div className=" css-b62m3t-container"></div> */}
+              </div>
               <hr className="flex flex-col my-8" />
               <span className="mb-4 text-gray-500 font-medium text-sm">
                 Additional Information (Optional)
               </span>
-              <div className="flex items-center w-full border border-gray-300 rounded-md space-x-4 px-4"></div>
-              <div className="flex items-center w-full border border-gray-300 rounded-md space-x-4 px-4 mt-2"></div>
-              <div className="flex items-center w-full border border-gray-300 rounded-md space-x-4 px-4 mt-2"></div>
-              <hr className="flex flex-col my-8" />
-              <div className="mb-4 flex items-center space-x-1"></div>
-              <div></div>
+              <div className="flex items-center w-full border border-gray-300 rounded-md space-x-4 px-4">
+                <Icon as={FaLinkedin} className="text-black h-5 w-5" />
+                <input
+                  type="url"
+                  placeholder="https://linkedin.com/in/..."
+                  className="w-full py-2 text-gray-900 rounded-md shadow-sm focus:border-yellow-600 focus:outline-none"
+                />
+              </div>
+              <div className="flex items-center w-full border border-gray-300 rounded-md space-x-4 px-4 mt-2">
+                <Icon as={FaGlobe} className="text-black h-5 w-5" />
+                <input
+                  type="url"
+                  placeholder="https://abc.com/..."
+                  className="w-full py-2 text-gray-900 rounded-md shadow-sm focus:border-yellow-600 focus:outline-none"
+                />
+              </div>
+              <div className="flex items-center w-full border border-gray-300 rounded-md space-x-4 px-4 mt-2">
+                <Icon as={FaDollarSign} className="text-black h-5 w-5" />
+                <input
+                  type="text"
+                  placeholder="Base salary expectation"
+                  className="w-full py-2 text-gray-900 rounded-md shadow-sm focus:border-yellow-600 focus:outline-none"
+                />
+              </div>
+              {/* <hr className="flex flex-col my-8" />
+              <div className="mb-4 flex items-center space-x-1">
+                <span className="text-gray-500 font-medium text-sm">
+                  Hidden Companies (Optional)
+                </span>
+              </div>
+              <div>
+                <div className="flex items-center space-x-2 mb-4">
+                  <input
+                    type="text"
+                    className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-500 w-full"
+                    placeholder="Email domain name (e.g. meta.com)"
+                  />
+                  <button
+                    disabled
+                    className="p-2 rounded bg-black text-white disabled:text-black focus:outline-none focus:ring-1 focus:ring-gray-500 focus:ring-offset-2 focus:ring-offset-gray-100 disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  >
+                    <svg>+</svg>
+                  </button>
+                </div>
+                <ul></ul>
+              </div> */}
             </div>
           </div>
           <div className="flex justify-end mt-8">

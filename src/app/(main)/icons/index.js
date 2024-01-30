@@ -20,6 +20,7 @@ export {
   BsPencil,
 } from "react-icons/bs";
 export { CiDeliveryTruck, CiSettings } from "react-icons/ci";
+export { FaLinkedin, FaGlobe, FaDollarSign } from "react-icons/fa";
 export { FaRegFileLines } from "react-icons/fa6";
 export { FiLock } from "react-icons/fi";
 export { GiArtificialHive } from "react-icons/gi";
