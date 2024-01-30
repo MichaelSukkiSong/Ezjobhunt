@@ -75,7 +75,6 @@ const JDgrid = ({ filteringOptions }) => {
         where("uid", "==", currentUserUid)
       );
       const querySnapshot = await getDocs(q);
-
       if (querySnapshot.docs.length > 0) {
         const userDoc = querySnapshot.docs[0].data();
 
