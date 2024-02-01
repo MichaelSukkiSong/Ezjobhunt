@@ -1,9 +1,24 @@
 "use client";
 
+import { useEffect } from "react";
 import { Icon } from "@chakra-ui/react";
+import fb from "@/app/services/firebase";
 import { FaLinkedin, FaGlobe, FaDollarSign } from "../icons";
+import { ref, uploadBytes } from "firebase/storage";
 
 const Page = () => {
+  useEffect(() => {
+    const storage = fb.getStorage();
+
+    // create resumes reference
+    const resumesRef = ref(storage, "resumes");
+
+    // 'file' comes from the Blob or File API
+    // uploadBytes(resumesRef, file).then((snapshot) => {
+    //   console.log("Uploaded a blob or file!");
+    // });
+  }, []);
+
   return (
     <div className="flex justify-center pt-16 pb-32 px-4 lg:px-0 bg-red-100 h-full">
       <div className="flex flex-col flex-auto lg:max-w-2xl">
