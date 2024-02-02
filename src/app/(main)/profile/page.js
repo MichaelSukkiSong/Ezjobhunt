@@ -1,23 +1,44 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@chakra-ui/react";
 import fb from "@/app/services/firebase";
 import { FaLinkedin, FaGlobe, FaDollarSign } from "../icons";
 import { ref, uploadBytes } from "firebase/storage";
 
 const Page = () => {
+  const [resumeFile, setResumeFile] = useState(null);
+
   useEffect(() => {
+    // select input element
+    const inputElement = document.getElementById("resume_input");
+
+    const handleFile = () => {
+      const selectedFile = document.getElementById("resume_input").files[0];
+      setResumeFile(selectedFile);
+    };
+
+    // add event listener to input element
+    inputElement.addEventListener("change", handleFile);
+
+    return () => {
+      // remove event listener
+      inputElement.removeEventListener("change", handleFile);
+    };
+  }, []);
+
+  const handleProfileSubmit = () => {
+    // get storage
     const storage = fb.getStorage();
 
     // create resumes reference
     const resumesRef = ref(storage, "resumes");
 
-    // 'file' comes from the Blob or File API
-    // uploadBytes(resumesRef, file).then((snapshot) => {
-    //   console.log("Uploaded a blob or file!");
-    // });
-  }, []);
+    // upload file
+    uploadBytes(resumesRef, resumeFile).then((snapshot) => {
+      console.log("Uploaded a blob or file!");
+    });
+  };
 
   return (
     <div className="flex justify-center pt-16 pb-32 px-4 lg:px-0 bg-red-100 h-full">
@@ -62,6 +83,7 @@ const Page = () => {
                       type="text"
                       placeholder="Enter city/location..."
                       autoComplete="off"
+                      id="resume_input"
                     />
                   </div>
                 </div>
@@ -123,7 +145,10 @@ const Page = () => {
             </div>
           </div>
           <div className="flex justify-end mt-8">
-            <button className="flex-none font-medium rounded px-6 py-2 bg-gray-200 text-gray-500">
+            <button
+              onClick={handleProfileSubmit}
+              className="flex-none font-medium rounded px-6 py-2 bg-gray-200 text-gray-500"
+            >
               Save Profile
             </button>
           </div>
