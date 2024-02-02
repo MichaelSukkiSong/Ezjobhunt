@@ -2,41 +2,41 @@
 
 import { useEffect, useState } from "react";
 import { Icon } from "@chakra-ui/react";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import fb from "@/app/services/firebase";
 import { FaLinkedin, FaGlobe, FaDollarSign } from "../icons";
-import { ref, uploadBytes } from "firebase/storage";
+import { useAuth } from "@/app/hooks/useAuth";
 
 const Page = () => {
-  const [resumeFile, setResumeFile] = useState(null);
+  const [currentUserUid, setCurrentUserUid] = useState(null);
+  const [file, setFile] = useState(null);
+  const user = useAuth();
 
   useEffect(() => {
-    // select input element
-    const inputElement = document.getElementById("resume_input");
+    if (user) {
+      setCurrentUserUid(user?.uid);
+      // console.log(user.uid);
+    }
+  }, [user]);
 
-    const handleFile = () => {
-      const selectedFile = document.getElementById("resume_input").files[0];
-      setResumeFile(selectedFile);
-    };
-
-    // add event listener to input element
-    inputElement.addEventListener("change", handleFile);
-
-    return () => {
-      // remove event listener
-      inputElement.removeEventListener("change", handleFile);
-    };
-  }, []);
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setFile(file);
+  };
 
   const handleProfileSubmit = () => {
     // get storage
     const storage = fb.getStorage();
 
     // create resumes reference
-    const resumesRef = ref(storage, "resumes");
+    const resumesRef = ref(storage, `users/${currentUserUid}/resume`);
 
-    // upload file
-    uploadBytes(resumesRef, resumeFile).then((snapshot) => {
+    // upload resume file to storage
+    uploadBytes(resumesRef, file).then((snapshot) => {
       console.log("Uploaded a blob or file!");
+      // getDownloadURL(resumesRef).then((url) => {
+      //   console.log(url);
+      // });
     });
   };
 
@@ -59,6 +59,7 @@ const Page = () => {
                       type="file"
                       placeholder="Resume"
                       accept="application/msword, application/pdf, .doc,.docx"
+                      onChange={handleFileChange}
                     />
                   </div>
                 </div>
@@ -84,6 +85,7 @@ const Page = () => {
                       placeholder="Enter city/location..."
                       autoComplete="off"
                       id="resume_input"
+                      disabled
                     />
                   </div>
                 </div>
@@ -102,6 +104,7 @@ const Page = () => {
                   type="url"
                   placeholder="https://linkedin.com/in/..."
                   className="w-full py-2 text-gray-900 rounded-md shadow-sm focus:border-yellow-600 focus:outline-none"
+                  disabled
                 />
               </div>
               <div className="flex items-center w-full border border-gray-300 rounded-md space-x-4 px-4 mt-2">
@@ -110,6 +113,7 @@ const Page = () => {
                   type="url"
                   placeholder="https://abc.com/..."
                   className="w-full py-2 text-gray-900 rounded-md shadow-sm focus:border-yellow-600 focus:outline-none"
+                  disabled
                 />
               </div>
               <div className="flex items-center w-full border border-gray-300 rounded-md space-x-4 px-4 mt-2">
@@ -118,6 +122,7 @@ const Page = () => {
                   type="text"
                   placeholder="Base salary expectation"
                   className="w-full py-2 text-gray-900 rounded-md shadow-sm focus:border-yellow-600 focus:outline-none"
+                  disabled
                 />
               </div>
               {/* <hr className="flex flex-col my-8" />
@@ -147,7 +152,10 @@ const Page = () => {
           <div className="flex justify-end mt-8">
             <button
               onClick={handleProfileSubmit}
-              className="flex-none font-medium rounded px-6 py-2 bg-gray-200 text-gray-500"
+              className={`flex-none font-medium rounded px-6 py-2 ${
+                file ? "bg-black text-white " : "bg-gray-200 text-gray-500"
+              } `}
+              disabled={file ? false : true}
             >
               Save Profile
             </button>
