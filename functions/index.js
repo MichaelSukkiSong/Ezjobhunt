@@ -1,13 +1,35 @@
 // The Cloud Functions for Firebase SDK to create Cloud Functions and triggers.
 const { onDocumentCreated } = require("firebase-functions/v2/firestore");
+const { onObjectFinalized } = require("firebase-functions/v2/storage");
 
 // The Firebase Admin SDK to access Firestore.
 const { initializeApp } = require("firebase-admin/app");
 const { getFirestore } = require("firebase-admin/firestore");
+const { getStorage } = require("firebase-admin/storage");
 
 const { processJob } = require("./utils/processJobs");
 
 initializeApp();
+
+exports.createProfileForRecruitors = onObjectFinalized(
+  { cpu: 2 },
+  async (event) => {
+    const fileBucket = event.data.bucket; // Storage bucket containing the file.
+    const filePath = event.data.name; // File path in the bucket.
+    const contentType = event.data.contentType; // File content type.
+
+    // console.log("===fileBucket : ", fileBucket);
+    // console.log("===filePath : ", filePath);
+    // console.log("===contentType : ", contentType);
+
+    //get bucket
+    const bucket = getStorage().bucket(fileBucket);
+    // download the file
+    const downloadResponse = await bucket.file(filePath).download();
+    const dataBuffer = downloadResponse[0];
+    console.log("==dataBuffer: ", dataBuffer);
+  }
+);
 
 exports.makejobdescriptionJSON = onDocumentCreated(
   "/greenhouse/{greenhouseId}",
