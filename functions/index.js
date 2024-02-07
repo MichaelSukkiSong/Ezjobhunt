@@ -8,6 +8,7 @@ const { getFirestore } = require("firebase-admin/firestore");
 const { getStorage } = require("firebase-admin/storage");
 
 const { processJob } = require("./utils/processJobs");
+const pdf = require("pdf-parse");
 
 initializeApp();
 
@@ -27,7 +28,27 @@ exports.createProfileForRecruitors = onObjectFinalized(
     // download the file
     const downloadResponse = await bucket.file(filePath).download();
     const dataBuffer = downloadResponse[0];
-    console.log("==dataBuffer: ", dataBuffer);
+    // console.log("==dataBuffer: ", dataBuffer);
+    pdf(dataBuffer)
+      .then((data) => {
+        // number of pages
+        // console.log(data.numpages);
+        // number of rendered pages
+        // console.log(data.numrender);
+        // PDF info
+        // console.log(data.info);
+        // PDF metadata
+        // console.log(data.metadata);
+        // PDF.js version
+        // check https://mozilla.github.io/pdf.js/getting_started/
+        // console.log(data.version);
+
+        // PDF text
+        console.log(data.text);
+      })
+      .catch((err) => {
+        console.log("Error parseing pdf file");
+      });
   }
 );
 
