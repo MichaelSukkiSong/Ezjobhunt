@@ -16,7 +16,7 @@ const Docxtemplater = require("docxtemplater");
 initializeApp();
 
 exports.createProfileForRecruitors = onObjectFinalized(
-  { cpu: 2 },
+  { cpu: 2, region: "us-west2" },
   async (event) => {
     const fileBucket = event.data.bucket; // Storage bucket containing the file.
     const filePath = event.data.name; // File path in the bucket.
