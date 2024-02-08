@@ -1,6 +1,5 @@
 const dotenv = require("dotenv");
 const { OpenAI } = require("openai");
-const axios = require("axios");
 
 dotenv.config();
 
@@ -81,16 +80,17 @@ async function processResume(resume) {
                   "What role does the person in the resume operate in?",
                 enum: [
                   "Engineering",
-                  "Design",
-                  "Product",
-                  "Science",
+                  "Data science",
                   "Sales",
                   "Marketing",
-                  "Support",
-                  "Operations",
+                  "Design",
+                  "Product Management",
                   "Project Management",
-                  "Recruiting & HR",
                   "Finance",
+                  "Recruiting & HR",
+                  "Customer Support",
+                  "Science",
+                  "Operations",
                   "Legal",
                 ],
               },
@@ -139,34 +139,15 @@ async function processResume(resume) {
     });
 
     const result = response?.choices?.[0]?.message?.function_call?.arguments;
-    console.log(
-      "********************response******************** : ",
-      response
-    );
+    // console.log(
+    //   "********************response******************** : ",
+    //   response
+    // );
     return result;
   } catch (e) {
     console.log("error", e);
     return null;
   }
-}
-
-function trimJobDescription(description, maxTokens = 10000) {
-  // Load the HTML content using Cheerio
-  const $ = cheerio.load(description);
-
-  // Remove script and style tags
-  $("script, style").remove();
-
-  // Get text content
-  console.log("***************root***************: ", $.root());
-  const textContent = $.root().text();
-  console.log("***************textContent***************: ", textContent);
-
-  // Remove extra white spaces and limit the result to maxTokens
-  const tokens = textContent.trim().replace(/\s+/g, " ").split(" ");
-  const result = tokens.slice(0, maxTokens).join(" ");
-
-  return result;
 }
 
 module.exports.processResume = processResume;

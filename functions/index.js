@@ -8,6 +8,7 @@ const { getFirestore } = require("firebase-admin/firestore");
 const { getStorage } = require("firebase-admin/storage");
 
 const { processJob } = require("./utils/processJobs");
+const { processResume } = require("./utils/processResume");
 const pdf = require("pdf-parse");
 
 initializeApp();
@@ -29,8 +30,10 @@ exports.createProfileForRecruitors = onObjectFinalized(
     const downloadResponse = await bucket.file(filePath).download();
     const dataBuffer = downloadResponse[0];
     // console.log("==dataBuffer: ", dataBuffer);
+
+    // if the file is a pdf file
     pdf(dataBuffer)
-      .then((data) => {
+      .then(async (data) => {
         // number of pages
         // console.log(data.numpages);
         // number of rendered pages
@@ -44,10 +47,25 @@ exports.createProfileForRecruitors = onObjectFinalized(
         // console.log(data.version);
 
         // PDF text
-        console.log(data.text);
+        // console.log(data.text);
+
+        // create linkedin-like profile
+        const processedResume = await processResume(data.text);
+        // console.log(processedResume);
+        const processedResume_obj = JSON.parse(processedResume);
+        // console.log(processedResume_obj);
+
+        if (processedResume_obj) {
+          //get firestore db
+          const db = getFirestore();
+
+          // save to firestore 'resumes' collection
+          await db.collection("resumes").add(processedResume_obj);
+          console.log("saved to firestore!");
+        }
       })
       .catch((err) => {
-        console.log("Error parseing pdf file");
+        console.log("Error parsing/saving pdf file");
       });
   }
 );
