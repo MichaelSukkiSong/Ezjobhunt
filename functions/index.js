@@ -10,6 +10,8 @@ const { getStorage } = require("firebase-admin/storage");
 const { processJob } = require("./utils/processJobs");
 const { processResume } = require("./utils/processResume");
 const pdf = require("pdf-parse");
+const PizZip = require("pizzip");
+const Docxtemplater = require("docxtemplater");
 
 initializeApp();
 
@@ -31,42 +33,77 @@ exports.createProfileForRecruitors = onObjectFinalized(
     const dataBuffer = downloadResponse[0];
     // console.log("==dataBuffer: ", dataBuffer);
 
-    // if the file is a pdf file
-    pdf(dataBuffer)
-      .then(async (data) => {
-        // number of pages
-        // console.log(data.numpages);
-        // number of rendered pages
-        // console.log(data.numrender);
-        // PDF info
-        // console.log(data.info);
-        // PDF metadata
-        // console.log(data.metadata);
-        // PDF.js version
-        // check https://mozilla.github.io/pdf.js/getting_started/
-        // console.log(data.version);
+    if (
+      contentType ===
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ) {
+      // Unzip the content of the file
+      const zip = new PizZip(dataBuffer);
 
-        // PDF text
-        // console.log(data.text);
-
-        // create linkedin-like profile
-        const processedResume = await processResume(data.text);
-        // console.log(processedResume);
-        const processedResume_obj = JSON.parse(processedResume);
-        // console.log(processedResume_obj);
-
-        if (processedResume_obj) {
-          //get firestore db
-          const db = getFirestore();
-
-          // save to firestore 'resumes' collection
-          await db.collection("resumes").add(processedResume_obj);
-          console.log("saved to firestore!");
-        }
-      })
-      .catch((err) => {
-        console.log("Error parsing/saving pdf file");
+      // This will parse the template, and will throw an error if the template is
+      // invalid, for example, if the template is "{user" (no closing tag)
+      const doc = new Docxtemplater(zip, {
+        paragraphLoop: true,
+        linebreaks: true,
       });
+
+      const text = doc.getFullText();
+      // console.log(text);
+
+      // create linkedin-like profile
+      const processedResume = await processResume(text);
+      // console.log(processedResume);
+      const processedResume_obj = JSON.parse(processedResume);
+      // console.log(processedResume_obj);
+
+      if (processedResume_obj) {
+        //get firestore db
+        const db = getFirestore();
+
+        // save to firestore 'resumes' collection
+        await db.collection("resumes").add(processedResume_obj);
+        console.log("saved to firestore!");
+      }
+    }
+
+    if (contentType === "application/pdf") {
+      // if the file is a pdf file
+      pdf(dataBuffer)
+        .then(async (data) => {
+          // number of pages
+          // console.log(data.numpages);
+          // number of rendered pages
+          // console.log(data.numrender);
+          // PDF info
+          // console.log(data.info);
+          // PDF metadata
+          // console.log(data.metadata);
+          // PDF.js version
+          // check https://mozilla.github.io/pdf.js/getting_started/
+          // console.log(data.version);
+
+          // PDF text
+          // console.log(data.text);
+
+          // create linkedin-like profile
+          const processedResume = await processResume(data.text);
+          // console.log(processedResume);
+          const processedResume_obj = JSON.parse(processedResume);
+          // console.log(processedResume_obj);
+
+          if (processedResume_obj) {
+            //get firestore db
+            const db = getFirestore();
+
+            // save to firestore 'resumes' collection
+            await db.collection("resumes").add(processedResume_obj);
+            console.log("saved to firestore!");
+          }
+        })
+        .catch((err) => {
+          console.log("Error parsing/saving pdf file");
+        });
+    }
   }
 );
 
