@@ -2,7 +2,13 @@
 
 import { useEffect, useState } from "react";
 import { Icon, useToast } from "@chakra-ui/react";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import {
+  ref,
+  uploadBytes,
+  getDownloadURL,
+  deleteObject,
+  getStorage,
+} from "firebase/storage";
 import fb from "@/app/services/firebase";
 import { FaLinkedin, FaGlobe, FaDollarSign } from "../icons";
 import { useAuth } from "@/app/hooks/useAuth";
@@ -27,14 +33,21 @@ const Page = () => {
     const resumesRef = ref(storage, `users/${currentUserUid}/resume`);
 
     // get the resumeURL and set it as state
-    if (resumesRef) {
-      getDownloadURL(resumesRef).then((url) => {
+    getDownloadURL(resumesRef)
+      .then((url) => {
         setResumeURL(url);
+        setSubmitted(true);
+      })
+      .catch((err) => {
+        // set file state to null
+        setFile(null);
+        // set submittable state back to false
+        setSubmittable(false);
+        // set submitted state to false
+        setSubmitted(false);
+        // initilize resumeURL state back to empty string
+        setResumeURL("");
       });
-
-      // set setSubmitted state to true
-      setSubmitted(true);
-    }
   }, [currentUserUid]);
 
   useEffect(() => {
@@ -80,6 +93,41 @@ const Page = () => {
     setSubmitted(true);
   };
 
+  const handleDeleteFile = () => {
+    // get sotrage
+    const storage = getStorage();
+
+    // create resumes reference
+    const resumesRef = ref(storage, `users/${currentUserUid}/resume`);
+
+    // delete the file
+    deleteObject(resumesRef)
+      .then(() => {
+        // set file state to null
+        setFile(null);
+        // set submittable state back to false
+        setSubmittable(false);
+        // set submitted state to false
+        setSubmitted(false);
+        // initilize resumeURL state back to empty string
+        setResumeURL("");
+
+        console.log("file deleted successfully!");
+      })
+      .catch((err) => {
+        console.log("error while deleting file!");
+      });
+
+    // set file state to null
+    setFile(null);
+    // set submittable state back to false
+    setSubmittable(false);
+    // set submitted state to false
+    setSubmitted(false);
+    // initilize resumeURL state back to empty string
+    setResumeURL("");
+  };
+
   return (
     <div className="flex justify-center pt-16 pb-32 px-4 lg:px-0 bg-red-100 h-full">
       <div className="flex flex-col flex-auto lg:max-w-2xl">
@@ -100,7 +148,12 @@ const Page = () => {
                       >
                         Resume
                       </a>
-                      <button className="ml-4 font-bold text-red-500">X</button>
+                      <button
+                        onClick={handleDeleteFile}
+                        className="ml-4 font-bold text-red-500"
+                      >
+                        X
+                      </button>
                     </div>
                   </div>
                 ) : (
