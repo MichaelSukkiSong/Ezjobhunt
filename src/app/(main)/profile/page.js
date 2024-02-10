@@ -17,6 +17,27 @@ const Page = () => {
   const toast = useToast();
 
   useEffect(() => {
+    if (!currentUserUid) return;
+
+    // check if there is a saved resume file by this user
+    // get storage
+    const storage = fb.getStorage();
+
+    // create resumes reference
+    const resumesRef = ref(storage, `users/${currentUserUid}/resume`);
+
+    // get the resumeURL and set it as state
+    if (resumesRef) {
+      getDownloadURL(resumesRef).then((url) => {
+        setResumeURL(url);
+      });
+
+      // set setSubmitted state to true
+      setSubmitted(true);
+    }
+  }, [currentUserUid]);
+
+  useEffect(() => {
     if (user) {
       setCurrentUserUid(user?.uid);
       // console.log(user.uid);
