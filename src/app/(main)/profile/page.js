@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Icon } from "@chakra-ui/react";
+import { Icon, useToast } from "@chakra-ui/react";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import fb from "@/app/services/firebase";
 import { FaLinkedin, FaGlobe, FaDollarSign } from "../icons";
@@ -10,7 +10,11 @@ import { useAuth } from "@/app/hooks/useAuth";
 const Page = () => {
   const [currentUserUid, setCurrentUserUid] = useState(null);
   const [file, setFile] = useState(null);
+  const [submittable, setSubmittable] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [resumeURL, setResumeURL] = useState("");
   const user = useAuth();
+  const toast = useToast();
 
   useEffect(() => {
     if (user) {
@@ -22,6 +26,7 @@ const Page = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     setFile(file);
+    setSubmittable(true);
   };
 
   const handleProfileSubmit = () => {
@@ -34,10 +39,24 @@ const Page = () => {
     // upload resume file to storage
     uploadBytes(resumesRef, file).then((snapshot) => {
       console.log("Uploaded a blob or file!");
-      // getDownloadURL(resumesRef).then((url) => {
-      //   console.log(url);
-      // });
+      toast({
+        title: "Resume updated.",
+        description: "Successfully updated resume.",
+        status: "success",
+        duration: 9000,
+        position: "top-right",
+        isClosable: true,
+      });
+
+      getDownloadURL(resumesRef).then((url) => {
+        // console.log(url);
+        setResumeURL(url);
+      });
     });
+
+    // set submittable state back to false
+    setSubmittable(false);
+    setSubmitted(true);
   };
 
   return (
@@ -48,21 +67,38 @@ const Page = () => {
             <a className="text-gray-800 text-sm font-medium underline"></a>
             <div className="flex flex-col w-full mt-4">
               <div className="relative">
-                <div className="flex items-end space-x-8 w-full px-4 py-4 bg-white border border-gray-300 rounded-md text-gray-900 shadow-sm focus:border-yellow-600 focus:outline-none">
-                  <div className="flex flex-col w-full">
-                    <span className="font-medium mb-2 text-sm text-gray-500">
-                      Resume
-                      <span className="text-red-600">*</span>
-                    </span>
-                    <input
-                      className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
-                      type="file"
-                      placeholder="Resume"
-                      accept="application/msword, application/pdf, .doc,.docx"
-                      onChange={handleFileChange}
-                    />
+                {submitted ? (
+                  <div className="flex items-center space-x-8 justify-between border border-gray-300 rounded-md shadow-sm px-4 py-4 w-full">
+                    <div className="block bg-white text-gray-900">
+                      <a
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-black underline font-medium"
+                        href={resumeURL}
+                        // get storage url and make it a ref here
+                      >
+                        Resume
+                      </a>
+                      <button className="ml-4 font-bold text-red-500">X</button>
+                    </div>
                   </div>
-                </div>
+                ) : (
+                  <div className="flex items-end space-x-8 w-full px-4 py-4 bg-white border border-gray-300 rounded-md text-gray-900 shadow-sm focus:border-yellow-600 focus:outline-none">
+                    <div className="flex flex-col w-full">
+                      <span className="font-medium mb-2 text-sm text-gray-500">
+                        Resume
+                        <span className="text-red-600">*</span>
+                      </span>
+                      <input
+                        className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none "
+                        type="file"
+                        placeholder="Resume"
+                        accept="application/msword, application/pdf, .doc,.docx"
+                        onChange={handleFileChange}
+                      />
+                    </div>
+                  </div>
+                )}
               </div>
               <button className="flex justify-center mt-8 text-red-600 font-medium">
                 FAQ: Who can see my resume?
@@ -153,9 +189,11 @@ const Page = () => {
             <button
               onClick={handleProfileSubmit}
               className={`flex-none font-medium rounded px-6 py-2 ${
-                file ? "bg-black text-white " : "bg-gray-200 text-gray-500"
+                submittable
+                  ? "bg-black text-white "
+                  : "bg-gray-200 text-gray-500"
               } `}
-              disabled={file ? false : true}
+              disabled={submittable ? false : true}
             >
               Save Profile
             </button>
