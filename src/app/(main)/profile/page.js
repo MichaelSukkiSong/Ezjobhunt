@@ -1,7 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Icon, useToast } from "@chakra-ui/react";
+import {
+  Icon,
+  useToast,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+  useDisclosure,
+} from "@chakra-ui/react";
 import {
   ref,
   uploadBytes,
@@ -21,6 +33,7 @@ const Page = () => {
   const [resumeURL, setResumeURL] = useState("");
   const user = useAuth();
   const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
     if (!currentUserUid) return;
@@ -126,6 +139,15 @@ const Page = () => {
     setSubmitted(false);
     // initilize resumeURL state back to empty string
     setResumeURL("");
+
+    toast({
+      title: "Success",
+      description: "Resume updated successfully.",
+      status: "success",
+      duration: 9000,
+      position: "top-right",
+      isClosable: true,
+    });
   };
 
   return (
@@ -149,11 +171,36 @@ const Page = () => {
                         Resume
                       </a>
                       <button
-                        onClick={handleDeleteFile}
+                        onClick={onOpen}
                         className="ml-4 font-bold text-red-500"
                       >
                         X
                       </button>
+                      <Modal isOpen={isOpen} onClose={onClose}>
+                        <ModalOverlay />
+                        <ModalContent>
+                          <ModalHeader>Delete resume</ModalHeader>
+                          <ModalCloseButton />
+                          <ModalBody>
+                            You can upload a new resume anytime. Are you sure
+                            you want to delete your resume?
+                          </ModalBody>
+
+                          <ModalFooter>
+                            <div className="flex items-center space-x-2">
+                              <Button
+                                colorScheme="red"
+                                onClick={handleDeleteFile}
+                              >
+                                Delete Resume
+                              </Button>
+                              <Button mr={3} onClick={onClose}>
+                                Cancel
+                              </Button>
+                            </div>
+                          </ModalFooter>
+                        </ModalContent>
+                      </Modal>
                     </div>
                   </div>
                 ) : (
