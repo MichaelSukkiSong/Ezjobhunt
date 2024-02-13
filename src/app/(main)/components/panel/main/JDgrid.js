@@ -40,6 +40,7 @@ const JDgrid = ({ filteringOptions }) => {
     type,
     experience,
     transparentSalaries,
+    industry,
   } = filteringOptions;
 
   useEffect(() => {
@@ -284,13 +285,19 @@ const JDgrid = ({ filteringOptions }) => {
         //     job.job_location.toLowerCase().includes(location.toLowerCase())
         //   );
 
+        const industryMatch =
+          !industry ||
+          industry?.length === 0 ||
+          industry.includes(job.industry);
+
         return (
           searchTermMatch &&
           remoteMatch &&
           transparentSalariesMatch &&
           roleMatch &&
           typeMatch &&
-          experienceMatch
+          experienceMatch &&
+          industryMatch
         );
         // locationMatch &&
       })

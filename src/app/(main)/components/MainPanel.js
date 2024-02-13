@@ -16,6 +16,7 @@ const MainPanel = () => {
     type: "",
     experience: [],
     transparentSalaries: false,
+    industry: [],
   });
 
   return (
@@ -24,7 +25,7 @@ const MainPanel = () => {
         <MobileMenubar />
         <Searchbar setFilteringOptions={setFilteringOptions} />
         <Optionsbar setFilteringOptions={setFilteringOptions} />
-        <Bannersbar />
+        <Bannersbar setFilteringOptions={setFilteringOptions} />
         <Suspense fallback={<p>Loading</p>}>
           <JDgrid filteringOptions={filteringOptions} />
         </Suspense>
