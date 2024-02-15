@@ -6,7 +6,6 @@ import SidePanel from "./components/SidePanel";
 
 export default function MainLayout({ children }) {
   const isMobile = useMediaQuery("(max-width: 768px)");
-  console.log(isMobile);
 
   return (
     <>

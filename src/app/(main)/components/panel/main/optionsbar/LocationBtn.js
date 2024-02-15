@@ -25,34 +25,34 @@ const LocationBtn = ({ setFilteringOptions }) => {
   const [selected, setSelected] = useState([]);
 
   useEffect(() => {
-    // const getCountry = async () => {
-    //   const res = await fetch("/api/fetchCountry");
-    //   const result = await res.json();
+    const getCountry = async () => {
+      const res = await fetch("/api/fetchCountry");
+      const result = await res.json();
 
-    //   const options = result.data.map((el) => {
-    //     return {
-    //       value: el.name.common,
-    //       label: el.name.common,
-    //     };
-    //   });
+      const options = result.data.map((el) => {
+        return {
+          value: el.name.common,
+          label: el.name.common,
+        };
+      });
 
-    //   setCountryOptions(options);
-    // };
+      setCountryOptions(options);
+    };
 
-    // getCountry();
+    getCountry();
 
-    const options = [
-      { value: "North America", label: "North America" },
-      { value: "Latin America", label: "Latin America" },
-      { value: "Europe", label: "Europe" },
-      { value: "EMEA", label: "EMEA" },
-      { value: "Asia", label: "Asia" },
-      { value: "Africa", label: "Africa" },
-      { value: "Oceania", label: "Oceania" },
-      { value: "United States", label: "United States" },
-    ];
+    // const options = [
+    //   { value: "North America", label: "North America" },
+    //   { value: "Latin America", label: "Latin America" },
+    //   { value: "Europe", label: "Europe" },
+    //   { value: "EMEA", label: "EMEA" },
+    //   { value: "Asia", label: "Asia" },
+    //   { value: "Africa", label: "Africa" },
+    //   { value: "Oceania", label: "Oceania" },
+    //   { value: "United States", label: "United States" },
+    // ];
 
-    setCountryOptions(options);
+    // setCountryOptions(options);
   }, []);
 
   return (
