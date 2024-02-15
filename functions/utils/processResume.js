@@ -139,10 +139,7 @@ async function processResume(resume) {
     });
 
     const result = response?.choices?.[0]?.message?.function_call?.arguments;
-    // console.log(
-    //   "********************response******************** : ",
-    //   response
-    // );
+
     return result;
   } catch (e) {
     console.log("error", e);

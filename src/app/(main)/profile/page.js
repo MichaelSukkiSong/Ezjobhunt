@@ -66,7 +66,6 @@ const Page = () => {
   useEffect(() => {
     if (user) {
       setCurrentUserUid(user?.uid);
-      // console.log(user.uid);
     }
   }, [user]);
 
@@ -96,7 +95,6 @@ const Page = () => {
       });
 
       getDownloadURL(resumesRef).then((url) => {
-        // console.log(url);
         setResumeURL(url);
       });
     });

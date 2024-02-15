@@ -12,21 +12,14 @@ const openai = new OpenAI({
 async function processJob(job) {
   // Grab URL of what was written to Firestore.
   const url = job.data().absolute_url;
-  // console.log("url : ", url);
 
   try {
     const res = await axios.get(url);
-    // console.log("res.data : ", res.data);
 
     const $ = cheerio.load(res.data);
     const jobDescription = $("body").text();
-    // console.log("jobDescription : ", jobDescription);
 
     const trimmedjobDescription = trimJobDescription(jobDescription);
-    console.log(
-      "********************trimmedjobDescription******************** : ",
-      trimmedjobDescription
-    );
 
     const response = await openai.chat.completions.create({
       model: "gpt-3.5-turbo-1106",
@@ -157,10 +150,6 @@ async function processJob(job) {
     });
 
     const result = response?.choices?.[0]?.message?.function_call?.arguments;
-    console.log(
-      "********************response******************** : ",
-      response
-    );
     return result;
   } catch (e) {
     console.log("error", e);
@@ -176,9 +165,7 @@ function trimJobDescription(description, maxTokens = 10000) {
   $("script, style").remove();
 
   // Get text content
-  console.log("***************root***************: ", $.root());
   const textContent = $.root().text();
-  console.log("***************textContent***************: ", textContent);
 
   // Remove extra white spaces and limit the result to maxTokens
   const tokens = textContent.trim().replace(/\s+/g, " ").split(" ");

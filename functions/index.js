@@ -22,16 +22,11 @@ exports.createProfileForRecruitors = onObjectFinalized(
     const filePath = event.data.name; // File path in the bucket.
     const contentType = event.data.contentType; // File content type.
 
-    // console.log("===fileBucket : ", fileBucket);
-    // console.log("===filePath : ", filePath);
-    // console.log("===contentType : ", contentType);
-
     //get bucket
     const bucket = getStorage().bucket(fileBucket);
     // download the file
     const downloadResponse = await bucket.file(filePath).download();
     const dataBuffer = downloadResponse[0];
-    // console.log("==dataBuffer: ", dataBuffer);
 
     if (
       contentType ===
@@ -48,13 +43,10 @@ exports.createProfileForRecruitors = onObjectFinalized(
       });
 
       const text = doc.getFullText();
-      // console.log(text);
 
       // create linkedin-like profile
       const processedResume = await processResume(text);
-      // console.log(processedResume);
       const processedResume_obj = JSON.parse(processedResume);
-      // console.log(processedResume_obj);
 
       if (processedResume_obj) {
         //get firestore db
@@ -70,26 +62,9 @@ exports.createProfileForRecruitors = onObjectFinalized(
       // if the file is a pdf file
       pdf(dataBuffer)
         .then(async (data) => {
-          // number of pages
-          // console.log(data.numpages);
-          // number of rendered pages
-          // console.log(data.numrender);
-          // PDF info
-          // console.log(data.info);
-          // PDF metadata
-          // console.log(data.metadata);
-          // PDF.js version
-          // check https://mozilla.github.io/pdf.js/getting_started/
-          // console.log(data.version);
-
-          // PDF text
-          // console.log(data.text);
-
           // create linkedin-like profile
           const processedResume = await processResume(data.text);
-          // console.log(processedResume);
           const processedResume_obj = JSON.parse(processedResume);
-          // console.log(processedResume_obj);
 
           if (processedResume_obj) {
             //get firestore db
@@ -127,20 +102,10 @@ exports.makejobdescriptionJSON = onDocumentCreated(
         job_company,
         job_url,
       };
-      // console.log("jobetc_obj", jobetc_obj);
-      // console.log("typeof jobetc_obj", typeof jobetc_obj);
-      console.log("jobDescription_str", jobDescription_str);
-      console.log("typeof jobDescription_str", typeof jobDescription_str);
-      // console.log("{ ...jobetc_obj, ...jobDescription_str } : ", {
-      //   ...jobetc_obj,
-      //   ...jobDescription_str,
-      // });
       const jobDescription_obj = jobDescription_str
         ? JSON.parse(jobDescription_str)
         : undefined;
       const job_obj = { ...jobetc_obj, ...jobDescription_obj };
-      // console.log("job_obj : ", job_obj);
-      // console.log("typeof job_obj : ", typeof job_obj);
 
       if (job_obj) {
         const db = getFirestore();

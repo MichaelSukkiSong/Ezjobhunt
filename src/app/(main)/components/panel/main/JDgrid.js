@@ -46,7 +46,6 @@ const JDgrid = ({ filteringOptions }) => {
   useEffect(() => {
     if (user) {
       setCurrentUserUid(user?.uid);
-      // console.log(user.uid);
     }
   }, [user]);
 
@@ -95,17 +94,11 @@ const JDgrid = ({ filteringOptions }) => {
   //TODO
   useEffect(() => {
     const handleScroll = () => {
-      // console.log("scroll working!");
-
       const { scrollHeight, scrollTop, clientHeight } = document.querySelector(
         "#infiniteJobsScrollDiv"
       );
 
-      // console.log(scrollHeight, scrollTop, clientHeight);
-
       if (scrollHeight - scrollTop - clientHeight < 100) {
-        // console.log("end of list!");
-
         const newNumVisibleJobs = numVisibleJobs + 40;
         setNumVisibleJobs(newNumVisibleJobs);
       }
