@@ -80,7 +80,9 @@ const JDcard = ({ job, buttons, etc }) => {
           </div>
           <div className="flex text-sm items-center space-x-4 px-4 pb-4 mt-4">
             <button className="px-4 py-2 rounded font-medium bg-gray-200 ">
-              Apply Now
+              <a href={job.job_url} target="_blank">
+                Apply Now
+              </a>
             </button>
             <div className="flex items-center space-x-4">
               {etc}
