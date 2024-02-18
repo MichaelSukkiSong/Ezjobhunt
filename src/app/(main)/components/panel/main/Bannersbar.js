@@ -43,7 +43,7 @@ const Bannersbar = ({ setFilteringOptions }) => {
   };
 
   return (
-    <div className="mt-4 flex-auto flex items-center justify-center overflow-hidden">
+    <div className="mt-4 mb-4 flex-auto flex items-center justify-center overflow-hidden">
       <div className="flex space-x-4 overflow-x-scroll hide-scrollbar">
         <button
           onClick={() => handleIndustryClick("HR Software")}
