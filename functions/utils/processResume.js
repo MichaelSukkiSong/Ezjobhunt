@@ -52,7 +52,7 @@ async function processResume(resume) {
               experience: {
                 type: "string",
                 description:
-                  "Describe the experience(job title/role, employment type, comapany name, location, location type, start date, end date, description, skills). Keep it brief - 100 characters or LESS.",
+                  "Describe the experience(job title/role, comapany name, start date, end date, description, skills). Keep it brief - 300 characters or LESS. DO NOT EXCEED 300 characters",
               },
               education: {
                 type: "string",
@@ -62,7 +62,7 @@ async function processResume(resume) {
               projects: {
                 type: "string",
                 description:
-                  "Describe the projects(project name, description, skills,start date, end date, contributors).If none, output empty string. Keep it brief - 100 characters or LESS.",
+                  "Describe the projects(project name, description, skills,start date, end date, contributors).If none, output empty string. Keep it brief - 300 characters or LESS. DO NOT EXCEED 300 characters",
               },
               skills: {
                 type: "string",
@@ -97,7 +97,7 @@ async function processResume(resume) {
               industry: {
                 type: "string",
                 description:
-                  "What industry does the person in the resume operate in?",
+                  "What industry does the person in the resume have operated in the past?",
                 enum: [
                   "Blockchain",
                   "Food",
