@@ -7,12 +7,12 @@ export function middleware(request) {
   // check if middleware is working
   // console.log("hello from middleware");
 
-  if (!g_state) {
-    // check redirect is working
-    return NextResponse.redirect(new URL("/auth", request.url));
-  }
+  // if (!g_state) {
+  //   // check redirect is working
+  //   return NextResponse.redirect(new URL("/auth", request.url));
+  // }
 }
 
 export const config = {
-  matcher: ["/application-tracker", "/profile", "/inbox"],
+  // matcher: ["/application-tracker", "/profile", "/inbox"],
 };
