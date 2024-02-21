@@ -1,5 +1,9 @@
+import { Search } from "./components/Search";
+
+export const dynamic = "force-dynamic";
+
 const Page = () => {
-  return <h1>Hello, Employers Page!</h1>;
+  return <Search />;
 };
 
 export default Page;
