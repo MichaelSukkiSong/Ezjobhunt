@@ -1,9 +1,9 @@
-import { Search } from "./components/Search";
+import { SearchCanidates } from "./components/SearchCanidates";
 
 export const dynamic = "force-dynamic";
 
 const Page = () => {
-  return <Search />;
+  return <SearchCanidates />;
 };
 
 export default Page;
