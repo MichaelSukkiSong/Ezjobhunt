@@ -10,7 +10,7 @@ const searchClient = algoliasearch(
   "d2a254690cc4542fa5ac4c76510c2cb6"
 );
 
-export function SearchCanidates() {
+export function SearchCandidates() {
   return (
     <div className="md:p-6 min-h-full">
       <InstantSearch indexName="resumes" searchClient={searchClient}>
@@ -35,7 +35,6 @@ export function SearchCanidates() {
         <Hits
           hitComponent={Hit}
           classNames={{
-            root: "",
             list: "grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 ",
           }}
         />

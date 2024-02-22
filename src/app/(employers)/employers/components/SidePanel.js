@@ -99,9 +99,9 @@ const SidePanel = () => {
         </span>
         <div className="mt-4 flex flex-col space-y-4">
           <Link
-            href="/"
+            href="/employers"
             className={`flex items-center space-x-2 font-medium text-sm ${
-              pathname === "/" ? "bg-gray-200 py-1.5 px-2 rounded" : ""
+              pathname === "/employers" ? "bg-gray-200 py-1.5 px-2 rounded" : ""
             }`}
           >
             <SearchIcon />
