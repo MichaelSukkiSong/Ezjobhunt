@@ -30,6 +30,7 @@ const JDgrid = ({ filteringOptions }) => {
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [hiddenJobs, setHiddenJobs] = useState([]);
   const [numVisibleJobs, setNumVisibleJobs] = useState(40);
+  const [loading, setLoading] = useState(true);
   const user = useAuth();
   const router = useRouter();
   const {
@@ -62,28 +63,35 @@ const JDgrid = ({ filteringOptions }) => {
         jobsArray.push({ id: doc.id, ...doc.data() });
       });
       setJobs(jobsArray);
+      setLoading(false);
     };
 
     const getSavedAppliedHiddenJobs = async () => {
-      if (!currentUserUid) return;
+      try {
+        if (!currentUserUid) return;
 
-      const db = fb.getFirestore();
+        const db = fb.getFirestore();
 
-      // Query the user by uid
-      const q = query(
-        collection(db, "users"),
-        where("uid", "==", currentUserUid)
-      );
-      const querySnapshot = await getDocs(q);
-      if (querySnapshot.docs.length > 0) {
-        const userDoc = querySnapshot.docs[0].data();
+        // Query the user by uid
+        const q = query(
+          collection(db, "users"),
+          where("uid", "==", currentUserUid)
+        );
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.docs.length > 0) {
+          const userDoc = querySnapshot.docs[0].data();
 
-        // get saved jobs and set it to state
-        setSavedJobs(userDoc.saved || []);
-        // get applied jobs and set it to state
-        setAppliedJobs(userDoc.applied || []);
-        // get hidden jobs and set it to state
-        setHiddenJobs(userDoc.hidden || []);
+          // get saved jobs and set it to state
+          setSavedJobs(userDoc.saved || []);
+          // get applied jobs and set it to state
+          setAppliedJobs(userDoc.applied || []);
+          // get hidden jobs and set it to state
+          setHiddenJobs(userDoc.hidden || []);
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error.message);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -310,9 +318,15 @@ const JDgrid = ({ filteringOptions }) => {
   return (
     <div className="infinite-scroll-component__outerdiv">
       <div className="infinite-scroll-component ">
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 ">
-          {renderJDcard()}
-        </div>
+        {loading ? (
+          <div className="flex justify-center items-center h-screen">
+            <div className="loader">loading...</div>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 ">
+            {renderJDcard()}
+          </div>
+        )}
       </div>
     </div>
   );
