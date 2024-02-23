@@ -319,7 +319,7 @@ const JDgrid = ({ filteringOptions }) => {
     <div className="infinite-scroll-component__outerdiv">
       <div className="infinite-scroll-component ">
         {loading ? (
-          <div className="flex justify-center items-start h-screen mt-20">
+          <div className="flex flex-col justify-start items-center h-screen">
             <iframe
               src="https://lottie.host/embed/ffcbf3fd-52ff-4bf0-a4f4-9218f3fa44f3/eT8ajCvyLR.json"
               type="text/html"
