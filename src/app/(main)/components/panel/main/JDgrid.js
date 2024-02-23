@@ -41,7 +41,6 @@ const JDgrid = ({ filteringOptions }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const jobsPerPage = 50;
   const [lastVisible, setLastVisible] = useState(null);
-  // const [numVisibleJobs, setNumVisibleJobs] = useState(40);
 
   const [loading, setLoading] = useState(true);
   const user = useAuth();
@@ -74,21 +73,6 @@ const JDgrid = ({ filteringOptions }) => {
         limit(jobsPerPage)
       );
       const documentSnapshots = await getDocs(first);
-      // ORIGINAL
-      // const querySnapshot = await getDocs(collection(db, "jobs"));
-
-      // // Get the last visible document
-      // const lastVisible =
-      //   documentSnapshots.docs[documentSnapshots.docs.length - 1];
-      // console.log("last", lastVisible);
-
-      // // Construct a new query starting at this document,
-      // // get the next 200 jobs.
-      // const next = query(
-      //   collection(db, "jobs"),
-      //   startAfter(lastVisible),
-      //   limit(200)
-      // );
 
       // Get the last visible document
       const lastVisible =
@@ -320,72 +304,67 @@ const JDgrid = ({ filteringOptions }) => {
   };
 
   const renderJDcard = () => {
-    return (
-      removeDuplicateObjects(jobs)
-        .filter((job) => !job.about_company !== true)
-        .filter((job) => !savedJobs.includes(job.id))
-        .filter((job) => !appliedJobs.includes(job.id))
-        .filter((job) => !hiddenJobs.includes(job.id))
-        .filter((job) => {
-          const searchTermMatch =
-            job.job_title?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
-            job.requirements
-              ?.toLowerCase()
-              .includes(searchTerm?.toLowerCase()) ||
-            job.tech_stack?.toLowerCase().includes(searchTerm?.toLowerCase());
+    return removeDuplicateObjects(jobs)
+      .filter((job) => !job.about_company !== true)
+      .filter((job) => !savedJobs.includes(job.id))
+      .filter((job) => !appliedJobs.includes(job.id))
+      .filter((job) => !hiddenJobs.includes(job.id))
+      .filter((job) => {
+        const searchTermMatch =
+          job.job_title?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+          job.requirements?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+          job.tech_stack?.toLowerCase().includes(searchTerm?.toLowerCase());
 
-          const remoteMatch =
-            !remoteOnly || job.job_location?.toLowerCase().includes("remote");
+        const remoteMatch =
+          !remoteOnly || job.job_location?.toLowerCase().includes("remote");
 
-          const transparentSalariesMatch =
-            !transparentSalaries || job.salary_range;
+        const transparentSalariesMatch =
+          !transparentSalaries || job.salary_range;
 
-          const roleMatch =
-            role === "" || job.role?.toLowerCase() === role?.toLowerCase();
+        const roleMatch =
+          role === "" || job.role?.toLowerCase() === role?.toLowerCase();
 
-          const typeMatch =
-            type === "" || job.job_type?.toLowerCase() === type?.toLowerCase();
+        const typeMatch =
+          type === "" || job.job_type?.toLowerCase() === type?.toLowerCase();
 
-          const experienceMatch =
-            !experience ||
-            experience?.length === 0 ||
-            (experience[0] < job.min_years_experience &&
-              job.min_years_experience < experience[1]);
+        const experienceMatch =
+          !experience ||
+          experience?.length === 0 ||
+          (experience[0] < job.min_years_experience &&
+            job.min_years_experience < experience[1]);
 
-          // const locationMatch =
-          //   locations.length === 0 ||
-          //   locations.some((location) =>
-          //     job.job_location.toLowerCase().includes(location.toLowerCase())
-          //   );
+        // const locationMatch =
+        //   locations.length === 0 ||
+        //   locations.some((location) =>
+        //     job.job_location.toLowerCase().includes(location.toLowerCase())
+        //   );
 
-          const industryMatch =
-            !industry ||
-            industry?.length === 0 ||
-            industry.includes(job.industry);
+        const industryMatch =
+          !industry ||
+          industry?.length === 0 ||
+          industry.includes(job.industry);
 
-          return (
-            searchTermMatch &&
-            remoteMatch &&
-            transparentSalariesMatch &&
-            roleMatch &&
-            typeMatch &&
-            experienceMatch &&
-            industryMatch
-          );
-          // locationMatch &&
-        })
-        // .slice(0, numVisibleJobs)
-        .map((job) => {
-          return (
-            <JDcard
-              key={job.id}
-              job={job}
-              buttons={buttons}
-              etc={JDcard_etc_main()}
-            />
-          );
-        })
-    );
+        return (
+          searchTermMatch &&
+          remoteMatch &&
+          transparentSalariesMatch &&
+          roleMatch &&
+          typeMatch &&
+          experienceMatch &&
+          industryMatch
+        );
+        // locationMatch &&
+      })
+      .map((job) => {
+        return (
+          <JDcard
+            key={job.id}
+            job={job}
+            buttons={buttons}
+            etc={JDcard_etc_main()}
+          />
+        );
+      });
   };
 
   return (
