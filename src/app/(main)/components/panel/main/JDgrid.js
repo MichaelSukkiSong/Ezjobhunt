@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Script from "next/script";
 import {
   doc,
   updateDoc,
@@ -317,26 +316,27 @@ const JDgrid = ({ filteringOptions }) => {
   };
 
   return (
-    <>
-      <Script
-        src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.mjs"
-        type="module"
-      ></Script>
-
-      <div className="infinite-scroll-component__outerdiv">
-        <div className="infinite-scroll-component ">
-          {loading ? (
-            <div className="flex justify-center items-start h-screen mt-20">
-              <iframe src="https://lottie.host/embed/ffcbf3fd-52ff-4bf0-a4f4-9218f3fa44f3/eT8ajCvyLR.json"></iframe>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 ">
-              {renderJDcard()}
-            </div>
-          )}
-        </div>
+    <div className="infinite-scroll-component__outerdiv">
+      <div className="infinite-scroll-component ">
+        <iframe
+          src="https://lottie.host/embed/ffcbf3fd-52ff-4bf0-a4f4-9218f3fa44f3/eT8ajCvyLR.json"
+          type="text/html"
+        ></iframe>
+        {loading ? (
+          <div className="flex justify-center items-start h-screen mt-20">
+            <iframe
+              src="https://lottie.host/embed/ffcbf3fd-52ff-4bf0-a4f4-9218f3fa44f3/eT8ajCvyLR.json"
+              type="text/html"
+            ></iframe>
+            Loading Jobs...
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 ">
+            {renderJDcard()}
+          </div>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 
