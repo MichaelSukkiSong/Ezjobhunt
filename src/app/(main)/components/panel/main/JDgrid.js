@@ -11,6 +11,8 @@ import {
   query,
   where,
   limit,
+  startAfter,
+  orderBy,
 } from "firebase/firestore";
 import fb from "@/app/services/firebase";
 import { useAuth } from "@/app/hooks/useAuth";
@@ -23,13 +25,24 @@ import {
   LuCoffee,
 } from "../../../icons";
 
+function removeDuplicateObjects(array) {
+  return array.filter(
+    (obj, index, self) =>
+      index === self.findIndex((t) => t.id === obj.id && t.name === obj.name)
+  );
+}
+
 const JDgrid = ({ filteringOptions }) => {
   const [currentUserUid, setCurrentUserUid] = useState(null);
   const [jobs, setJobs] = useState([]);
   const [savedJobs, setSavedJobs] = useState([]);
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [hiddenJobs, setHiddenJobs] = useState([]);
-  const [numVisibleJobs, setNumVisibleJobs] = useState(40);
+  const [currentPage, setCurrentPage] = useState(1);
+  const jobsPerPage = 50;
+  const [lastVisible, setLastVisible] = useState(null);
+  // const [numVisibleJobs, setNumVisibleJobs] = useState(40);
+
   const [loading, setLoading] = useState(true);
   const user = useAuth();
   const router = useRouter();
@@ -55,11 +68,36 @@ const JDgrid = ({ filteringOptions }) => {
       const db = fb.getFirestore();
       const jobsArray = [];
       // TESTING
-      // const q = query(collection(db, "jobs"), limit(200));
-      // const querySnapshot = await getDocs(q);
+      const first = query(
+        collection(db, "jobs"),
+        orderBy("job_title"),
+        limit(jobsPerPage)
+      );
+      const documentSnapshots = await getDocs(first);
       // ORIGINAL
-      const querySnapshot = await getDocs(collection(db, "jobs"));
-      querySnapshot.forEach((doc) => {
+      // const querySnapshot = await getDocs(collection(db, "jobs"));
+
+      // // Get the last visible document
+      // const lastVisible =
+      //   documentSnapshots.docs[documentSnapshots.docs.length - 1];
+      // console.log("last", lastVisible);
+
+      // // Construct a new query starting at this document,
+      // // get the next 200 jobs.
+      // const next = query(
+      //   collection(db, "jobs"),
+      //   startAfter(lastVisible),
+      //   limit(200)
+      // );
+
+      // Get the last visible document
+      const lastVisible =
+        documentSnapshots.docs[documentSnapshots.docs.length - 1];
+
+      setLastVisible(lastVisible);
+      // console.log("last", lastVisible);
+
+      documentSnapshots.forEach((doc) => {
         jobsArray.push({ id: doc.id, ...doc.data() });
       });
       setJobs(jobsArray);
@@ -99,16 +137,16 @@ const JDgrid = ({ filteringOptions }) => {
     getSavedAppliedHiddenJobs();
   }, [currentUserUid]);
 
-  //TODO
   useEffect(() => {
-    const handleScroll = () => {
+    const handleScroll = async () => {
       const { scrollHeight, scrollTop, clientHeight } = document.querySelector(
         "#infiniteJobsScrollDiv"
       );
 
       if (scrollHeight - scrollTop - clientHeight < 100) {
-        const newNumVisibleJobs = numVisibleJobs + 40;
-        setNumVisibleJobs(newNumVisibleJobs);
+        console.log("you are at the end! fetch more jobs!");
+
+        setCurrentPage(currentPage + 1);
       }
     };
 
@@ -121,7 +159,38 @@ const JDgrid = ({ filteringOptions }) => {
         .querySelector("#infiniteJobsScrollDiv")
         ?.removeEventListener("scroll", handleScroll);
     };
-  }, [numVisibleJobs]);
+  }, [currentPage]);
+
+  useEffect(() => {
+    const loadNextJobs = async () => {
+      setLoading(true);
+
+      const db = fb.getFirestore();
+      const jobsArray = [];
+
+      const next = query(
+        collection(db, "jobs"),
+        orderBy("job_title"),
+        startAfter(lastVisible),
+        limit(jobsPerPage)
+      );
+
+      const documentSnapshots = await getDocs(next);
+
+      setLastVisible(documentSnapshots.docs[documentSnapshots.docs.length - 1]);
+
+      documentSnapshots.forEach((doc) => {
+        jobsArray.push({ id: doc.id, ...doc.data() });
+      });
+      setJobs((prev) => {
+        return [...prev, ...jobsArray];
+      });
+
+      setLoading(false);
+    };
+
+    loadNextJobs();
+  }, [currentPage]);
 
   const handleSaveJobClick = async (job) => {
     if (!currentUserUid) {
@@ -251,68 +320,72 @@ const JDgrid = ({ filteringOptions }) => {
   };
 
   const renderJDcard = () => {
-    return jobs
-      .filter((job) => !job.about_company !== true)
-      .filter((job) => !savedJobs.includes(job.id))
-      .filter((job) => !appliedJobs.includes(job.id))
-      .filter((job) => !hiddenJobs.includes(job.id))
-      .filter((job) => {
-        const searchTermMatch =
-          job.job_title?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
-          job.requirements?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
-          job.tech_stack?.toLowerCase().includes(searchTerm?.toLowerCase());
+    return (
+      removeDuplicateObjects(jobs)
+        .filter((job) => !job.about_company !== true)
+        .filter((job) => !savedJobs.includes(job.id))
+        .filter((job) => !appliedJobs.includes(job.id))
+        .filter((job) => !hiddenJobs.includes(job.id))
+        .filter((job) => {
+          const searchTermMatch =
+            job.job_title?.toLowerCase().includes(searchTerm?.toLowerCase()) ||
+            job.requirements
+              ?.toLowerCase()
+              .includes(searchTerm?.toLowerCase()) ||
+            job.tech_stack?.toLowerCase().includes(searchTerm?.toLowerCase());
 
-        const remoteMatch =
-          !remoteOnly || job.job_location?.toLowerCase().includes("remote");
+          const remoteMatch =
+            !remoteOnly || job.job_location?.toLowerCase().includes("remote");
 
-        const transparentSalariesMatch =
-          !transparentSalaries || job.salary_range;
+          const transparentSalariesMatch =
+            !transparentSalaries || job.salary_range;
 
-        const roleMatch =
-          role === "" || job.role?.toLowerCase() === role?.toLowerCase();
+          const roleMatch =
+            role === "" || job.role?.toLowerCase() === role?.toLowerCase();
 
-        const typeMatch =
-          type === "" || job.job_type?.toLowerCase() === type?.toLowerCase();
+          const typeMatch =
+            type === "" || job.job_type?.toLowerCase() === type?.toLowerCase();
 
-        const experienceMatch =
-          !experience ||
-          experience?.length === 0 ||
-          (experience[0] < job.min_years_experience &&
-            job.min_years_experience < experience[1]);
+          const experienceMatch =
+            !experience ||
+            experience?.length === 0 ||
+            (experience[0] < job.min_years_experience &&
+              job.min_years_experience < experience[1]);
 
-        // const locationMatch =
-        //   locations.length === 0 ||
-        //   locations.some((location) =>
-        //     job.job_location.toLowerCase().includes(location.toLowerCase())
-        //   );
+          // const locationMatch =
+          //   locations.length === 0 ||
+          //   locations.some((location) =>
+          //     job.job_location.toLowerCase().includes(location.toLowerCase())
+          //   );
 
-        const industryMatch =
-          !industry ||
-          industry?.length === 0 ||
-          industry.includes(job.industry);
+          const industryMatch =
+            !industry ||
+            industry?.length === 0 ||
+            industry.includes(job.industry);
 
-        return (
-          searchTermMatch &&
-          remoteMatch &&
-          transparentSalariesMatch &&
-          roleMatch &&
-          typeMatch &&
-          experienceMatch &&
-          industryMatch
-        );
-        // locationMatch &&
-      })
-      .slice(0, numVisibleJobs)
-      .map((job) => {
-        return (
-          <JDcard
-            key={job.id}
-            job={job}
-            buttons={buttons}
-            etc={JDcard_etc_main()}
-          />
-        );
-      });
+          return (
+            searchTermMatch &&
+            remoteMatch &&
+            transparentSalariesMatch &&
+            roleMatch &&
+            typeMatch &&
+            experienceMatch &&
+            industryMatch
+          );
+          // locationMatch &&
+        })
+        // .slice(0, numVisibleJobs)
+        .map((job) => {
+          return (
+            <JDcard
+              key={job.id}
+              job={job}
+              buttons={buttons}
+              etc={JDcard_etc_main()}
+            />
+          );
+        })
+    );
   };
 
   return (
