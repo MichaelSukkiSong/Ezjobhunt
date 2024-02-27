@@ -27,7 +27,7 @@ const LandingPage = () => {
         </div>
       </nav>
 
-      <header className="min-h-screen flex justify-around items-center pl-10">
+      <header className="min-h-screen flex justify-center items-center pl-10">
         <div className="flex flex-col  max-w-lg p-4">
           <h1 className="text-bold text-6xl mb-10 font-semibold">
             Employ your potential
