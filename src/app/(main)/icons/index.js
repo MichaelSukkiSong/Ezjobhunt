@@ -29,7 +29,12 @@ export { GrInsecure, GrDocumentExcel } from "react-icons/gr";
 export { HiOutlinePaperAirplane } from "react-icons/hi";
 export { LiaRobotSolid } from "react-icons/lia";
 export { LuGraduationCap, LuCoffee } from "react-icons/lu";
-export { MdSettings, MdLogout, MdOutlineLibraryAddCheck } from "react-icons/md";
+export {
+  MdSettings,
+  MdLogout,
+  MdOutlineLibraryAddCheck,
+  MdArrowBackIosNew,
+} from "react-icons/md";
 export { PiDnaBold, PiTelegramLogo, PiBowlFoodBold } from "react-icons/pi";
 export {
   RiComputerLine,

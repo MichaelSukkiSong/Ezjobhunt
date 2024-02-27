@@ -12,6 +12,7 @@ import {
   FiLock,
   MdSettings,
   MdLogout,
+  MdArrowBackIosNew,
   BsBookmark,
   SiFoodpanda,
 } from "../../../(main)/icons";
@@ -160,7 +161,17 @@ const SidePanel = () => {
         </div>
       </div>
       <div className="flex items-center justify-center bg-white py-4 border-t">
-        {user ? (
+        <div className="flex font-bold text-l">
+          <div className="flex justify-center items-center mr-2 text-orange-400">
+            <Icon as={MdArrowBackIosNew} className="" />
+          </div>
+          <Link href="/jobs">
+            <span className="flex justify-center items-center text-orange-400">
+              Back to Jobs
+            </span>
+          </Link>
+        </div>
+        {/* {user ? (
           <div className="flex flex-col items-center space-y-2 mt-2 w-full">
             <span className="text-xs">{user.email}</span>
             <button
@@ -178,7 +189,7 @@ const SidePanel = () => {
           >
             Log In / Sign Up
           </Link>
-        )}
+        )} */}
       </div>
     </div>
   );
