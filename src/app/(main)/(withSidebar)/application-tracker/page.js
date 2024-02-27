@@ -13,7 +13,7 @@ import {
 } from "firebase/firestore";
 import fb from "@/app/services/firebase";
 import { useAuth } from "@/app/hooks/useAuth";
-import JDcard from "../components/panel/main/JDcard";
+import JDcard from "../../components/panel/main/JDcard";
 import JDcard_etc_at from "./components/JDcard_etc_at";
 import {
   BsBookmark,
@@ -21,7 +21,7 @@ import {
   GoPaperAirplane,
   GrDocumentExcel,
   BsTrash3,
-} from "../icons";
+} from "../../icons";
 
 const Page = () => {
   const [activeIndex, setActiveIndex] = useState(0);

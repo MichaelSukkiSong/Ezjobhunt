@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { arrayRemove, arrayUnion, doc, updateDoc } from "firebase/firestore";
 import fb from "@/app/services/firebase";
-import { BsPencil } from "../../icons";
+import { BsPencil } from "../../../icons";
 
 const JDcard_etc_at = ({ jobId, memo, currentUserUid, onJobDataChange }) => {
   const [notesText, setNotesText] = useState("");

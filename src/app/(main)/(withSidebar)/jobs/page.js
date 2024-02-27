@@ -1,4 +1,4 @@
-import MainPanel from "../components/MainPanel";
+import MainPanel from "../../components/MainPanel";
 
 const MainPage = () => {
   return <MainPanel />;

@@ -22,7 +22,7 @@ import {
   getStorage,
 } from "firebase/storage";
 import fb from "@/app/services/firebase";
-import { FaLinkedin, FaGlobe, FaDollarSign } from "../icons";
+import { FaLinkedin, FaGlobe, FaDollarSign } from "../../icons";
 import { useAuth } from "@/app/hooks/useAuth";
 
 const Page = () => {
