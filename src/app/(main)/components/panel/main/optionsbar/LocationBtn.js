@@ -26,17 +26,22 @@ const LocationBtn = ({ setFilteringOptions }) => {
 
   useEffect(() => {
     const getCountry = async () => {
-      const res = await fetch("/api/fetchCountry");
-      const result = await res.json();
+      let options;
+      try {
+        const res = await fetch("/api/fetchCountry");
+        const result = await res.json();
 
-      const options = result.data.map((el) => {
-        return {
-          value: el.name.common,
-          label: el.name.common,
-        };
-      });
-
-      setCountryOptions(options);
+        options = result.data.map((el) => {
+          return {
+            value: el.name.common,
+            label: el.name.common,
+          };
+        });
+      } catch (err) {
+        options = [];
+      } finally {
+        setCountryOptions(options);
+      }
     };
 
     getCountry();

@@ -37,12 +37,16 @@ const LandingPage = () => {
             <p>Hiring? Search for the best talent in the industry.</p>
           </h2>
           <div>
-            <button className="rounded-sm bg-orange-400 hover:bg-orange-500 text-white p-3 mr-4">
-              <Link href="/jobs">Search Job</Link>
-            </button>
-            <button className="border rounded-sm border-orange-100 text-orange-400 p-3 hover:text-orange-500 hover:border-orange-200">
-              <Link href="/employers">I am a Employer</Link>
-            </button>
+            <Link href="/jobs">
+              <button className="rounded-sm bg-orange-400 hover:bg-orange-500 text-white p-3 mr-4">
+                Search Job
+              </button>
+            </Link>
+            <Link href="/employers">
+              <button className="border rounded-sm border-orange-100 text-orange-400 p-3 hover:text-orange-500 hover:border-orange-200">
+                I am a Employer
+              </button>
+            </Link>
           </div>
         </div>
         <div className="hidden md:block">
