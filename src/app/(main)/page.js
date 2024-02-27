@@ -41,7 +41,7 @@ const LandingPage = () => {
               <Link href="/jobs">Search Job</Link>
             </button>
             <button className="border rounded-sm border-orange-100 text-orange-400 p-3 hover:text-orange-500 hover:border-orange-200">
-              <Link href="/employers">I'm a Employer</Link>
+              <Link href="/employers">I am a Employer</Link>
             </button>
           </div>
         </div>
