@@ -18,7 +18,7 @@ const Page = () => {
 
     ui.start("#firebaseui-auth-container", {
       signInFlow: "popup",
-      signInSuccessUrl: "/",
+      signInSuccessUrl: "/jobs",
       signInOptions: [
         {
           provider: firebase.auth.GoogleAuthProvider.PROVIDER_ID,

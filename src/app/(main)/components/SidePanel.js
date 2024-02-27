@@ -46,7 +46,7 @@ const SidePanel = () => {
         console.log("Error signing out", err);
       });
 
-    router.replace("/");
+    router.replace("/jobs");
     router.refresh();
   };
 
@@ -84,13 +84,14 @@ const SidePanel = () => {
             {user ? null : <Icon as={FiLock} />}
           </Link>
           <Link
-            href="/inbox"
+            href={user ? "/inbox" : "/auth"}
             className={`flex items-center space-x-2 mt-4 mb-4 font-medium text-sm ${
               pathname === "/inbox" ? "bg-gray-200 py-1.5 px-2 rounded" : ""
             }`}
           >
             <ChatIcon />
             <span>Inbox</span>
+            {user ? null : <Icon as={FiLock} />}
           </Link>
         </div>
       </div>
