@@ -38,7 +38,18 @@ const LocationBtn = ({ setFilteringOptions }) => {
           };
         });
       } catch (err) {
-        options = [];
+        options = [
+          { label: "United States", value: "United States" },
+          { label: "North America", value: "North America" },
+          { label: "South America", value: "South America" },
+          { label: "Europe", value: "Europe" },
+          { label: "Asia", value: "Asia" },
+          { label: "Africa", value: "Africa" },
+          { label: "Oceania", value: "Oceania" },
+          { label: "Middle East", value: "Middle East" },
+          { label: "Central America", value: "Central America" },
+          { label: "Caribbean", value: "Caribbean" },
+        ];
       } finally {
         setCountryOptions(options);
       }
