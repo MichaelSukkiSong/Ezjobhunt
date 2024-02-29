@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { MdArrowOutward, CheckIcon } from "../(main)/icons";
+import { MdArrowOutward, CheckIcon, ArrowForwardIcon } from "../(main)/icons";
 
 const LandingPage = () => {
   const [isZoomed1, setIsZoomed1] = useState(false);
@@ -121,13 +121,15 @@ const LandingPage = () => {
             <div className="md:flex justify-center items-center mb-20">
               <div className="flex flex-col md:w-100 p-10  rounded-3xl md:mr-10">
                 <h2 className="text-center text-4xl md:text-5xl font-semibold mb-10 text-orange-900">
-                  1. Search / Filter
+                  Search / Filter Jobs
                 </h2>
                 <div className="flex pl-10 md:pl-2">
                   <div className="">
                     <CheckIcon color="orange.400" mr={2} />
                   </div>
-                  <span className="mb-3">Search and filter Jobs with ease</span>
+                  <span className="mb-3">
+                    Search and filter quality Jobs with ease
+                  </span>
                 </div>
                 <div className="flex  pl-10 md:pl-2">
                   <div className="">
@@ -173,42 +175,45 @@ const LandingPage = () => {
               </div>
               <div className="flex flex-col md:w-100 p-10  rounded-3xl">
                 <h2 className="text-center text-4xl md:text-5xl font-semibold mb-10 text-orange-900">
-                  2. Submit
+                  Perfect Match
                 </h2>
                 <div className="flex pl-10 md:pl-2">
                   <div className="">
                     <CheckIcon color="orange.400" mr={2} />
                   </div>
                   <span className="mb-3 ">
-                    Submit and Store resume in Database
+                    Just submit your resume for the perfect match
                   </span>
                 </div>
                 <div className="flex pl-10 md:pl-2">
                   <div className="">
                     <CheckIcon color="orange.400" mr={2} />
                   </div>
-                  <span className="mb-3 ">Parsed by AI</span>
+                  <span className="mb-3 ">Parsed and Analyzed by AI</span>
                 </div>
                 <div className="flex pl-10 md:pl-2">
                   <div className="">
                     <CheckIcon color="orange.400" mr={2} />
                   </div>
                   <span className="mb-3 ">
-                    Match with employers for the perfect fit
+                    Match with potential employers for the perfect fit
                   </span>
                 </div>
               </div>
             </div>
             <div className="md:flex justify-center items-center mb-20">
               <div className="flex flex-col md:w-100 p-10  rounded-3xl md:mr-20">
+                <h2 className="text-center text-4xl md:text-5xl font-semibold mb-2 text-orange-900">
+                  Track Applications
+                </h2>
                 <h2 className="text-center text-4xl md:text-5xl font-semibold mb-10 text-orange-900">
-                  3. Track
+                  Track Candidates
                 </h2>
                 <div className="flex pl-10 md:pl-2">
                   <div className="">
                     <CheckIcon color="orange.400" mr={2} />
                   </div>
-                  <span className="mb-3 ">Track Application status</span>
+                  <span className="mb-3 ">Track Applications / Candidates</span>
                 </div>
                 <div className="flex pl-10 md:pl-2">
                   <div className="">
@@ -239,8 +244,11 @@ const LandingPage = () => {
             </div>
             <div className="flex justify-center items-center mt-20">
               <Link href="/jobs">
-                <button className="rounded-2xl  bg-orange-400 hover:bg-orange-500 font-bold text-white p-4 mr-4 transition duration-300 md:text-2xl text-md hover:-translate-y-1 shadow-2xl hover:shadow-lg active:translate-y-0">
-                  Explore Jobs
+                <button className="flex justify-center items-center rounded-2xl  bg-orange-400 hover:bg-orange-500  text-white py-4 px-8 mr-4 transition duration-300 md:text-2xl text-md hover:-translate-y-1 shadow-2xl hover:shadow-lg active:translate-y-0">
+                  <span className="">Explore Jobs</span>
+                  <div className="ml-2  flex">
+                    <ArrowForwardIcon />
+                  </div>
                 </button>
               </Link>
             </div>

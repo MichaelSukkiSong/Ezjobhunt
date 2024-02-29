@@ -6,6 +6,7 @@ export {
   HamburgerIcon,
   CloseIcon,
   CheckIcon,
+  ArrowForwardIcon,
 } from "@chakra-ui/icons";
 
 export { AiOutlineHeart, AiOutlineInsurance } from "react-icons/ai";
