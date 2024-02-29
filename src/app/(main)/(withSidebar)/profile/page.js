@@ -149,7 +149,7 @@ const Page = () => {
   };
 
   return (
-    <div className="flex justify-center pt-16 pb-32 px-4 lg:px-0 bg-red-100 h-full">
+    <div className="flex justify-center pt-16 pb-32 px-4 lg:px-0 bg-orange-100 h-full">
       <div className="flex flex-col flex-auto lg:max-w-2xl">
         <div className="flex flex-col p-8 bg-white rounded-md sm:rounded-lg md:rounded-2xl lg:rounded-3xl shadow sm:shadow-md md:shadow-lg lg:shadow-xl xl:shadow-2xl">
           <div className="flex flex-col items-center">

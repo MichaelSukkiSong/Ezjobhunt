@@ -5,6 +5,7 @@ export {
   Icon,
   HamburgerIcon,
   CloseIcon,
+  CheckIcon,
 } from "@chakra-ui/icons";
 
 export { AiOutlineHeart, AiOutlineInsurance } from "react-icons/ai";
@@ -34,6 +35,7 @@ export {
   MdLogout,
   MdOutlineLibraryAddCheck,
   MdArrowBackIosNew,
+  MdArrowOutward,
 } from "react-icons/md";
 export { PiDnaBold, PiTelegramLogo, PiBowlFoodBold } from "react-icons/pi";
 export {
