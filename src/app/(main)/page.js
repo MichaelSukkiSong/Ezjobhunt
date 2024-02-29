@@ -81,7 +81,7 @@ const LandingPage = () => {
       <header className="min-h-screen flex justify-center items-center pl-10">
         <div className="flex flex-col  max-w-lg p-4">
           <h1 className="text-bold text-5xl md:text-6xl mb-10 font-semibold">
-            Employ your potential
+            Unlock Your Future
           </h1>
           <h2 className="mb-8 text-sm md:text-base">
             <p>Looking for a new role? Search quality jobs with ease.</p>
