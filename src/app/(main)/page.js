@@ -3,7 +3,15 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { MdArrowOutward, CheckIcon, ArrowForwardIcon } from "../(main)/icons";
+import {
+  MdArrowOutward,
+  CheckIcon,
+  ArrowForwardIcon,
+  FaSearch,
+  MdSmartToy,
+  MdOutlineSummarize,
+  GiDeerTrack,
+} from "../(main)/icons";
 
 const LandingPage = () => {
   const [isZoomed1, setIsZoomed1] = useState(false);
@@ -116,7 +124,7 @@ const LandingPage = () => {
       </header>
 
       <main>
-        <section className="min-h-60  pt-40 pb-40 bg-orange-50">
+        <section className="min-h-60  py-40 bg-orange-50">
           <div className="p-6 flex flex-col">
             <div className="md:flex justify-center items-center mb-20">
               <div className="flex flex-col md:w-100 p-10  rounded-3xl md:mr-10">
@@ -254,31 +262,83 @@ const LandingPage = () => {
             </div>
           </div>
         </section>
-        {/* <section className="min-h-60 bg-red-200 p-2">
-          <h2 className="text-center text-4xl mb-6">Everything You Need</h2>
-          <div className="grid md:grid-cols-4 grid-cols-2">
-            <div className="p-2">
-              <div>Icon</div>
-              <h3>Block Explorer</h3>
-              <span>View and analyze transaction history and state</span>
+        <section className="min-h-60  py-40 px-10 ">
+          <div className="mb-10 flex justify-center text-xs text-orange-800 ">
+            <span className="bg-orange-50 p-1 rounded-3xl px-3 border-x border-t border-orange-50">
+              Features
+            </span>
+          </div>
+          <h2 className="text-center text-4xl mb-10 font-semibold text-orange-900">
+            All the Essentials
+          </h2>
+          <div className="grid md:grid-cols-4 grid-cols-2 gap-5">
+            <div className="flex flex-col p-4  border-x border-t border-orange-50  rounded-2xl cursor-pointer group hover:shadow transition delay-100">
+              <div className="mb-5 text-orange-400 relative w-8 h-8">
+                <div className=" absolute -top-[11px] -left-[11px] w-3 h-3 group-hover:border-b group-hover:border-r group-hover:border-orange-300 transition-all duration-700 ease-in "></div>
+                <div className=" absolute -top-[11px] -right-[11px] w-3 h-3 group-hover:border-b group-hover:border-orange-300 group-hover:border-l transition-all duration-700 ease-in"></div>
+                <div className=" absolute -bottom-[11px] -left-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-r transition-all duration-700 ease-in"></div>
+                <div className=" absolute -bottom-[11px] -right-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-l transition-all duration-700 ease-in"></div>
+                <div className="absolute  top-0 left-0  w-full h-full  flex items-center justify-center border border-orange-50 group-hover:border-orange-300 transition-all duration-700  ease-in">
+                  <FaSearch />
+                </div>
+              </div>
+              <h3 className="mb-2 text-orange-900">Job Search & Filtering</h3>
+              <span className="text-xs text-orange-300">
+                Easily search and filter through thousands of job listings to
+                find the perfect match for your skills and preferences.
+              </span>
             </div>
-            <div className="p-2">
-              <div>Icon</div>
-              <h3>Block Explorer</h3>
-              <span>View and analyze transaction history and state</span>
+            <div className="flex flex-col p-4  border-x border-t border-orange-50  rounded-2xl cursor-pointer group hover:shadow transition delay-100">
+              <div className="mb-5 text-orange-400 relative w-8 h-8">
+                <div className=" absolute -top-[11px] -left-[11px] w-3 h-3 group-hover:border-b group-hover:border-r group-hover:border-orange-300 transition-all duration-700 ease-in "></div>
+                <div className=" absolute -top-[11px] -right-[11px] w-3 h-3 group-hover:border-b group-hover:border-orange-300 group-hover:border-l transition-all duration-700 ease-in"></div>
+                <div className=" absolute -bottom-[11px] -left-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-r transition-all duration-700 ease-in"></div>
+                <div className=" absolute -bottom-[11px] -right-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-l transition-all duration-700 ease-in"></div>
+                <div className="absolute  top-0 left-0  w-full h-full  flex items-center justify-center border border-orange-50 group-hover:border-orange-300 transition-all duration-700  ease-in">
+                  <MdSmartToy />
+                </div>
+              </div>
+              <h3 className="mb-2 text-orange-900">Smart Recommendations</h3>
+              <span className="text-xs text-orange-300">
+                Discover tailored job listings based on your profile and search
+                history, making job hunting more efficient
+              </span>
             </div>
-            <div className="p-2">
-              <div>Icon</div>
-              <h3>Block Explorer</h3>
-              <span>View and analyze transaction history and state</span>
+
+            <div className="flex flex-col p-4  border-x border-t border-orange-50  rounded-2xl cursor-pointer group hover:shadow transition delay-100">
+              <div className="mb-5 text-orange-400 relative w-8 h-8">
+                <div className=" absolute -top-[11px] -left-[11px] w-3 h-3 group-hover:border-b group-hover:border-r group-hover:border-orange-300 transition-all duration-700 ease-in "></div>
+                <div className=" absolute -top-[11px] -right-[11px] w-3 h-3 group-hover:border-b group-hover:border-orange-300 group-hover:border-l transition-all duration-700 ease-in"></div>
+                <div className=" absolute -bottom-[11px] -left-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-r transition-all duration-700 ease-in"></div>
+                <div className=" absolute -bottom-[11px] -right-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-l transition-all duration-700 ease-in"></div>
+                <div className="absolute  top-0 left-0  w-full h-full  flex items-center justify-center border border-orange-50 group-hover:border-orange-300 transition-all duration-700  ease-in">
+                  <MdOutlineSummarize />
+                </div>
+              </div>
+              <h3 className="mb-2 text-orange-900">ChatGPT Summarization</h3>
+              <span className="text-xs text-orange-300">
+                Get quick and concise summaries of job descriptions, helping you
+                make informed decisions faster
+              </span>
             </div>
-            <div className="p-2">
-              <div>Icon</div>
-              <h3>Block Explorer</h3>
-              <span>View and analyze transaction history and state</span>
+            <div className="flex flex-col p-4  border-x border-t border-orange-50  rounded-2xl cursor-pointer group hover:shadow transition delay-100">
+              <div className="mb-5 text-orange-400 relative w-8 h-8">
+                <div className=" absolute -top-[11px] -left-[11px] w-3 h-3 group-hover:border-b group-hover:border-r group-hover:border-orange-300 transition-all duration-700 ease-in "></div>
+                <div className=" absolute -top-[11px] -right-[11px] w-3 h-3 group-hover:border-b group-hover:border-orange-300 group-hover:border-l transition-all duration-700 ease-in"></div>
+                <div className=" absolute -bottom-[11px] -left-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-r transition-all duration-700 ease-in"></div>
+                <div className=" absolute -bottom-[11px] -right-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-l transition-all duration-700 ease-in"></div>
+                <div className="absolute  top-0 left-0  w-full h-full  flex items-center justify-center border border-orange-50 group-hover:border-orange-300 transition-all duration-700  ease-in">
+                  <GiDeerTrack />
+                </div>
+              </div>
+              <h3 className="mb-2 text-orange-900">Application Tracker</h3>
+              <span className="text-xs text-orange-300">
+                Keep track of all your job applications in one place, from
+                initial submission to final decision
+              </span>
             </div>
           </div>
-        </section> */}
+        </section>
       </main>
       {/* <footer className="min-h-60 bg-green-200 flex justify-center items-center p-10">
         <div className="flex justify-evenly space-x-20">
