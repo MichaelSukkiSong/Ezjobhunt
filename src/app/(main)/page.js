@@ -17,6 +17,7 @@ const LandingPage = () => {
   const [isZoomed1, setIsZoomed1] = useState(false);
   const [isZoomed2, setIsZoomed2] = useState(false);
   const [isZoomed3, setIsZoomed3] = useState(false);
+  const [isFeaturesInView, setIsFeaturesInView] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,6 +48,15 @@ const LandingPage = () => {
         setIsZoomed3(true);
       } else {
         setIsZoomed3(false);
+      }
+
+      const featuresSection = document.getElementById("features");
+      const featuresTop = featuresSection?.getBoundingClientRect().top;
+
+      if (featuresTop < windowHeight) {
+        setIsFeaturesInView(true);
+      } else {
+        setIsFeaturesInView(false);
       }
     };
 
@@ -262,7 +272,7 @@ const LandingPage = () => {
             </div>
           </div>
         </section>
-        <section className="min-h-60  py-40 px-10 ">
+        <section id="features" className="min-h-60  py-40 px-10 ">
           <div className="mb-10 flex justify-center text-xs text-orange-800 ">
             <span className="bg-orange-50 p-1 rounded-3xl px-3 border-x border-t border-orange-50">
               Features
@@ -274,11 +284,41 @@ const LandingPage = () => {
           <div className="grid md:grid-cols-4 grid-cols-2 gap-5">
             <div className="flex flex-col p-4  border-x border-t border-orange-50  rounded-2xl cursor-pointer group hover:shadow transition delay-100">
               <div className="mb-5 text-orange-400 relative w-8 h-8">
-                <div className=" absolute -top-[11px] -left-[11px] w-3 h-3 group-hover:border-b group-hover:border-r group-hover:border-orange-300 transition-all duration-700 ease-in "></div>
-                <div className=" absolute -top-[11px] -right-[11px] w-3 h-3 group-hover:border-b group-hover:border-orange-300 group-hover:border-l transition-all duration-700 ease-in"></div>
-                <div className=" absolute -bottom-[11px] -left-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-r transition-all duration-700 ease-in"></div>
-                <div className=" absolute -bottom-[11px] -right-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-l transition-all duration-700 ease-in"></div>
-                <div className="absolute  top-0 left-0  w-full h-full  flex items-center justify-center border border-orange-50 group-hover:border-orange-300 transition-all duration-700  ease-in">
+                <div
+                  className={` absolute -top-[11px] -left-[11px] w-3 h-3 group-hover:border-b group-hover:border-r group-hover:border-orange-300 transition-all duration-1000 ease-in ${
+                    isFeaturesInView
+                      ? "border-b border-r border-orange-300 transition-all duration-1000 ease-in"
+                      : ""
+                  } `}
+                ></div>
+                <div
+                  className={` absolute -top-[11px] -right-[11px] w-3 h-3 group-hover:border-b group-hover:border-orange-300 group-hover:border-l transition-all duration-1000 ease-in ${
+                    isFeaturesInView
+                      ? "border-b border-l border-orange-300 transition-all duration-1000 ease-in"
+                      : ""
+                  }`}
+                ></div>
+                <div
+                  className={` absolute -bottom-[11px] -left-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-r transition-all duration-1000 ease-in ${
+                    isFeaturesInView
+                      ? "border-t border-r border-orange-300 transition-all duration-1000 ease-in"
+                      : ""
+                  }`}
+                ></div>
+                <div
+                  className={` absolute -bottom-[11px] -right-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-l transition-all duration-1000 ease-in ${
+                    isFeaturesInView
+                      ? "border-t border-l border-orange-300 transition-all duration-1000 ease-in"
+                      : ""
+                  }`}
+                ></div>
+                <div
+                  className={`absolute  top-0 left-0  w-full h-full  flex items-center justify-center border border-orange-50 group-hover:border-orange-300 transition-all duration-700  ease-in ${
+                    isFeaturesInView
+                      ? "border-orange-300 transition-all duration-1000  ease-in"
+                      : ""
+                  }`}
+                >
                   <FaSearch />
                 </div>
               </div>
@@ -290,11 +330,41 @@ const LandingPage = () => {
             </div>
             <div className="flex flex-col p-4  border-x border-t border-orange-50  rounded-2xl cursor-pointer group hover:shadow transition delay-100">
               <div className="mb-5 text-orange-400 relative w-8 h-8">
-                <div className=" absolute -top-[11px] -left-[11px] w-3 h-3 group-hover:border-b group-hover:border-r group-hover:border-orange-300 transition-all duration-700 ease-in "></div>
-                <div className=" absolute -top-[11px] -right-[11px] w-3 h-3 group-hover:border-b group-hover:border-orange-300 group-hover:border-l transition-all duration-700 ease-in"></div>
-                <div className=" absolute -bottom-[11px] -left-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-r transition-all duration-700 ease-in"></div>
-                <div className=" absolute -bottom-[11px] -right-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-l transition-all duration-700 ease-in"></div>
-                <div className="absolute  top-0 left-0  w-full h-full  flex items-center justify-center border border-orange-50 group-hover:border-orange-300 transition-all duration-700  ease-in">
+                <div
+                  className={` absolute -top-[11px] -left-[11px] w-3 h-3 group-hover:border-b group-hover:border-r group-hover:border-orange-300 transition-all duration-1000 ease-in ${
+                    isFeaturesInView
+                      ? "border-b border-r border-orange-300 transition-all duration-1000 ease-in"
+                      : ""
+                  } `}
+                ></div>
+                <div
+                  className={` absolute -top-[11px] -right-[11px] w-3 h-3 group-hover:border-b group-hover:border-orange-300 group-hover:border-l transition-all duration-1000 ease-in ${
+                    isFeaturesInView
+                      ? "border-b border-l border-orange-300 transition-all duration-1000 ease-in"
+                      : ""
+                  }`}
+                ></div>
+                <div
+                  className={` absolute -bottom-[11px] -left-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-r transition-all duration-1000 ease-in ${
+                    isFeaturesInView
+                      ? "border-t border-r border-orange-300 transition-all duration-1000 ease-in"
+                      : ""
+                  }`}
+                ></div>
+                <div
+                  className={` absolute -bottom-[11px] -right-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-l transition-all duration-1000 ease-in ${
+                    isFeaturesInView
+                      ? "border-t border-l border-orange-300 transition-all duration-1000 ease-in"
+                      : ""
+                  }`}
+                ></div>
+                <div
+                  className={`absolute  top-0 left-0  w-full h-full  flex items-center justify-center border border-orange-50 group-hover:border-orange-300 transition-all duration-700  ease-in ${
+                    isFeaturesInView
+                      ? "border-orange-300 transition-all duration-1000  ease-in"
+                      : ""
+                  }`}
+                >
                   <MdSmartToy />
                 </div>
               </div>
@@ -307,11 +377,41 @@ const LandingPage = () => {
 
             <div className="flex flex-col p-4  border-x border-t border-orange-50  rounded-2xl cursor-pointer group hover:shadow transition delay-100">
               <div className="mb-5 text-orange-400 relative w-8 h-8">
-                <div className=" absolute -top-[11px] -left-[11px] w-3 h-3 group-hover:border-b group-hover:border-r group-hover:border-orange-300 transition-all duration-700 ease-in "></div>
-                <div className=" absolute -top-[11px] -right-[11px] w-3 h-3 group-hover:border-b group-hover:border-orange-300 group-hover:border-l transition-all duration-700 ease-in"></div>
-                <div className=" absolute -bottom-[11px] -left-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-r transition-all duration-700 ease-in"></div>
-                <div className=" absolute -bottom-[11px] -right-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-l transition-all duration-700 ease-in"></div>
-                <div className="absolute  top-0 left-0  w-full h-full  flex items-center justify-center border border-orange-50 group-hover:border-orange-300 transition-all duration-700  ease-in">
+                <div
+                  className={` absolute -top-[11px] -left-[11px] w-3 h-3 group-hover:border-b group-hover:border-r group-hover:border-orange-300 transition-all duration-1000 ease-in ${
+                    isFeaturesInView
+                      ? "border-b border-r border-orange-300 transition-all duration-1000 ease-in"
+                      : ""
+                  } `}
+                ></div>
+                <div
+                  className={` absolute -top-[11px] -right-[11px] w-3 h-3 group-hover:border-b group-hover:border-orange-300 group-hover:border-l transition-all duration-1000 ease-in ${
+                    isFeaturesInView
+                      ? "border-b border-l border-orange-300 transition-all duration-1000 ease-in"
+                      : ""
+                  }`}
+                ></div>
+                <div
+                  className={` absolute -bottom-[11px] -left-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-r transition-all duration-1000 ease-in ${
+                    isFeaturesInView
+                      ? "border-t border-r border-orange-300 transition-all duration-1000 ease-in"
+                      : ""
+                  }`}
+                ></div>
+                <div
+                  className={` absolute -bottom-[11px] -right-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-l transition-all duration-1000 ease-in ${
+                    isFeaturesInView
+                      ? "border-t border-l border-orange-300 transition-all duration-1000 ease-in"
+                      : ""
+                  }`}
+                ></div>
+                <div
+                  className={`absolute  top-0 left-0  w-full h-full  flex items-center justify-center border border-orange-50 group-hover:border-orange-300 transition-all duration-700  ease-in ${
+                    isFeaturesInView
+                      ? "border-orange-300 transition-all duration-1000  ease-in"
+                      : ""
+                  }`}
+                >
                   <MdOutlineSummarize />
                 </div>
               </div>
@@ -323,11 +423,41 @@ const LandingPage = () => {
             </div>
             <div className="flex flex-col p-4  border-x border-t border-orange-50  rounded-2xl cursor-pointer group hover:shadow transition delay-100">
               <div className="mb-5 text-orange-400 relative w-8 h-8">
-                <div className=" absolute -top-[11px] -left-[11px] w-3 h-3 group-hover:border-b group-hover:border-r group-hover:border-orange-300 transition-all duration-700 ease-in "></div>
-                <div className=" absolute -top-[11px] -right-[11px] w-3 h-3 group-hover:border-b group-hover:border-orange-300 group-hover:border-l transition-all duration-700 ease-in"></div>
-                <div className=" absolute -bottom-[11px] -left-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-r transition-all duration-700 ease-in"></div>
-                <div className=" absolute -bottom-[11px] -right-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-l transition-all duration-700 ease-in"></div>
-                <div className="absolute  top-0 left-0  w-full h-full  flex items-center justify-center border border-orange-50 group-hover:border-orange-300 transition-all duration-700  ease-in">
+                <div
+                  className={` absolute -top-[11px] -left-[11px] w-3 h-3 group-hover:border-b group-hover:border-r group-hover:border-orange-300 transition-all duration-1000 ease-in ${
+                    isFeaturesInView
+                      ? "border-b border-r border-orange-300 transition-all duration-1000 ease-in"
+                      : ""
+                  } `}
+                ></div>
+                <div
+                  className={` absolute -top-[11px] -right-[11px] w-3 h-3 group-hover:border-b group-hover:border-orange-300 group-hover:border-l transition-all duration-1000 ease-in ${
+                    isFeaturesInView
+                      ? "border-b border-l border-orange-300 transition-all duration-1000 ease-in"
+                      : ""
+                  }`}
+                ></div>
+                <div
+                  className={` absolute -bottom-[11px] -left-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-r transition-all duration-1000 ease-in ${
+                    isFeaturesInView
+                      ? "border-t border-r border-orange-300 transition-all duration-1000 ease-in"
+                      : ""
+                  }`}
+                ></div>
+                <div
+                  className={` absolute -bottom-[11px] -right-[11px] w-3 h-3 group-hover:border-t group-hover:border-orange-300 group-hover:border-l transition-all duration-1000 ease-in ${
+                    isFeaturesInView
+                      ? "border-t border-l border-orange-300 transition-all duration-1000 ease-in"
+                      : ""
+                  }`}
+                ></div>
+                <div
+                  className={`absolute  top-0 left-0  w-full h-full  flex items-center justify-center border border-orange-50 group-hover:border-orange-300 transition-all duration-700  ease-in ${
+                    isFeaturesInView
+                      ? "border-orange-300 transition-all duration-1000  ease-in"
+                      : ""
+                  }`}
+                >
                   <GiDeerTrack />
                 </div>
               </div>
