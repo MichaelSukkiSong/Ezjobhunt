@@ -11,6 +11,12 @@ import {
   MdSmartToy,
   MdOutlineSummarize,
   GiDeerTrack,
+  BsMeta,
+  FaTwitter,
+  FaInstagram,
+  FaYoutube,
+  SiSemanticuireact,
+  FaGithub,
 } from "../(main)/icons";
 
 const LandingPage = () => {
@@ -72,22 +78,22 @@ const LandingPage = () => {
     <>
       <nav className="border-b border-orange-200 flex justify-between ">
         <div className="p-2 mr-2 hover:text-orange-600 transition duration-300">
-          <Link href="/">Ezjobhunt</Link>
+          <Link href="/" className="flex text-orange-700">
+            <div className="flex justify-center items-center mr-2 ">
+              <SiSemanticuireact />
+            </div>
+            Ezjobhunt
+          </Link>
         </div>
         <div className="flex">
-          <div className="p-2 mr-2 hover:text-orange-600 transition duration-300">
-            <Link href="/jobs">Jobseekers</Link>
-          </div>
-          <div className="p-2 mr-2 hover:text-orange-600 transition duration-300">
-            <Link href="employers">Employers</Link>
-          </div>
-          <div className="p-2 mr-2 hover:text-orange-600 transition duration-300">
+          <div className="p-2 mr-2 hover:text-orange-600 transition duration-300  flex items-center justify-center">
             <Link
               href="https://github.com/MichaelSukkiSong/Ezjobhunt"
               target="_blank"
-              className="flex"
+              className="flex justify-center items-center"
             >
-              <span className="mr-1">Github</span>
+              <FaGithub className="mr-2" />
+              <span className="mr-1 flex">Github</span>
               <div className="flex justify-center items-center text-sm ">
                 <MdArrowOutward />
               </div>
@@ -134,11 +140,11 @@ const LandingPage = () => {
       </header>
 
       <main>
-        <section className="min-h-60  py-40 bg-orange-50">
+        <section className="min-h-60  py-40 md:px-10 bg-orange-50">
           <div className="p-6 flex flex-col">
             <div className="md:flex justify-center items-center mb-20">
               <div className="flex flex-col md:w-100 p-10  rounded-3xl md:mr-10">
-                <h2 className="text-center text-4xl md:text-5xl font-semibold mb-10 text-orange-900">
+                <h2 className="text-center text-2xl md:text-5xl font-semibold mb-10 text-orange-900">
                   Search / Filter Jobs
                 </h2>
                 <div className="flex pl-10 md:pl-2">
@@ -192,7 +198,7 @@ const LandingPage = () => {
                 />
               </div>
               <div className="flex flex-col md:w-100 p-10  rounded-3xl">
-                <h2 className="text-center text-4xl md:text-5xl font-semibold mb-10 text-orange-900">
+                <h2 className="text-center text-2xl md:text-5xl font-semibold mb-10 text-orange-900">
                   Perfect Match
                 </h2>
                 <div className="flex pl-10 md:pl-2">
@@ -221,10 +227,10 @@ const LandingPage = () => {
             </div>
             <div className="md:flex justify-center items-center mb-20">
               <div className="flex flex-col md:w-100 p-10  rounded-3xl md:mr-20">
-                <h2 className="text-center text-4xl md:text-5xl font-semibold mb-2 text-orange-900">
+                <h2 className="text-center text-2xl md:text-5xl font-semibold mb-2 text-orange-900">
                   Track Applications
                 </h2>
-                <h2 className="text-center text-4xl md:text-5xl font-semibold mb-10 text-orange-900">
+                <h2 className="text-center text-2xl md:text-5xl font-semibold mb-10 text-orange-900">
                   Track Candidates
                 </h2>
                 <div className="flex pl-10 md:pl-2">
@@ -272,7 +278,8 @@ const LandingPage = () => {
             </div>
           </div>
         </section>
-        <section id="features" className="min-h-60  py-40 px-10 ">
+
+        <section id="features" className="min-h-60  py-40 md:px-10 ">
           <div className="mb-10 flex justify-center text-xs text-orange-800 ">
             <span className="bg-orange-50 p-1 rounded-3xl px-3 border-x border-t border-orange-50">
               Features
@@ -470,34 +477,84 @@ const LandingPage = () => {
           </div>
         </section>
       </main>
-      {/* <footer className="min-h-60 bg-green-200 flex justify-center items-center p-10">
-        <div className="flex justify-evenly space-x-20">
-          <div className="flex flex-col justify-start items-center bg-orange-300">
-            <div>Ezjobhunt</div>
-            <div>links</div>
+
+      <footer className="flex flex-col min-h-60  justify-center items-center py-20 md:px-10 bg-orange-50">
+        <h2 className="text-center text-3xl mb-20 font-semibold text-orange-900">
+          Ezjobhunt
+        </h2>
+        <div className="md:flex justify-center  md:space-x-20 w-full bg-orange-200 md:[clip-path:polygon(10%_0,90%_0,100%_100%,0_100%)] px-2 py-20 bg-gradient-to-r from-orange-800 to-orange-300 text-white md:text-2xl text-lg">
+          <div className="flex flex-col justify-start items-center ">
+            <div className="border-b border-white pb-2 flex w-72">
+              <div className="mr-2  flex justify-center items-center">
+                <SiSemanticuireact />
+              </div>
+              Ezjobhunt
+            </div>
+            <div className="flex flex-col text-sm mt-2">
+              <span>Michael is a developer based in California</span>
+            </div>
+            <div className="mt-6">
+              <ul className="flex space-x-6">
+                <a
+                  href="https://www.facebook.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <li className="bg-white rounded-full p-2 text-orange-600">
+                    <BsMeta />
+                  </li>
+                </a>
+                <a
+                  href="https://www.twitter.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <li className="bg-white rounded-full p-2 text-orange-600">
+                    <FaTwitter />
+                  </li>
+                </a>
+                <a
+                  href="https://www.instagram.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <li className="bg-white rounded-full p-2 text-orange-600">
+                    <FaInstagram />
+                  </li>
+                </a>
+                <a
+                  href="https://www.youtube.com/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <li className="bg-white rounded-full p-2 text-orange-600">
+                    <FaYoutube />
+                  </li>
+                </a>
+              </ul>
+            </div>
           </div>
-          <div className="flex flex-col justify-start items-center bg-orange-300">
-            <span>Jobseekers</span>
-            <div>How Ezjobhunt Works</div>
-            <div>Refer a Friend</div>
-            <div>Partnerships</div>
-            <div>FAQ</div>
+          <div className="flex flex-col justify-start items-center mt-8 md:mt-0">
+            <span className="border-b border-white pb-2 mb-2">About</span>
+            <div className="text-base">About</div>
+            <div className="text-base">FAQ</div>
           </div>
-          <div className="flex  flex-col justify-start items-center bg-orange-300">
-            <span>Employers</span>
-            <div>Why Ezjobhunt</div>
-            <div>Pricing</div>
-            <div>FAQ</div>
+          <div className="flex flex-col justify-start items-center mt-8 md:mt-0">
+            <span className="border-b border-white pb-2 mb-2">Services</span>
+            <div className="text-base">Refer a Friend</div>
+            <div className="text-base">Partnerships</div>
+            <div className="text-base">FAQ</div>
           </div>
-          <div className="flex flex-col  justify-start items-center bg-orange-300">
-            <span>Company</span>
-            <div>Support</div>
-            <div>About Ezjobhunt</div>
-            <div>Careers</div>
-            <div>Press</div>
+
+          <div className="flex flex-col  justify-start items-center mt-8 md:mt-0">
+            <span className="border-b border-white pb-2 mb-2">Support</span>
+            <div className="text-base">Blog</div>
+            <div className="text-base">Developer</div>
+            <div className="text-base">Press</div>
+            <div className="text-base">Contact</div>
           </div>
         </div>
-      </footer> */}
+      </footer>
     </>
   );
 };

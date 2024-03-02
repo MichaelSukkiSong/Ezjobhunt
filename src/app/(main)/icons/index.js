@@ -20,9 +20,19 @@ export {
   BsCart2,
   BsTrash3,
   BsPencil,
+  BsMeta,
 } from "react-icons/bs";
 export { CiDeliveryTruck, CiSettings } from "react-icons/ci";
-export { FaLinkedin, FaGlobe, FaDollarSign, FaSearch } from "react-icons/fa";
+export {
+  FaLinkedin,
+  FaGlobe,
+  FaDollarSign,
+  FaSearch,
+  FaTwitter,
+  FaInstagram,
+  FaYoutube,
+  FaGithub,
+} from "react-icons/fa";
 export { FaRegFileLines } from "react-icons/fa6";
 export { FiLock } from "react-icons/fi";
 export { GiArtificialHive, GiDeerTrack } from "react-icons/gi";
@@ -46,6 +56,10 @@ export {
   RiMoneyDollarCircleLine,
   RiGovernmentLine,
 } from "react-icons/ri";
-export { SiHiveBlockchain, SiFoodpanda } from "react-icons/si";
+export {
+  SiHiveBlockchain,
+  SiFoodpanda,
+  SiSemanticuireact,
+} from "react-icons/si";
 export { TiWeatherPartlySunny } from "react-icons/ti";
 export { TbBuildingEstate } from "react-icons/tb";
